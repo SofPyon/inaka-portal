@@ -17,7 +17,7 @@
 Git、Composer、Docker がセットアップ済みである必要があります。
 
 ```bash
-# git clone ...
+$ git clone git@github.com:SofPyon/inaka-portal.git
 $ cd inaka-portal/
 
 # 設定ファイルを作成
