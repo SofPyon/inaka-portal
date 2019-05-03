@@ -25,6 +25,8 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /vendor/
 /node_modules/
 
+composer.phar
+
 # IDE Files
 #-------------------------
 /nbproject/
