@@ -90,7 +90,7 @@ class Users_model extends MY_Model
    * @param  int         $role_id ユーザー権限ID( roles.id )
    * @return object|bool          権限情報オブジェクト。存在しない場合はfalse
    */
-    public function get_user_role_info_by_user_role_id($role_id)
+    public function get_role_info_by_role_id($role_id)
     {
         $this->db->where("id", $role_id);
         $query = $this->db->get("roles");
@@ -105,7 +105,7 @@ class Users_model extends MY_Model
    * 権限情報を全て取得する
    * @return object[] 権限情報オブジェクトの配列。
    */
-    public function get_all_user_role_info()
+    public function get_all_roles()
     {
         return $this->db->get("roles")->result();
     }

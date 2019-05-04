@@ -854,7 +854,7 @@ class Home_staff extends MY_Controller
         switch ($mode) {
             case null:
                 $vars["pages"] = $this->auth_model->get_all_auth_staff_page();
-                $vars["roles"] = $this->users->get_all_user_role_info();
+                $vars["roles"] = $this->users->get_all_roles();
                 $vars["csrf_test_name"] = $this->input->cookie("csrf_cookie_name");
                 $this->_render('home_staff/auth_index', $vars);
                 break;
@@ -964,7 +964,7 @@ class Home_staff extends MY_Controller
             $result->id = $id; // auth_staff_page.id
             $result->is_authorized = $is_authorized;
             $result->role_id = $role_id;
-            $result->role_name = $this->users->get_user_role_info_by_user_role_id($role_id)->name;
+            $result->role_name = $this->users->get_role_info_by_role_id($role_id)->name;
             $result->auth_staff_role_id = $this->auth_model->get_auth_staff_role($id, $role_id)->id;
             echo json_encode($result);
         } else {
