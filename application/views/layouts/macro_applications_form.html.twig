@@ -2,20 +2,28 @@
     {{ form_open_multipart( null, form_attr )|raw }}
     {% for question in form.questions %}
         <div class="w-max-md form-group{% if not empty(form_error("answers[#{question.id}]")) %} has-error{% endif %}">
-            <label class="control-label" for="{{ "input_answer_#{question.id}" }}">
-                {{ question.name }}
-                {% if question.is_required == true %}
-                    <span class="label label-danger">必須</span>
-                {% endif %}
-
-                {% if question.type == "upload" %}
-                    {% if type == "update" and answers[question.id] is not empty %}
-                        <span class="label label-primary">アップロード済み</span>
-                    {% else %}
-                        <span class="label label-danger">未アップロード</span>
+            {% if question.type is same as("heading") %}
+                <h2>{{ question.name }}</h2>
+            {% else %}
+                <label class="control-label" for="{{ "input_answer_#{question.id}" }}">
+                    {{ question.name }}
+                    {% if question.is_required == true %}
+                        <span class="label label-danger">必須</span>
                     {% endif %}
-                {% endif %}
-            </label>
+
+                    {% if question.type == "upload" %}
+                        {% if type == "update" and answers[question.id] is not empty %}
+                            <span class="label label-primary">アップロード済み</span>
+                        {% else %}
+                            <span class="label label-danger">未アップロード</span>
+                        {% endif %}
+                    {% endif %}
+                </label>
+            {% endif %}
+
+            {% if question.description is not empty %}
+                <p>{{ question.description }}</p>
+            {% endif %}
             {% if question.type == "checkbox" %}
                 {{ form_error("answers[#{question.id}][]", '<p class="text-danger">', '</p>') | raw }}
             {% else %}
@@ -97,7 +105,7 @@
                         </option>
                     {% endfor %}
                 </select>
-            {% else %}
+            {% elseif question.type is not same as("heading") %}
                 <input
                     type="{% if question.type != "upload" %}{{ question.type }}{% else %}file{% endif %}"
                     name="answers[{{ question.id }}]"
