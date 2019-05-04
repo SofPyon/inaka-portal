@@ -78,13 +78,13 @@ class Forms_model extends MY_Model
             "questions.min_width AS question_min_width",
             "questions.min_height AS question_min_height",
             "questions.priority AS question_priority",
-            // form_question_options
-            "form_question_options.id AS option_id",
-            "form_question_options.value AS option_value",
+            // options
+            "options.id AS option_id",
+            "options.value AS option_value",
         ];
         $this->db->select(implode(",", $select), false);
         $this->db->where("questions.form_id", $form_id);
-        $this->db->join("form_question_options", "questions.id = form_question_options.question_id", "left");
+        $this->db->join("options", "questions.id = options.question_id", "left");
         $this->db->order_by("questions.priority");
         $query = $this->db->get("questions");
         $results = $query->result();
@@ -305,7 +305,7 @@ class Forms_model extends MY_Model
     public function get_options_by_question_id($question_id)
     {
         $this->db->where("question_id", $question_id);
-        $query = $this->db->get("form_question_options");
+        $query = $this->db->get("options");
         $return = [];
         foreach ($query->result() as $option) {
             $return[$option->id] = $option;
