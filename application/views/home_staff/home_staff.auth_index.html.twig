@@ -121,7 +121,7 @@
     // TODO: Vue.js へ移行
 
 
-    var all_roles = {{ user_roles_list | json_encode | raw }};
+    var all_roles = {{ roles | json_encode | raw }};
     var csrf_test_name = "{{ csrf_test_name }}";
     var ajax_endpoint_uri = "{{ base_url("home_staff/auth_config/ajax") }}";
 

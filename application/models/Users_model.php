@@ -35,7 +35,7 @@ class Users_model extends MY_Model
         $query = $this->db->get("users");
         if ($query->num_rows() === 1) {
             $result = $query->result()[0];
-            $result->roles = $this->get_user_roles_by_user_id($user_id);
+            $result->roles = $this->get_role_user_by_user_id($user_id);
             $result->is_admin = false;
             if (is_array($result->roles) && in_array("0", $result->roles, true)) {
                 $result->is_admin = true;
@@ -58,7 +58,7 @@ class Users_model extends MY_Model
         $query = $this->db->get("users");
         if ($query->num_rows() === 1) {
             $result = $query->result()[0];
-            $result->roles = $this->get_user_roles_by_user_id($result->id);
+            $result->roles = $this->get_role_user_by_user_id($result->id);
             $result->is_admin = false;
             if (is_array($result->roles) && in_array("0", $result->roles, true)) {
                 $result->is_admin = true;
@@ -74,10 +74,10 @@ class Users_model extends MY_Model
    * @param  int   $user_id ユーザーID( users.id )
    * @return int[] 権限IDの配列
    */
-    public function get_user_roles_by_user_id($user_id)
+    public function get_role_user_by_user_id($user_id)
     {
         $this->db->where("user_id", $user_id);
-        $query = $this->db->get("user_roles");
+        $query = $this->db->get("role_user");
         $return = [];
         foreach ($query->result() as $result) {
             $return[] = $result->role_id;
@@ -87,13 +87,13 @@ class Users_model extends MY_Model
 
   /**
    * ユーザー権限IDから権限情報を取得する
-   * @param  int         $role_id ユーザー権限ID( user_roles_list.id )
+   * @param  int         $role_id ユーザー権限ID( roles.id )
    * @return object|bool          権限情報オブジェクト。存在しない場合はfalse
    */
     public function get_user_role_info_by_user_role_id($role_id)
     {
         $this->db->where("id", $role_id);
-        $query = $this->db->get("user_roles_list");
+        $query = $this->db->get("roles");
         if ($query->num_rows() === 1) {
             return $query->result()[0];
         } else {
@@ -107,7 +107,7 @@ class Users_model extends MY_Model
    */
     public function get_all_user_role_info()
     {
-        return $this->db->get("user_roles_list")->result();
+        return $this->db->get("roles")->result();
     }
 
   /**

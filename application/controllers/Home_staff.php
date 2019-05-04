@@ -388,7 +388,7 @@ class Home_staff extends MY_Controller
 
         $this->grocery_crud->change_field_type('updated_at', 'invisible');
 
-        $this->grocery_crud->set_relation_n_n('roles', 'user_roles', 'user_roles_list', 'user_id', 'role_id', '{name}');
+        $this->grocery_crud->set_relation_n_n('roles', 'role_user', 'roles', 'user_id', 'role_id', '{name}');
 
         $this->grocery_crud->unique_fields(['student_id']);
 
@@ -813,19 +813,19 @@ class Home_staff extends MY_Controller
     /**
      * ユーザー権限管理ページ( Admin によるアクセスのみを許可する )
      */
-    public function user_roles_list()
+    public function roles()
     {
 
         $this->_admin_only();
 
         $vars = [];
         $vars["page_title"] = "ユーザー権限管理(Admin)";
-        $vars["main_page_type"] = "user_roles_list";
+        $vars["main_page_type"] = "roles";
 
         // ユーザー権限ID=0 (Admin) の情報の編集を禁止
         $this->grocery_crud->where('id !=', 0);
 
-        $this->grocery_crud->set_table('user_roles_list');
+        $this->grocery_crud->set_table('roles');
         $this->grocery_crud->set_subject('ユーザー権限');
         $this->grocery_crud->display_as('id', 'ユーザー権限ID');
         $this->grocery_crud->display_as('name', '権限名');
@@ -854,7 +854,7 @@ class Home_staff extends MY_Controller
         switch ($mode) {
             case null:
                 $vars["pages"] = $this->auth_model->get_all_auth_staff_page();
-                $vars["user_roles_list"] = $this->users->get_all_user_role_info();
+                $vars["roles"] = $this->users->get_all_user_role_info();
                 $vars["csrf_test_name"] = $this->input->cookie("csrf_cookie_name");
                 $this->_render('home_staff/auth_index', $vars);
                 break;
@@ -1190,11 +1190,11 @@ class Home_staff extends MY_Controller
 
             // Admin only ページのリンクも用意する
             if ($this->_get_login_user()->is_admin === true) {
-                $vars["_sidebar_menu"]["user_roles_list"] =
+                $vars["_sidebar_menu"]["roles"] =
                     [
                         "icon" => "key",
                         "name" => "ユーザー権限管理(Admin)",
-                        "url" => "home_staff/user_roles_list",
+                        "url" => "home_staff/roles",
                     ];
                 $vars["_sidebar_menu"]["auth_config"] =
                     [

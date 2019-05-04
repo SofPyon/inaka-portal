@@ -10,7 +10,7 @@ CREATE TABLE `auth_staff_page` (
 CREATE TABLE `auth_staff_role` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `auth_staff_page_id` int(11) NOT NULL COMMENT 'auth_staff_page の ID',
-  `role_id` int(11) NOT NULL COMMENT 'user_rolesテーブルのID',
+  `role_id` int(11) NOT NULL COMMENT 'role_userテーブルのID',
   `is_authorized` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'このrole_idのroleに所属するユーザーは認可されているか',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -168,17 +168,17 @@ CREATE TABLE `schedules` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Create syntax for TABLE 'user_roles'
-CREATE TABLE `user_roles` (
+-- Create syntax for TABLE 'role_user'
+CREATE TABLE `role_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT 'users.id',
-  `role_id` int(11) NOT NULL COMMENT 'user_roles_list.id(0:Admin)',
+  `role_id` int(11) NOT NULL COMMENT 'roles.id(0:Admin)',
   `notes` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Create syntax for TABLE 'user_roles_list'
-CREATE TABLE `user_roles_list` (
+-- Create syntax for TABLE 'roles'
+CREATE TABLE `roles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `notes` text,
