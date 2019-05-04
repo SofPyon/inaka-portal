@@ -119,10 +119,11 @@ CREATE TABLE `form_question_options` (
 -- Create syntax for TABLE 'form_questions'
 CREATE TABLE `form_questions` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '設問ID',
-  `section_id` int(11) unsigned NOT NULL COMMENT 'セクションID',
+  `form_id` int(11) unsigned NOT NULL COMMENT 'フォームID',
   `name` varchar(255) NOT NULL DEFAULT '',
-  `type` varchar(255) NOT NULL DEFAULT '' COMMENT 'number/text/textarea/radio/checkbox/select/upload',
-  `is_required` tinyint(1) NOT NULL DEFAULT '0',
+  `description` text,
+  `type` varchar(255) NOT NULL DEFAULT '' COMMENT 'heading/number/text/textarea/radio/checkbox/select/upload',
+  `is_required` tinyint(1) NOT NULL DEFAULT '0' COMMENT '(heading)無視',
   `number_min` int(11) DEFAULT NULL COMMENT '(number)範囲制限/(upload)無視/(それ以外)文字数制限',
   `number_max` int(11) DEFAULT NULL COMMENT 'number_min と同様',
   `allowed_types` varchar(255) DEFAULT NULL COMMENT '(uploadで使用)パイプで接続された，アップロードを許可するMIMEタイプ一覧．一般的に，ファイル拡張子はMIMEタイプとして使用できる．',
@@ -131,15 +132,7 @@ CREATE TABLE `form_questions` (
   `max_height` int(11) unsigned DEFAULT '0',
   `min_width` int(11) unsigned DEFAULT '0',
   `min_height` int(11) unsigned DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Create syntax for TABLE 'form_sections'
-CREATE TABLE `form_sections` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'セクションID',
-  `form_id` int(11) unsigned NOT NULL COMMENT 'フォームID',
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT 'セクションタイトル',
-  `description` text COMMENT '説明文',
+  `priority` int(11) unsigned NOT NULL DEFAULT '1' COMMENT 'priorityが小さい値の設問ほど上に配置される'
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
