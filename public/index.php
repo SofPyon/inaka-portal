@@ -37,9 +37,16 @@
  */
 
 require_once('../vendor/autoload.php');
-Dotenv\Dotenv::create(__DIR__. '/../application/')->load();
-function env($key, $default = null) {
-  return ! empty($value = getenv($key)) ? $value : $default;
+
+if (file_exists(__DIR__. '/../application/.env')) {
+    Dotenv\Dotenv::create(__DIR__ . '/../application/')->load();
+} else {
+    die('.env file not found');
+}
+
+function env($key, $default = null)
+{
+    return ! empty($value = getenv($key)) ? $value : $default;
 }
 
 /*
