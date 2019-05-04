@@ -137,14 +137,14 @@ class Applications_form extends Home_base_controller
 
         // POST 時
         if ($this->input->method() === "post") {
-            $this->_post_index($vars, $answers_on_db, $type, $formId, $boothId, $circleId, $answer_id);
+            $this->_post_index($vars, $answers_on_db, $type, $formId, $boothId, $circleId, $answer_id, $answers);
         } // end if post
 
         $vars["answers"] = $answers;
         $this->_render('home/applications_form', $vars);
     }
 
-    private function _post_index($vars, $answers_on_db, $type, $formId, $boothId, $circleId, $answer_id)
+    private function _post_index($vars, $answers_on_db, $type, $formId, $boothId, $circleId, $answer_id, &$answers)
     {
         $answers = [];
 
@@ -205,8 +205,10 @@ class Applications_form extends Home_base_controller
                 // メール送信用
                 if ($question->type === "checkbox") {
                     $answers_for_email[$question->name] = [];
-                    foreach ($this->input->post($name) as $value) {
-                        $answers_for_email[$question->name][] = $question->options[$value]->value;
+                    if (is_iterable($this->input->post($name))) {
+                        foreach ($this->input->post($name) as $value) {
+                            $answers_for_email[$question->name][] = $question->options[$value]->value;
+                        }
                     }
                 } else {
                     $value = $this->input->post($name);
