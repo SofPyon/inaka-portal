@@ -418,7 +418,7 @@ class Forms_model extends MY_Model
         $data->is_public = ((int)$data->is_public === 1);
         // ↑ is_public === 1 なら true を代入
 
-      // 受付期間内か
+        // 受付期間内か
         $data->is_in_period = true;
         $data->now_period = "open";
         $now = new DateTime();
