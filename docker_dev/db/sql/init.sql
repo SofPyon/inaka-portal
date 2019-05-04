@@ -132,7 +132,7 @@ CREATE TABLE `form_questions` (
   `max_height` int(11) unsigned DEFAULT '0',
   `min_width` int(11) unsigned DEFAULT '0',
   `min_height` int(11) unsigned DEFAULT '0',
-  `priority` int(11) unsigned NOT NULL DEFAULT '1' COMMENT 'priorityが小さい値の設問ほど上に配置される'
+  `priority` int(11) unsigned NOT NULL DEFAULT '1' COMMENT 'priorityが小さい値の設問ほど上に配置される',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
