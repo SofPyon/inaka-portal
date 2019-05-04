@@ -519,7 +519,7 @@ class Home_staff extends MY_Controller
         }
         $this->grocery_crud->set_relation_n_n(
             'members',
-            'circle_members',
+            'circle_user',
             'users',
             'circle_id',
             'user_id',

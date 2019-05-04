@@ -36,8 +36,8 @@ CREATE TABLE `ci_sessions` (
   KEY `ci_sessions_timestamp` (`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Create syntax for TABLE 'circle_members'
-CREATE TABLE `circle_members` (
+-- Create syntax for TABLE 'circle_user'
+CREATE TABLE `circle_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `circle_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,

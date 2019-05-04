@@ -91,7 +91,7 @@ class Booths_model extends MY_Model
 
         $this->db->where("circle_id", $booth_info->circle_id);
         $this->db->where("user_id", $user_id);
-        $query = $this->db->get("circle_members");
+        $query = $this->db->get("circle_user");
         if ((int)$query->num_rows() === 0) {
             return false;
         }
