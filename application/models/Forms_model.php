@@ -6,27 +6,27 @@
 class Forms_model extends MY_Model
 {
 
-  /**
-   * 非公開のフォームをこのモデルの get の結果に含めるか
-   * @var bool
-   */
+    /**
+     * 非公開のフォームをこのモデルの get の結果に含めるか
+     * @var bool
+     */
     public $include_private = false;
 
-  /**
-   * すべてのフォームを取得
-   * @param  string   $period_type in_period(受付期間中), closed(受付終了), not_started(受付開始雨), null(全て) のいずれか
-   * @return object[]              フォームオブジェクトの配列
-   */
+    /**
+     * すべてのフォームを取得
+     * @param string $period_type in_period(受付期間中), closed(受付終了), not_started(受付開始雨), null(全て) のいずれか
+     * @return object[]              フォームオブジェクトの配列
+     */
     public function get_forms($period_type = null)
     {
         if ($period_type === "in_period") {
-            $where = "'". date("Y-m-d H:i:s"). "'". " BETWEEN open_at AND close_at";
+            $where = "'" . date("Y-m-d H:i:s") . "'" . " BETWEEN open_at AND close_at";
             $this->db->where($where);
         } elseif ($period_type === "not_started") {
-            $where = "'". date("Y-m-d H:i:s"). "'". " < open_at";
+            $where = "'" . date("Y-m-d H:i:s") . "'" . " < open_at";
             $this->db->where($where);
         } elseif ($period_type === "closed") {
-            $where = "'". date("Y-m-d H:i:s"). "'". " > close_at";
+            $where = "'" . date("Y-m-d H:i:s") . "'" . " > close_at";
             $this->db->where($where);
         }
 
@@ -50,7 +50,7 @@ class Forms_model extends MY_Model
         $form_info = $this->db->get("forms")->row();
 
         // 存在しないフォームの場合 false
-        if (! $form_info) {
+        if (!$form_info) {
             return false;
         }
 
@@ -117,12 +117,12 @@ class Forms_model extends MY_Model
             }
 
             // 選択肢を格納していく
-            if (! isset($questions_for_return[$question_id]->options) ||
-                ! is_array($questions_for_return[$question_id]->options)) {
+            if (!isset($questions_for_return[$question_id]->options) ||
+                !is_array($questions_for_return[$question_id]->options)) {
                 $questions_for_return[$question_id]->options = [];
             }
 
-            if (! empty($result->option_id)) {
+            if (!empty($result->option_id)) {
                 $option = new stdClass();
 
                 $option->id = $result->option_id;
@@ -138,11 +138,11 @@ class Forms_model extends MY_Model
         return $return;
     }
 
-  /**
-   * 指定したフォームIDのフォームの統計情報を取得する
-   * @param  int         $form_id フォームID
-   * @return object|bool          統計情報オブジェクト．フォームが見つからない時 false
-   */
+    /**
+     * 指定したフォームIDのフォームの統計情報を取得する
+     * @param int $form_id フォームID
+     * @return object|bool          統計情報オブジェクト．フォームが見つからない時 false
+     */
     public function get_statistics_by_form_id($form_id)
     {
         $return = new stdClass();
@@ -168,7 +168,7 @@ class Forms_model extends MY_Model
             $return->count_all_circles = $this->circles->count_all();
             $return->count_all_booths = null;
             // 回答率を計算する
-            $return->proportion_circle = round(( $return->count_circle / $return->count_all_circles ) * 100, 1);
+            $return->proportion_circle = round(($return->count_circle / $return->count_all_circles) * 100, 1);
             $return->proportion_booth = null;
         } else {
             // type が booth の場合
@@ -179,48 +179,48 @@ class Forms_model extends MY_Model
             $return->count_all_circles = $this->circles->count_all();
             $return->count_all_booths = $this->booths->count_all();
             // 回答率を計算する
-            $return->proportion_circle = round(( $return->count_circle / $return->count_all_circles ) * 100, 1);
-            $return->proportion_booth = round(( $return->count_booth / $return->count_all_booths ) * 100, 1);
+            $return->proportion_circle = round(($return->count_circle / $return->count_all_circles) * 100, 1);
+            $return->proportion_booth = round(($return->count_booth / $return->count_all_booths) * 100, 1);
         }
 
         return $return;
     }
 
-  /**
-   * 指定した回答IDから回答を取得する
-   * @param  int         $answer_id 回答ID( form_answers.id )
-   * @return object|bool            回答オブジェクト。見つからない時 false
-   */
+    /**
+     * 指定した回答IDから回答を取得する
+     * @param int $answer_id 回答ID( form_answers.id )
+     * @return object|bool            回答オブジェクト。見つからない時 false
+     */
     public function get_answer_by_answer_id($answer_id)
     {
-      // form_answers
+        // form_answers
         $this->db->where("id", $answer_id);
         $answer = $this->db->get("form_answers")->row();
         if (!$answer) {
             return false;
         }
 
-      // 団体情報とブース情報も取得
+        // 団体情報とブース情報も取得
         $circle = $this->circles->get_circle_info_by_circle_id($answer->circle_id);
         $booth = null;
         if (!empty($answer->circle_id)) {
             $booth = $this->booths->get_booth_info_by_booth_id($answer->booth_id);
         }
 
-      // form_answer_details
+        // form_answer_details
         $this->db->where("answer_id", $answer_id);
         $details = $this->db->get("form_answer_details")->result();
         $details_for_return = [];
         foreach ($details as $detail) {
-            if (empty($details_for_return[ $detail->question_id ])) {
-                $details_for_return[ $detail->question_id ] = $detail->answer;
+            if (empty($details_for_return[$detail->question_id])) {
+                $details_for_return[$detail->question_id] = $detail->answer;
             } else {
-                if (!is_array($details_for_return[ $detail->question_id ])) {
-                    $tmp = $details_for_return[ $detail->question_id ];
-                    $details_for_return[ $detail->question_id ] = [];
-                    $details_for_return[ $detail->question_id ][] = $tmp;
+                if (!is_array($details_for_return[$detail->question_id])) {
+                    $tmp = $details_for_return[$detail->question_id];
+                    $details_for_return[$detail->question_id] = [];
+                    $details_for_return[$detail->question_id][] = $tmp;
                 }
-                $details_for_return[ $detail->question_id ][] = $detail->answer;
+                $details_for_return[$detail->question_id][] = $detail->answer;
             }
         }
 
@@ -231,12 +231,12 @@ class Forms_model extends MY_Model
         return $return;
     }
 
-  /**
-   * 指定した回答IDの回答の次の回答情報を取得する(ページング用，スタッフ用)
-   * @param  int         $answer_id 回答ID
-   * @param  int         $form_id   フォームID
-   * @return object|bool            回答情報オブジェクト．存在しない場合 false
-   */
+    /**
+     * 指定した回答IDの回答の次の回答情報を取得する(ページング用，スタッフ用)
+     * @param int $answer_id 回答ID
+     * @param int $form_id フォームID
+     * @return object|bool            回答情報オブジェクト．存在しない場合 false
+     */
     public function next_answer($answer_id, $form_id)
     {
         $this->db->select("id");
@@ -252,12 +252,12 @@ class Forms_model extends MY_Model
         }
     }
 
-  /**
-   * 指定した回答IDの回答の前の回答情報を取得する(ページング用，スタッフ用)
-   * @param  int         $answer_id 回答ID
-   * @param  int         $form_id   フォームID
-   * @return object|bool            回答情報オブジェクト．存在しない場合 false
-   */
+    /**
+     * 指定した回答IDの回答の前の回答情報を取得する(ページング用，スタッフ用)
+     * @param int $answer_id 回答ID
+     * @param int $form_id フォームID
+     * @return object|bool            回答情報オブジェクト．存在しない場合 false
+     */
     public function prev_answer($answer_id, $form_id)
     {
         $this->db->select("id");
@@ -273,13 +273,13 @@ class Forms_model extends MY_Model
         }
     }
 
-  /**
-   * 検索条件に合致する回答リストを取得する
-   * @param  int   $form_id   フォームID
-   * @param  int   $circle_id 団体ID
-   * @param  int   $booth_id  ブースID
-   * @return array            リスト配列
-   */
+    /**
+     * 検索条件に合致する回答リストを取得する
+     * @param int $form_id フォームID
+     * @param int $circle_id 団体ID
+     * @param int $booth_id ブースID
+     * @return array            リスト配列
+     */
     public function get_answers($form_id = null, $circle_id = null, $booth_id = null)
     {
         if (!empty($form_id)) {
@@ -293,7 +293,7 @@ class Forms_model extends MY_Model
         }
         $query = $this->db->get("form_answers");
 
-      // TODO: N+1問題の解決
+        // TODO: N+1問題の解決
         $return = [];
         foreach ($query->result() as $answer) {
             $item = $this->get_answer_by_answer_id($answer->id);
@@ -313,16 +313,16 @@ class Forms_model extends MY_Model
         return $return;
     }
 
-  /**
-   * 回答を追加する
-   * TODO: add_answer と update_answer の統合
-   * @param array    $answers   回答情報
-   * @param string   $type      circle か booth か
-   * @param int      $form_id   フォームID
-   * @param int      $circle_id 団体ID
-   * @param int      $booth_id  ブースID
-   * @param int|bool            insertした回答の回答ID．insertに失敗した場合 false
-   */
+    /**
+     * 回答を追加する
+     * TODO: add_answer と update_answer の統合
+     * @param array $answers 回答情報
+     * @param string $type circle か booth か
+     * @param int $form_id フォームID
+     * @param int $circle_id 団体ID
+     * @param int $booth_id ブースID
+     * @param int|bool            insertした回答の回答ID．insertに失敗した場合 false
+     */
     public function add_answer($answers, $type, $form_id, $circle_id, $booth_id)
     {
         $now = date("Y-m-d H:i:s");
