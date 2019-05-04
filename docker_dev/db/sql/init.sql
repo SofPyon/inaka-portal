@@ -74,14 +74,14 @@ CREATE TABLE `documents` (
 -- Create syntax for TABLE 'form_answer_details'
 CREATE TABLE `form_answer_details` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '設問回答ID',
-  `answer_id` int(11) unsigned NOT NULL COMMENT 'form_answers.id',
+  `answer_id` int(11) unsigned NOT NULL COMMENT 'answers.id',
   `question_id` int(11) unsigned NOT NULL COMMENT '設問ID',
   `answer` longtext COMMENT '回答本文',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Create syntax for TABLE 'form_answers'
-CREATE TABLE `form_answers` (
+-- Create syntax for TABLE 'answers'
+CREATE TABLE `answers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '回答ID',
   `form_id` int(11) unsigned NOT NULL COMMENT 'フォームID',
   `created_at` datetime NOT NULL COMMENT '回答新規作成日時',

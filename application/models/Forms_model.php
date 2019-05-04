@@ -158,7 +158,7 @@ class Forms_model extends MY_Model
             false
         );
         $this->db->where("form_id", $form_id);
-        $result = $this->db->get("form_answers")->row();
+        $result = $this->db->get("answers")->row();
         if ($form->type === "circle") {
             // type が circle の場合
             $return->form_type = "circle";
@@ -188,14 +188,14 @@ class Forms_model extends MY_Model
 
     /**
      * 指定した回答IDから回答を取得する
-     * @param int $answer_id 回答ID( form_answers.id )
+     * @param int $answer_id 回答ID( answers.id )
      * @return object|bool            回答オブジェクト。見つからない時 false
      */
     public function get_answer_by_answer_id($answer_id)
     {
-        // form_answers
+        // answers
         $this->db->where("id", $answer_id);
-        $answer = $this->db->get("form_answers")->row();
+        $answer = $this->db->get("answers")->row();
         if (!$answer) {
             return false;
         }
@@ -244,7 +244,7 @@ class Forms_model extends MY_Model
         $this->db->where("form_id", $form_id);
         $this->db->order_by("id", "asc");
         $this->db->limit(1);
-        $query = $this->db->get("form_answers");
+        $query = $this->db->get("answers");
         if ($query->num_rows() === 1) {
             return $this->get_answer_by_answer_id($query->row()->id);
         } else {
@@ -265,7 +265,7 @@ class Forms_model extends MY_Model
         $this->db->where("form_id", $form_id);
         $this->db->order_by("id", "desc");
         $this->db->limit(1);
-        $query = $this->db->get("form_answers");
+        $query = $this->db->get("answers");
         if ($query->num_rows() === 1) {
             return $this->get_answer_by_answer_id($query->row()->id);
         } else {
@@ -291,7 +291,7 @@ class Forms_model extends MY_Model
         if (!empty($booth_id)) {
             $this->db->where("booth_id", $booth_id);
         }
-        $query = $this->db->get("form_answers");
+        $query = $this->db->get("answers");
 
         // TODO: N+1問題の解決
         $return = [];
@@ -329,7 +329,7 @@ class Forms_model extends MY_Model
 
         $this->db->trans_start();
 
-        // form_answers に insert
+        // answers に insert
         $this->db->set("form_id", $form_id);
         $this->db->set("created_at", $now);
         $this->db->set("updated_at", $now);
@@ -337,7 +337,7 @@ class Forms_model extends MY_Model
         if ($type === "booth") {
             $this->db->set("booth_id", $booth_id);
         }
-        $this->db->insert("form_answers");
+        $this->db->insert("answers");
 
         // 回答ID
         $answer_id = $this->db->insert_id();
@@ -379,10 +379,10 @@ class Forms_model extends MY_Model
 
         $this->db->trans_start();
 
-        // form_answers を update
+        // answers を update
         $this->db->where("id", $answer_id);
         $this->db->set("updated_at", $now);
-        $this->db->update("form_answers");
+        $this->db->update("answers");
 
         // form_answer_details を update
         foreach ($answers as $question_id => $answer) {
