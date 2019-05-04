@@ -45,50 +45,63 @@ class Forms_model extends MY_Model
 
     public function get_form_by_form_id($form_id)
     {
+        // フォーム情報を取得
+        $this->db->where("id", $form_id);
+        $form_info = $this->db->get("forms")->row();
+        $form_info->max_answers = (int)$form_info->max_answers;
+        $form_info = $this->processing_form_data($form_info);
+
+        // 非公開フォームだった場合 false
+        if ($this->include_private !== true && $form_info->is_public !== true) {
+            return false;
+        }
+
         $select = [
-        // form_sections
-        "form_sections.id AS section_id",
-        "form_sections.title AS section_title",
-        "form_sections.description AS section_description",
-        // form_questions
-        "form_questions.id AS question_id",
-        "form_questions.name AS question_name",
-        "form_questions.type AS question_type",
-        "form_questions.is_required AS question_is_required",
-        "form_questions.number_min AS question_number_min",
-        "form_questions.number_max AS question_number_max",
-        "form_questions.allowed_types AS question_allowed_types",
-        "form_questions.max_size AS question_max_size",
-        "form_questions.max_width AS question_max_width",
-        "form_questions.max_height AS question_max_height",
-        "form_questions.min_width AS question_min_width",
-        "form_questions.min_height AS question_min_height",
+            // form_questions
+            "form_questions.id AS question_id",
+            "form_questions.name AS question_name",
+            "form_questions.description AS question_description",
+            "form_questions.type AS question_type",
+            "form_questions.is_required AS question_is_required",
+            "form_questions.number_min AS question_number_min",
+            "form_questions.number_max AS question_number_max",
+            "form_questions.allowed_types AS question_allowed_types",
+            "form_questions.max_size AS question_max_size",
+            "form_questions.max_width AS question_max_width",
+            "form_questions.max_height AS question_max_height",
+            "form_questions.min_width AS question_min_width",
+            "form_questions.min_height AS question_min_height",
+            "form_questions.priority AS question_priority",
+            // form_question_options
+            "form_question_options.id AS option_id",
+            "form_question_options.value AS option_value",
         ];
         $this->db->select(implode(",", $select), false);
-        $this->db->where("form_sections.form_id", $form_id);
-        $this->db->join("form_questions", "form_questions.section_id = form_sections.id", "left");
-        $this->db->order_by("section_id");
-        $query = $this->db->get("form_sections");
+        $this->db->where("form_questions.form_id", $form_id);
+        $this->db->join("form_question_options", "form_questions.id = form_question_options.question_id", "left");
+        $this->db->order_by("form_questions.priority");
+        $query = $this->db->get("form_questions");
         $results = $query->result();
 
-      // 存在しないフォームが指定された場合は false を返す
+        // 存在しないフォームが指定された場合は false を返す
         if (!$results) {
             return false;
         }
 
-      // return 用のセクション配列
-        $sections_for_return = [];
+        // return 用の設問配列
+        $questions_for_return = [];
 
-      // セクション情報の中に，設問情報が入っている構造にする
+        // 設問情報の中に、選択肢情報が入っている構造にする
         foreach ($results as $result) {
-          // 設問オブジェクト
-            if ($result->question_id !== null) {
+            // 設問オブジェクト
+            $question_id = $result->id;
+            if (empty($questions_for_return[$question_id])) {
                 $question = new stdClass();
                 $question->id = $result->question_id;
                 $question->name = $result->question_name;
+                $question->description = $result->question_description;
                 $question->type = $result->question_type;
                 $question->is_required = ((int)$result->question_is_required === 1);
-                // ↑ is_required === 1 なら true を代入
                 $question->number_min = $result->question_number_min ?? null;
                 $question->number_max = $result->question_number_max ?? null;
                 $question->allowed_types = $result->question_allowed_types;
@@ -97,55 +110,26 @@ class Forms_model extends MY_Model
                 $question->max_height = (int)$result->question_max_height ?? null;
                 $question->min_width = (int)$result->question_min_width ?? null;
                 $question->min_height = (int)$result->question_min_height ?? null;
+                $question->priority = (int)$result->question_priority ?? null;
 
-              // type が選択系だった場合，選択肢情報を取得
-              // TODO: N+1 問題の解決 → セクション機能は廃止するので、その際解消する
-                $question->options = [];
-                if (in_array($question->type, ["radio", "checkbox", "select"], true)) {
-                    $question->options = $this->get_options_by_question_id($question->id);
-                }
-            } else {
-                $question = null;
+                $questions_for_return[$question_id] = $question;
             }
 
-            if (count($sections_for_return) === 0 ||
-            $sections_for_return[ count($sections_for_return) - 1 ]->id !== $result->section_id ) {
-              // まだ，$sections_for_return に，該当する section_id が入っていない場合
-              // 新しく $sections_for_return に，項目を追加する
-                $item = new stdClass();
-                $item->id          = $result->section_id;
-                $item->title       = $result->section_title;
-                $item->description = $result->section_description;
-                $item->description_html = $this->parse_markdown($item->description);
-
-                if ($question !== null) {
-                    $item->questions = [ $question ];
-                } else {
-                    $item->questions = null;
-                }
-
-                $sections_for_return[] = $item;
-            } else {
-              // すでに，$sections_for_return に，該当する section_id が入っている場合
-              // 既存のセクション情報に設問情報を追加する
-                $sections_for_return[ count($sections_for_return) - 1 ]->questions[] = $question;
+            // 選択肢を格納していく
+            if (! is_array($questions_for_return[$question_id]->options)) {
+                $questions_for_return[$question_id]->options = [];
             }
+
+            $option = new stdClass();
+
+            $option->id = $result->option_id;
+            $option->value = $result->value;
+
+            $questions_for_return[$question_id]->options[] = $option;
         }
 
-      // フォーム情報を取得
-        $this->db->where("id", $form_id);
-        $form_info = $this->db->get("forms")->row();
-        $form_info->max_answers = (int)$form_info->max_answers;
-        $form_info = $this->processing_form_data($form_info);
-        $return = new stdClass();
         $return = $form_info;
-        $return->sections = $sections_for_return;
-
-      // 非公開フォームだった場合 false
-      // TODO: フォーム情報を，セクションや設問より先に get すべきでは？
-        if ($this->include_private !== true && $form_info->is_public !== true) {
-            return false;
-        }
+        $return->questions = $questions_for_return;
 
         return $return;
     }
@@ -159,35 +143,38 @@ class Forms_model extends MY_Model
     {
         $return = new stdClass();
 
-      // フォーム情報を取得
+        // フォーム情報を取得
         $form = $this->get_form_by_form_id($form_id);
 
-      // 回答者数を取得
-      // (回答者数 : typeがboothなら回答ブース数と回答団体数，circleなら回答団体数を取得．同じ団体が
-      // 1つのフォームに対し2つ以上の回答をしていても，回答団体数は1とカウントする)
-        $this->db->select("count( DISTINCT circle_id ) AS count_circle, count( DISTINCT booth_id ) AS count_booth", false);
+        // 回答者数を取得
+        // (回答者数 : typeがboothなら回答ブース数と回答団体数，circleなら回答団体数を取得．同じ団体が
+        // 1つのフォームに対し2つ以上の回答をしていても，回答団体数は1とカウントする)
+        $this->db->select(
+            "count( DISTINCT circle_id ) AS count_circle, count( DISTINCT booth_id ) AS count_booth",
+            false
+        );
         $this->db->where("form_id", $form_id);
         $result = $this->db->get("form_answers")->row();
         if ($form->type === "circle") {
-          // type が circle の場合
+            // type が circle の場合
             $return->form_type = "circle";
             $return->count_circle = $result->count_circle;
             $return->count_booth = null;
-          // 母数を取得する
+            // 母数を取得する
             $return->count_all_circles = $this->circles->count_all();
             $return->count_all_booths = null;
-          // 回答率を計算する
+            // 回答率を計算する
             $return->proportion_circle = round(( $return->count_circle / $return->count_all_circles ) * 100, 1);
             $return->proportion_booth = null;
         } else {
-          // type が booth の場合
+            // type が booth の場合
             $return->form_type = "booth";
             $return->count_circle = $result->count_circle;
             $return->count_booth = $result->count_booth;
-          // 母数を取得する
+            // 母数を取得する
             $return->count_all_circles = $this->circles->count_all();
             $return->count_all_booths = $this->booths->count_all();
-          // 回答率を計算する
+            // 回答率を計算する
             $return->proportion_circle = round(( $return->count_circle / $return->count_all_circles ) * 100, 1);
             $return->proportion_booth = round(( $return->count_booth / $return->count_all_booths ) * 100, 1);
         }
