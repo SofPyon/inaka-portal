@@ -49,6 +49,12 @@ class Forms_model extends MY_Model
         $this->db->where("id", $form_id);
         $form_info = $this->db->get("forms")->row();
         $form_info->max_answers = (int)$form_info->max_answers;
+
+        // 存在しないフォームの場合 false
+        if (! $form_info) {
+            return false;
+        }
+
         $form_info = $this->processing_form_data($form_info);
 
         // 非公開フォームだった場合 false
@@ -82,11 +88,6 @@ class Forms_model extends MY_Model
         $this->db->order_by("form_questions.priority");
         $query = $this->db->get("form_questions");
         $results = $query->result();
-
-        // 存在しないフォームが指定された場合は false を返す
-        if (!$results) {
-            return false;
-        }
 
         // return 用の設問配列
         $questions_for_return = [];
