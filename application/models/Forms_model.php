@@ -329,7 +329,7 @@ class Forms_model extends MY_Model
 
         $this->db->trans_start();
 
-      // form_answers に insert
+        // form_answers に insert
         $this->db->set("form_id", $form_id);
         $this->db->set("created_at", $now);
         $this->db->set("modified_at", $now);
@@ -339,10 +339,10 @@ class Forms_model extends MY_Model
         }
         $this->db->insert("form_answers");
 
-      // 回答ID
+        // 回答ID
         $answer_id = $this->db->insert_id();
 
-      // form_answer_details に insert
+        // form_answer_details に insert
         foreach ($answers as $question_id => $answer) {
             if (is_array($answer)) {
                 foreach ($answer as $option) {
@@ -368,28 +368,28 @@ class Forms_model extends MY_Model
         return $answer_id;
     }
 
-  /**
-   * 回答を更新する
-   * @param array $answers   回答情報
-   * @param int   $answer_id 更新する回答の回答ID
-   */
+    /**
+     * 回答を更新する
+     * @param array $answers 回答情報
+     * @param int $answer_id 更新する回答の回答ID
+     */
     public function update_answer($answers, $answer_id)
     {
         $now = date("Y-m-d H:i:s");
 
         $this->db->trans_start();
 
-      // form_answers を update
+        // form_answers を update
         $this->db->where("id", $answer_id);
         $this->db->set("modified_at", $now);
         $this->db->update("form_answers");
 
-      // form_answer_details を update
+        // form_answer_details を update
         foreach ($answers as $question_id => $answer) {
+            $this->db->where("answer_id", $answer_id);
+            $this->db->where("question_id", $question_id);
+            $this->db->delete("form_answer_details");
             if (is_array($answer)) {
-                $this->db->where("answer_id", $answer_id);
-                $this->db->where("question_id", $question_id);
-                $this->db->delete("form_answer_details");
                 foreach ($answer as $option) {
                     $this->db->set("answer_id", $answer_id);
                     $this->db->set("question_id", $question_id);
@@ -397,10 +397,10 @@ class Forms_model extends MY_Model
                     $this->db->insert("form_answer_details");
                 }
             } else {
-                $this->db->where("answer_id", $answer_id);
-                $this->db->where("question_id", $question_id);
+                $this->db->set("answer_id", $answer_id);
+                $this->db->set("question_id", $question_id);
                 $this->db->set("answer", $answer);
-                $this->db->update("form_answer_details");
+                $this->db->insert("form_answer_details");
             }
         }
 
