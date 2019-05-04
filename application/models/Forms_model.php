@@ -126,9 +126,9 @@ class Forms_model extends MY_Model
                 $option = new stdClass();
 
                 $option->id = $result->option_id;
-                $option->value = $result->value;
+                $option->value = $result->option_value;
 
-                $questions_for_return[$question_id]->options[] = $option;
+                $questions_for_return[$question_id]->options[$option->id] = $option;
             }
         }
 
