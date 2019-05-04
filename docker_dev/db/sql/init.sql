@@ -45,23 +45,6 @@ CREATE TABLE `circle_members` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Create syntax for TABLE 'circle_members_roles'
-CREATE TABLE `circle_members_roles` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `circle_member_id` int(11) NOT NULL COMMENT 'circle_members.id',
-  `role_id` int(11) DEFAULT NULL COMMENT 'circle_members_roles_list.id',
-  `notes` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Create syntax for TABLE 'circle_members_roles_list'
-CREATE TABLE `circle_members_roles_list` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `notes` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 -- Create syntax for TABLE 'circles'
 CREATE TABLE `circles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
