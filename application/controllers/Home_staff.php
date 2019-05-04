@@ -213,81 +213,7 @@ class Home_staff extends MY_Controller
         // $mode で場合分け
         switch ($mode) {
             case "csv":
-                // カラム名
-                $string_to_export = "ID\t団体名";
-
-                if ($vars["form"]->type === "booth") {
-                    $string_to_export .= "\tブース名";
-                }
-
-                foreach ($vars["form"]->sections as $section) {
-                    if (count($section->questions) === 0) {
-                        continue;
-                    }
-
-                    foreach ($section->questions as $question) {
-                        $string_to_export .= "\t" . $question->name;
-                    }
-                }
-
-                $string_to_export .= "\n";
-
-                // 回答内容
-                foreach ($vars["answers"] as $answer) {
-                    // 回答ID
-                    $string_to_export .= $answer->id;
-                    // 団体名
-                    $string_to_export .= "\t" . $answer->circle->name;
-                    // ブース名
-                    if ($vars["form"]->type === "booth") {
-                        if (empty($answer->booth->name)) {
-                            $string_to_export .= "\t" . $answer->booth->place_name;
-                        } else {
-                            $string_to_export .= "\t" . $answer->booth->name;
-                            $string_to_export .= "(" . $answer->booth->place_name . ")";
-                        }
-                    }
-                    // 回答本体
-                    foreach ($vars["form"]->sections as $section) {
-                        if (count($section->questions) === 0) {
-                            continue;
-                        }
-                        foreach ($section->questions as $question) {
-                            if ($question->type === "checkbox" || $question->type === "radio" ||
-                                $question->type === "select") {
-                                // 多肢選択式
-                                $string_to_export .= "\t";
-                                foreach ($question->options as $option) {
-                                    if (is_array($answer->answers[$question->id]) &&
-                                        in_array($option->id, $answer->answers[$question->id], true)) {
-                                        $string_to_export .= $option->value . "/";
-                                    } elseif ($option->id === $answer->answers[$question->id]) {
-                                        $string_to_export .= $option->value;
-                                    }
-                                }
-                            } else {
-                                // Not多肢選択式
-                                $string_to_export .= "\t" .
-                                    str_replace(
-                                        ["\r\n", "\t"],
-                                        ["{{改行}}", "{{タブ文字}}"],
-                                        $answer->answers[$question->id]
-                                    );
-                            }
-                        }
-                    }
-
-                    // 行末
-                    $string_to_export .= "\n";
-                }
-
-                // Convert to UTF-16LE and Prepend BOM
-                $string_to_export = "\xFF\xFE" . mb_convert_encoding($string_to_export, 'UTF-16LE', 'UTF-8');
-                $filename = "export-" . date("Y-m-d_H:i:s") . ".csv";
-                header('Content-type: text/tab-separated-values;charset=UTF-16LE');
-                header('Content-Disposition: attachment; filename=' . $filename);
-                header("Cache-Control: no-cache");
-                echo $string_to_export;
+                $this->_application_read_csv($vars);
                 break;
             case "print":
                 $this->_render('home_staff/applications_read_print', $vars);
@@ -299,6 +225,79 @@ class Home_staff extends MY_Controller
                 $this->_error("エラー", "このページは存在しません。", 404);
                 break;
         }
+    }
+
+    private function _application_read_csv($vars)
+    {
+        // カラム名
+        $string_to_export = "ID\t団体名";
+
+        if ($vars["form"]->type === "booth") {
+            $string_to_export .= "\tブース名";
+        }
+
+        foreach ($vars["form"]->questions as $question) {
+            if ($question->type !== 'heading') {
+                $string_to_export .= "\t" . $question->name;
+            }
+        }
+
+        $string_to_export .= "\n";
+
+        // 回答内容
+        foreach ($vars["answers"] as $answer) {
+            // 回答ID
+            $string_to_export .= $answer->id;
+            // 団体名
+            $string_to_export .= "\t" . $answer->circle->name;
+            // ブース名
+            if ($vars["form"]->type === "booth") {
+                if (empty($answer->booth->name)) {
+                    $string_to_export .= "\t" . $answer->booth->place_name;
+                } else {
+                    $string_to_export .= "\t" . $answer->booth->name;
+                    $string_to_export .= "(" . $answer->booth->place_name . ")";
+                }
+            }
+            // 回答本体
+            foreach ($vars["form"]->questions as $question) {
+                if ($question->type === "heading") {
+                    continue;
+                }
+                if ($question->type === "checkbox" || $question->type === "radio" ||
+                    $question->type === "select") {
+                    // 多肢選択式
+                    $string_to_export .= "\t";
+                    foreach ($question->options as $option) {
+                        if (is_array($answer->answers[$question->id]) &&
+                            in_array($option->id, $answer->answers[$question->id], true)) {
+                            $string_to_export .= $option->value . "/";
+                        } elseif ($option->id === $answer->answers[$question->id]) {
+                            $string_to_export .= $option->value;
+                        }
+                    }
+                } else {
+                    // Not多肢選択式
+                    $string_to_export .= "\t" .
+                        str_replace(
+                            ["\r\n", "\t"],
+                            ["{{改行}}", "{{タブ文字}}"],
+                            $answer->answers[$question->id]
+                        );
+                }
+            }
+
+            // 行末
+            $string_to_export .= "\n";
+        }
+
+        // Convert to UTF-16LE and Prepend BOM
+        $string_to_export = "\xFF\xFE" . mb_convert_encoding($string_to_export, 'UTF-16LE', 'UTF-8');
+        $filename = "export-" . date("Y-m-d_H:i:s") . ".csv";
+        header('Content-type: text/tab-separated-values;charset=UTF-16LE');
+        header('Content-Disposition: attachment; filename=' . $filename);
+        header("Cache-Control: no-cache");
+        echo $string_to_export;
     }
 
     /**
