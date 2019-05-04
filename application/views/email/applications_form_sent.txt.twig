@@ -31,8 +31,6 @@
 
 **************************************************
 
-{% for section, answers in sections %}
-【 {{ section | raw }} 】
 {% for question, answer in answers %}
 {% if answer is iterable %}
 [ {{ question | raw }} ]
@@ -43,8 +41,6 @@
 [ {{ question | raw }} ]
 {{ answer | raw }}
 {% endif %}
-
-{% endfor %}
 
 {% endfor %}
 

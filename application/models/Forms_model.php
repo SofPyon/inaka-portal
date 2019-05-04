@@ -95,10 +95,10 @@ class Forms_model extends MY_Model
         // 設問情報の中に、選択肢情報が入っている構造にする
         foreach ($results as $result) {
             // 設問オブジェクト
-            $question_id = $result->id;
+            $question_id = $result->question_id;
             if (empty($questions_for_return[$question_id])) {
                 $question = new stdClass();
-                $question->id = $result->question_id;
+                $question->id = $question_id;
                 $question->name = $result->question_name;
                 $question->description = $result->question_description;
                 $question->type = $result->question_type;
@@ -117,16 +117,19 @@ class Forms_model extends MY_Model
             }
 
             // 選択肢を格納していく
-            if (! is_array($questions_for_return[$question_id]->options)) {
+            if (! isset($questions_for_return[$question_id]->options) ||
+                ! is_array($questions_for_return[$question_id]->options)) {
                 $questions_for_return[$question_id]->options = [];
             }
 
-            $option = new stdClass();
+            if (! empty($result->option_id)) {
+                $option = new stdClass();
 
-            $option->id = $result->option_id;
-            $option->value = $result->value;
+                $option->id = $result->option_id;
+                $option->value = $result->value;
 
-            $questions_for_return[$question_id]->options[] = $option;
+                $questions_for_return[$question_id]->options[] = $option;
+            }
         }
 
         $return = $form_info;
