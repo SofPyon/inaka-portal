@@ -63,30 +63,30 @@ class Forms_model extends MY_Model
         }
 
         $select = [
-            // form_questions
-            "form_questions.id AS question_id",
-            "form_questions.name AS question_name",
-            "form_questions.description AS question_description",
-            "form_questions.type AS question_type",
-            "form_questions.is_required AS question_is_required",
-            "form_questions.number_min AS question_number_min",
-            "form_questions.number_max AS question_number_max",
-            "form_questions.allowed_types AS question_allowed_types",
-            "form_questions.max_size AS question_max_size",
-            "form_questions.max_width AS question_max_width",
-            "form_questions.max_height AS question_max_height",
-            "form_questions.min_width AS question_min_width",
-            "form_questions.min_height AS question_min_height",
-            "form_questions.priority AS question_priority",
+            // questions
+            "questions.id AS question_id",
+            "questions.name AS question_name",
+            "questions.description AS question_description",
+            "questions.type AS question_type",
+            "questions.is_required AS question_is_required",
+            "questions.number_min AS question_number_min",
+            "questions.number_max AS question_number_max",
+            "questions.allowed_types AS question_allowed_types",
+            "questions.max_size AS question_max_size",
+            "questions.max_width AS question_max_width",
+            "questions.max_height AS question_max_height",
+            "questions.min_width AS question_min_width",
+            "questions.min_height AS question_min_height",
+            "questions.priority AS question_priority",
             // form_question_options
             "form_question_options.id AS option_id",
             "form_question_options.value AS option_value",
         ];
         $this->db->select(implode(",", $select), false);
-        $this->db->where("form_questions.form_id", $form_id);
-        $this->db->join("form_question_options", "form_questions.id = form_question_options.question_id", "left");
-        $this->db->order_by("form_questions.priority");
-        $query = $this->db->get("form_questions");
+        $this->db->where("questions.form_id", $form_id);
+        $this->db->join("form_question_options", "questions.id = form_question_options.question_id", "left");
+        $this->db->order_by("questions.priority");
+        $query = $this->db->get("questions");
         $results = $query->result();
 
         // return 用の設問配列

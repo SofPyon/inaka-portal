@@ -99,8 +99,8 @@ CREATE TABLE `form_question_options` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Create syntax for TABLE 'form_questions'
-CREATE TABLE `form_questions` (
+-- Create syntax for TABLE 'questions'
+CREATE TABLE `questions` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '設問ID',
   `form_id` int(11) unsigned NOT NULL COMMENT 'フォームID',
   `name` varchar(255) NOT NULL DEFAULT '',
