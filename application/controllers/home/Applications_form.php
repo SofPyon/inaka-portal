@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__. '/Home_base_controller.php';
+require_once __DIR__ . '/Home_base_controller.php';
 
 /**
  * home/Applications_form コントローラ
@@ -35,17 +35,17 @@ class Applications_form extends Home_base_controller
 
         $answer_id = 0;
 
-            // POST結果
+        // POST結果
         if (isset($_SESSION["post_result"])) {
             $vars["post_result"] = $_SESSION["post_result"];
         } else {
             $vars["post_result"] = null;
         }
 
-            // DB保存用の回答配列
+        // DB保存用の回答配列
         $answers = [];
 
-            // フォーム情報を取得
+        // フォーム情報を取得
         $vars["form"] = $this->forms->get_form_by_form_id($form_id);
         if ($vars["form"] === false) {
             $this->_error("申請フォームエラー", "このフォームは存在しません。", 404);
@@ -53,51 +53,56 @@ class Applications_form extends Home_base_controller
 
         $vars["xs_navbar_title"] = $vars["form"]->name;
 
-            // form の type が booth にもかかわらず $booth_id が提供されていない場合、エラー
-            // TODO: エラーではなく，ブース選択画面を表示させたほうが親切
+        // form の type が booth にもかかわらず $booth_id が提供されていない場合、エラー
+        // TODO: エラーではなく，ブース選択画面を表示させたほうが親切
         if ($vars["form"]->type === "booth" && empty($booth_id)) {
             $this->_error("申請フォームエラー", "ブースが指定されていません。");
         }
 
-            // アクセス権がない場合はエラー
+        // アクセス権がない場合はエラー
         if ($this->circles->can_edit($circle_id, $this->_get_login_user()->id) === false
-        || ( $vars["form"]->type === "booth" && $this->booths->can_edit($booth_id, $this->_get_login_user()->id) === false ) ) {
+            || ($vars["form"]->type === "booth" &&
+                $this->booths->can_edit($booth_id, $this->_get_login_user()->id) === false)) {
             $this->_error("申請フォームエラー", "このページにアクセスする権限がありません。", 403);
         }
 
-            // サークル・ブース情報を取得
+        // サークル・ブース情報を取得
         $vars["circle"] = $this->circles->get_circle_info_by_circle_id($circle_id);
         if ($vars["form"]->type === "booth" && !empty($booth_id)) {
             $vars["booth"] = $this->booths->get_booth_info_by_booth_id($booth_id);
-                // ブース情報が見つからない場合はエラー
+            // ブース情報が見つからない場合はエラー
             if ($vars["booth"] === false) {
                 $this->_error("申請フォームエラー", "該当するブース情報が見つかりません。", 404);
             }
         }
 
-            // $type で分ける
+        // $type で分ける
         if ($type === "new") {
-                // 新規申請の作成
+            // 新規申請の作成
             $vars["type"] = "new";
 
             $answer_list = $this->forms->get_answers($form_id, $circle_id, $booth_id);
 
-                // もし，max_answers が 1で，かつ，すでに申請されている場合， update へリダイレクト
+            // もし，max_answers が 1で，かつ，すでに申請されている場合， update へリダイレクト
             if ((int)$vars["form"]->max_answers === 1 && count($answer_list) > 0) {
                 $url = "home/applications/{$circle_id}";
                 if ($vars["form"]->type === "booth") {
                     $url .= "/b:{$booth_id}";
                 }
-                $url .= "/forms/{$form_id}/". $answer_list[0]->id;
+                $url .= "/forms/{$form_id}/" . $answer_list[0]->id;
                 redirect($url);
             }
 
-                // もし， max_answers を超える数の申請をしようとしている場合，エラー表示
+            // もし， max_answers を超える数の申請をしようとしている場合，エラー表示
             if (count($answer_list) >= (int)$vars["form"]->max_answers) {
-                $this->_error("申請フォームエラー", "この申請の申請上限数に達しました(上限数 : ". (int)$vars["form"]->max_answers. " )。これ以上、この申請を提出することはできません。");
+                $this->_error(
+                    "申請フォームエラー",
+                    "この申請の申請上限数に達しました(上限数 : " . (int)$vars["form"]->max_answers . " )。".
+                        "これ以上、この申請を提出することはできません。"
+                );
             }
         } else {
-                // すでに行った申請の確認・変更
+            // すでに行った申請の確認・変更
             $vars["type"] = "update";
 
             // $type は 回答ID
@@ -118,15 +123,15 @@ class Applications_form extends Home_base_controller
 
             // URLで渡されたブースIDとフォームIDが，回答のものと一致しない場合，エラー
             if ((int)$circle_id !== (int)$answer_info->circle_id ||
-            ( !empty($booth_id) && (int)$booth_id !== (int)$answer_info->booth_id ) ) {
+                (!empty($booth_id) && (int)$booth_id !== (int)$answer_info->booth_id)) {
                 $this->_error("申請フォームエラー", "該当する回答情報が見つかりません。", 404);
             }
 
             $answers = $answers_on_db = $answer_info->answers;
-          /*
-          $answers : この先，書き換えOK
-          $answers_on_db : この先，書き換えNG( DB上のデータ )
-           */
+            /*
+            $answers : この先，書き換えOK
+            $answers_on_db : この先，書き換えNG( DB上のデータ )
+             */
         }
 
         // POST 時
@@ -155,7 +160,7 @@ class Applications_form extends Home_base_controller
                 foreach ($section->questions as $question) {
                     $rules = [];
                     // フォームの name
-                    $name = "answers[". $question->id. "]";
+                    $name = "answers[" . $question->id . "]";
                     if ($question->type === "checkbox") {
                         $name .= "[]";
                     }
@@ -177,11 +182,11 @@ class Applications_form extends Home_base_controller
                         $rules[] = "numeric";
                         // number_min(最小値設定)
                         if (!empty($question->number_min)) {
-                            $rules[] = "greater_than_equal_to[". $question->number_min. "]";
+                            $rules[] = "greater_than_equal_to[" . $question->number_min . "]";
                         }
                         // number_max(最大値設定)
                         if (!empty($question->number_max)) {
-                            $rules[] = "less_than_equal_to[". $question->number_max. "]";
+                            $rules[] = "less_than_equal_to[" . $question->number_max . "]";
                         }
                     }
 
@@ -191,7 +196,7 @@ class Applications_form extends Home_base_controller
                         // TODO: implode?
                         $rule = "in_list[";
                         foreach ($question->options as $option) {
-                            $rule .= $option->id. ",";
+                            $rule .= $option->id . ",";
                         }
                         $rule .= "]";
                         // $rule = str_replace( ",]", "]", $rule );
@@ -212,13 +217,13 @@ class Applications_form extends Home_base_controller
                     // (upload)検証とアップロード処理
                     if ($question->type === "upload") {
                         if ($vars["type"] === "new" ||
-                        ( $vars["type"] === "update" &&
-                        ( !empty($_FILES["answers"]["name"][$question->id])
-                        && $this->input->post("answers[". $question->id. "]") !== "__delete__" ) ) ) {
+                            ($vars["type"] === "update" &&
+                                (!empty($_FILES["answers"]["name"][$question->id])
+                                    && $this->input->post("answers[" . $question->id . "]") !== "__delete__"))) {
                             // アップロードされたとき
 
-                            $config_fields = [ "is_required", "allowed_types", "max_size", "max_width",
-                                 "max_height", "min_width", "min_height" ];
+                            $config_fields = ["is_required", "allowed_types", "max_size", "max_width",
+                                "max_height", "min_width", "min_height"];
                             // is_required は，ファイルアップロードクラスの $config で必要なものではないが，
                             // 独自に使用する
                             foreach ($config_fields as $field) {
@@ -242,7 +247,8 @@ class Applications_form extends Home_base_controller
                             }
                         } else {
                             // update の場合で，削除の場合か，何も送信されなかった場合か
-                            if ($this->input->post("answers[". $question->id. "]") === "__delete__" && $question->is_required === false) {
+                            if ($this->input->post("answers[" . $question->id . "]") === "__delete__" &&
+                                $question->is_required === false) {
                                 // DB上のデータを削除する
                                 $answers[$question->id] = null;
 
@@ -262,11 +268,11 @@ class Applications_form extends Home_base_controller
                     if ($question->type === "text" || $question->type === "textarea") {
                         // number_min(最小文字数設定)
                         if (!empty($question->number_min)) {
-                            $rules[] = "min_length[". $question->number_min. "]";
+                            $rules[] = "min_length[" . $question->number_min . "]";
                         }
                         // number_max(最大文字数設定)
                         if (!empty($question->number_max)) {
-                            $rules[] = "max_length[". $question->number_max. "]";
+                            $rules[] = "max_length[" . $question->number_max . "]";
                         }
                     }
 
@@ -275,7 +281,7 @@ class Applications_form extends Home_base_controller
 
                     // DB保存用のデータ
                     if ($question->type !== "upload") {
-                        $answers[$question->id] = $this->input->post("answers[". $question->id. "]");
+                        $answers[$question->id] = $this->input->post("answers[" . $question->id . "]");
                     }
 
                     // メール送信用の値が empty の場合，ハイフンにする
@@ -293,15 +299,21 @@ class Applications_form extends Home_base_controller
                 $answers += $this->form_upload_data ?? [];
 
                 // 失敗時のエラーメッセージ
-                $error_msg  = "申請の送信に失敗しました。恐れ入りますが、再度の送信をお試しください。\n";
+                $error_msg = "申請の送信に失敗しました。恐れ入りますが、再度の送信をお試しください。\n";
                 $error_msg .= "万が一、何度試してもこのエラーが表示される場合、手動で対応させていただきますので";
-                $error_msg .= " ". RP_CONTACT_EMAIL. " ";
+                $error_msg .= " " . RP_CONTACT_EMAIL . " ";
                 $error_msg .= "宛に、申請フォームの内容を記載した上でメールを送信してください。";
 
                 if ($type === "new") {
-                    $answer_id = $this->forms->add_answer($answers, $vars["form"]->type, $form_id, $circle_id, $booth_id);
+                    $answer_id = $this->forms->add_answer(
+                        $answers,
+                        $vars["form"]->type,
+                        $form_id,
+                        $circle_id,
+                        $booth_id
+                    );
                     if ($answer_id === false) {
-                            // new 失敗
+                        // new 失敗
                         $this->_error("申請フォームエラー", $error_msg);
                     }
                 } else {
@@ -320,7 +332,8 @@ class Applications_form extends Home_base_controller
 
                 // 完了メールを送信
                 $vars_email = [];
-                $vars_email["name_to"] = $this->_get_login_user()->name_family. " ". $this->_get_login_user()->name_given;
+                $vars_email["name_to"] = $this->_get_login_user()->name_family . " " .
+                    $this->_get_login_user()->name_given;
                 $vars_email["form_name"] = $vars["form"]->name;
                 $vars_email["type"] = $type === "new" ? "新規作成" : "更新";
                 $vars_email["update_form_url"] = base_url($url);
@@ -332,11 +345,21 @@ class Applications_form extends Home_base_controller
                 $vars_email["sections"] = $answers_for_email;
 
                 // 回答者に送信するメール
-                $this->_send_email($this->_get_login_user()->email, "申請「". $vars_email["form_name"]. "」を承りました", "email/applications_form_sent", $vars_email);
+                $this->_send_email(
+                    $this->_get_login_user()->email,
+                    "申請「" . $vars_email["form_name"] . "」を承りました",
+                    "email/applications_form_sent",
+                    $vars_email
+                );
 
                 // フォーム管理者に送信するメール
                 $manager = $this->users->get_user_by_user_id($vars["form"]->created_by);
-                $this->_send_email($manager->email, "[スタッフ用控え]申請「". $vars_email["form_name"]. "」を承りました", "email/applications_form_sent", $vars_email);
+                $this->_send_email(
+                    $manager->email,
+                    "[スタッフ用控え]申請「" . $vars_email["form_name"] . "」を承りました",
+                    "email/applications_form_sent",
+                    $vars_email
+                );
 
                 // リダイレクト
                 $this->session->set_flashdata("post_result", true);
@@ -348,16 +371,15 @@ class Applications_form extends Home_base_controller
         $this->_render('home/applications_form', $vars);
     }
 
-  /**
-   * 申請フォームファイル送信用フォームバリデーションコールバック関数
-   */
+    /**
+     * 申請フォームファイル送信用フォームバリデーションコールバック関数
+     */
     public function _validate_form_upload()
     {
         // アップロード設定
         $config = array_shift($this->form_upload_config);
         // ファイルアップロードフィールドの設問IDと名前
         $question_id = $config["question_id"];
-        $name = $config["name"];
         // required 設定
         $is_required = $config["is_required"];
         if ($is_required === true && empty($_FILES["answers"]["name"][$question_id])) {
@@ -372,24 +394,27 @@ class Applications_form extends Home_base_controller
         unset($config["name"]);
         unset($config["is_required"]);
         // パスなどのアップロード設定
-        $config["upload_path"] = RP_UPLOAD_DIR. "/form_file";
+        $config["upload_path"] = RP_UPLOAD_DIR . "/form_file";
         $config["encrypt_name"] = true;
         // ファイルアップロードクラスを load する
         $this->load->library("upload", $config);
         // アップロードを実行する
         // https://gist.github.com/zitoloco/1558423 を参考にしたトリック
-        $_FILES["form_file"]["name"]     = $_FILES["answers"]["name"][$question_id];
-        $_FILES["form_file"]["type"]     = $_FILES["answers"]["type"][$question_id];
+        $_FILES["form_file"]["name"] = $_FILES["answers"]["name"][$question_id];
+        $_FILES["form_file"]["type"] = $_FILES["answers"]["type"][$question_id];
         $_FILES["form_file"]["tmp_name"] = $_FILES["answers"]["tmp_name"][$question_id];
-        $_FILES["form_file"]["error"]    = $_FILES["answers"]["error"][$question_id];
-        $_FILES["form_file"]["size"]     = $_FILES["answers"]["size"][$question_id];
+        $_FILES["form_file"]["error"] = $_FILES["answers"]["error"][$question_id];
+        $_FILES["form_file"]["size"] = $_FILES["answers"]["size"][$question_id];
         if (!$this->upload->do_upload("form_file")) {
             // アップロード失敗時
             $errors = str_replace("</p><p>", "/////", $this->upload->display_errors());
             $errors = str_replace(["<p>", "</p>"], "", $errors);
             $errors = explode("/////", $errors);
             $display_error = array_pop($errors);
-            $this->form_validation->set_message("_validate_form_upload", $display_error. " : ". $_FILES["form_file"]["name"]);
+            $this->form_validation->set_message(
+                "_validate_form_upload",
+                $display_error . " : " . $_FILES["form_file"]["name"]
+            );
             return false;
         }
         // アップロードしたデータのファイル名を格納
