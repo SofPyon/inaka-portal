@@ -53,14 +53,14 @@ class Home_staff extends MY_Controller
             'title',
             'body',
             'created_at',
-            'modified_at',
+            'updated_at',
             'created_by',
             'modified_by',
             'notes'
         );
-        $this->grocery_crud->fields('title', 'body', 'created_at', 'modified_at', 'created_by', 'modified_by', 'notes');
+        $this->grocery_crud->fields('title', 'body', 'created_at', 'updated_at', 'created_by', 'modified_by', 'notes');
         $this->grocery_crud->change_field_type('created_at', 'invisible');
-        $this->grocery_crud->change_field_type('modified_at', 'invisible');
+        $this->grocery_crud->change_field_type('updated_at', 'invisible');
         $this->grocery_crud->change_field_type('created_by', 'invisible');
         $this->grocery_crud->change_field_type('modified_by', 'invisible');
 
@@ -122,7 +122,7 @@ class Home_staff extends MY_Controller
             'open_at',
             'close_at',
             'created_at',
-            'modified_at',
+            'updated_at',
             'type',
             'max_answers',
             'is_public',
@@ -134,14 +134,14 @@ class Home_staff extends MY_Controller
             'open_at',
             'close_at',
             'created_at',
-            'modified_at',
+            'updated_at',
             'type',
             'max_answers',
             'is_public',
             'created_by'
         );
         $this->grocery_crud->change_field_type('created_at', 'invisible');
-        $this->grocery_crud->change_field_type('modified_at', 'invisible');
+        $this->grocery_crud->change_field_type('updated_at', 'invisible');
         $this->grocery_crud->change_field_type('created_by', 'invisible');
 
         $this->grocery_crud->required_fields('name', 'open_at', 'close_at', 'type', 'is_public');
@@ -359,7 +359,7 @@ class Home_staff extends MY_Controller
             'email',
             'is_staff',
             'created_at',
-            'modified_at',
+            'updated_at',
             'notes'
         ];
         if ($this->grocery_crud->getstate() === 'list' || $this->grocery_crud->getstate() === 'ajax_list' ||
@@ -377,7 +377,7 @@ class Home_staff extends MY_Controller
             'name_given',
             'name_given_yomi',
             'is_staff',
-            'modified_at',
+            'updated_at',
             'notes'
         ];
         if ($this->_get_login_user()->is_admin) {
@@ -386,7 +386,7 @@ class Home_staff extends MY_Controller
         }
         $this->grocery_crud->fields($fields);
 
-        $this->grocery_crud->change_field_type('modified_at', 'invisible');
+        $this->grocery_crud->change_field_type('updated_at', 'invisible');
 
         $this->grocery_crud->set_relation_n_n('roles', 'user_roles', 'user_roles_list', 'user_id', 'role_id', '{name}');
 
@@ -505,9 +505,9 @@ class Home_staff extends MY_Controller
         $this->grocery_crud->display_as('id', '団体ID');
         $this->grocery_crud->display_as('name', '団体名');
 
-        $this->grocery_crud->columns('id', 'name', 'modified_at', 'modified_by', 'notes');
-        $this->grocery_crud->fields('name', 'members', 'modified_at', 'modified_by', 'notes');
-        $this->grocery_crud->change_field_type('modified_at', 'invisible');
+        $this->grocery_crud->columns('id', 'name', 'updated_at', 'modified_by', 'notes');
+        $this->grocery_crud->fields('name', 'members', 'updated_at', 'modified_by', 'notes');
+        $this->grocery_crud->change_field_type('updated_at', 'invisible');
         $this->grocery_crud->change_field_type('modified_by', 'invisible');
 
         $this->grocery_crud->required_fields('name');
@@ -575,9 +575,9 @@ class Home_staff extends MY_Controller
         $this->grocery_crud->display_as('id', '企画ID');
         $this->grocery_crud->display_as('name', '企画名');
 
-        $this->grocery_crud->columns('id', 'place_id', 'circle_id', 'name', 'modified_at', 'modified_by', 'notes');
-        $this->grocery_crud->fields('place_id', 'circle_id', 'name', 'modified_at', 'modified_by', 'notes');
-        $this->grocery_crud->change_field_type('modified_at', 'invisible');
+        $this->grocery_crud->columns('id', 'place_id', 'circle_id', 'name', 'updated_at', 'modified_by', 'notes');
+        $this->grocery_crud->fields('place_id', 'circle_id', 'name', 'updated_at', 'modified_by', 'notes');
+        $this->grocery_crud->change_field_type('updated_at', 'invisible');
         $this->grocery_crud->change_field_type('modified_by', 'invisible');
 
         $this->grocery_crud->required_fields('place_id', 'circle_id');
@@ -731,7 +731,7 @@ class Home_staff extends MY_Controller
             'is_public',
             'is_important',
             'created_at',
-            'modified_at',
+            'updated_at',
             'created_by',
             'notes'
         );
@@ -743,12 +743,12 @@ class Home_staff extends MY_Controller
             'is_public',
             'is_important',
             'created_at',
-            'modified_at',
+            'updated_at',
             'created_by',
             'notes'
         );
         $this->grocery_crud->change_field_type('created_at', 'invisible');
-        $this->grocery_crud->change_field_type('modified_at', 'invisible');
+        $this->grocery_crud->change_field_type('updated_at', 'invisible');
         $this->grocery_crud->change_field_type('created_by', 'invisible');
 
         $this->grocery_crud->set_relation('schedule_id', 'schedules', '{name}(ID:{id})');

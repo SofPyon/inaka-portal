@@ -110,7 +110,7 @@ class MY_Controller extends CI_Controller
         $this->grocery_crud->display_as('is_important', '重要');
         $this->grocery_crud->display_as('is_locked', '編集禁止');
         $this->grocery_crud->display_as('created_at', '作成日時');
-        $this->grocery_crud->display_as('modified_at', '最終変更日時');
+        $this->grocery_crud->display_as('updated_at', '最終変更日時');
         $this->grocery_crud->display_as('created_by', '作成者');
         $this->grocery_crud->display_as('modified_by', '最終変更者');
         $this->grocery_crud->display_as('name_family', '姓');
@@ -158,7 +158,7 @@ class MY_Controller extends CI_Controller
         * 非表示にしたいカラム名を指定し、第２引数に invisible を指定すれば OK です。
         * See Also : https://www.grocerycrud.com/documentation/options_functions/callback_before_insert
         */
-        $post_array['modified_at'] = date('Y-m-d H:i:s');
+        $post_array['updated_at'] = date('Y-m-d H:i:s');
         $post_array['modified_by'] = $this->_get_login_user()->id;
 
         return $post_array;

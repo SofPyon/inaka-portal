@@ -332,7 +332,7 @@ class Forms_model extends MY_Model
         // form_answers に insert
         $this->db->set("form_id", $form_id);
         $this->db->set("created_at", $now);
-        $this->db->set("modified_at", $now);
+        $this->db->set("updated_at", $now);
         $this->db->set("circle_id", $circle_id);
         if ($type === "booth") {
             $this->db->set("booth_id", $booth_id);
@@ -381,7 +381,7 @@ class Forms_model extends MY_Model
 
         // form_answers を update
         $this->db->where("id", $answer_id);
-        $this->db->set("modified_at", $now);
+        $this->db->set("updated_at", $now);
         $this->db->update("form_answers");
 
         // form_answer_details を update

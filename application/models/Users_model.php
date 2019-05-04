@@ -346,8 +346,8 @@ class Users_model extends MY_Model
             foreach ($fields as $field) {
                 $this->db->set($field, $userinfo->$field);
             }
-            // modified_at は、現在時刻にセットする
-            $this->db->set("modified_at", date("Y-m-d H:i:s"));
+            // updated_at は、現在時刻にセットする
+            $this->db->set("updated_at", date("Y-m-d H:i:s"));
             // users テーブルに挿入する
             $result = $this->db->insert("users");
             if ($result === true) {
