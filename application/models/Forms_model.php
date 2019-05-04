@@ -48,13 +48,13 @@ class Forms_model extends MY_Model
         // フォーム情報を取得
         $this->db->where("id", $form_id);
         $form_info = $this->db->get("forms")->row();
-        $form_info->max_answers = (int)$form_info->max_answers;
 
         // 存在しないフォームの場合 false
         if (! $form_info) {
             return false;
         }
 
+        $form_info->max_answers = (int)$form_info->max_answers;
         $form_info = $this->processing_form_data($form_info);
 
         // 非公開フォームだった場合 false
