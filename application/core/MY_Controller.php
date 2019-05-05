@@ -138,7 +138,7 @@ class MY_Controller extends CI_Controller
     protected function _logout()
     {
         session_regenerate_id(true);
-        unset($_SESSION[self::SESSION_KEY_USER_ID]);
+        unset($_SESSION[self::SESSION_KEY_USER_ID], $_SESSION['staff_authorized']);
     }
 
     /**
