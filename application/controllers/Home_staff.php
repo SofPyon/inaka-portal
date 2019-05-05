@@ -870,7 +870,7 @@ class Home_staff extends MY_Controller
             'created_at',
             'created_by',
             'updated_at',
-            'created_by',
+            'updated_by',
             'notes'
         );
         $this->grocery_crud->fields(
@@ -883,7 +883,7 @@ class Home_staff extends MY_Controller
             'created_at',
             'created_by',
             'updated_at',
-            'created_by',
+            'updated_by',
             'notes'
         );
         $this->grocery_crud->change_field_type('created_at', 'invisible');
