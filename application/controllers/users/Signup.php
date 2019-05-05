@@ -9,7 +9,7 @@ class Signup extends Users_base_controller
     public function index()
     {
         if (! empty($this->_get_login_user())) {
-            redirect("/");
+            codeigniter_redirect("/");
         }
 
         $this->load->library("form_validation");
@@ -101,7 +101,7 @@ class Signup extends Users_base_controller
                     throw new Exception();
                 }
                 $this->session->set_flashdata('email_sent_to', $email_send_to);
-                redirect('users/sent_confirm_email');
+                codeigniter_redirect('users/sent_confirm_email');
             } catch (Exception $e) {
               // データベースの登録を削除
                 $failed_email = true;

@@ -91,14 +91,14 @@ class MY_Controller extends CI_Controller
             // 現在アクセスされているURIをセッションに保存
             $_SESSION["login_return_uri"] = $this->uri->uri_string();
             // ログインページへリダイレクト
-            redirect('users/login');
+            codeigniter_redirect('users/login');
         } else {
             # ログインされている場合
             // login_return_uri がセットされている場合，そのページにアクセス
             if (isset($_SESSION["login_return_uri"])) {
                 $uri = $_SESSION["login_return_uri"];
                 unset($_SESSION["login_return_uri"]);
-                redirect($uri);
+                codeigniter_redirect($uri);
             }
         }
     }

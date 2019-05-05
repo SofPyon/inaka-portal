@@ -1062,7 +1062,7 @@ class Home_staff extends MY_Controller
                     $this->input->post('is_authorized')
                 );
                 $this->session->set_flashdata('post_result', $result);
-                redirect("home_staff/auth_config/new");
+                codeigniter_redirect("home_staff/auth_config/new");
             }
         }
 
@@ -1227,7 +1227,7 @@ class Home_staff extends MY_Controller
                 (int)$_SESSION["staff_verify_code"] === (int)$this->input->post("verify_code")) {
                 // 認証成功
                 $_SESSION['staff_authorized'] = true;
-                redirect("home_staff/");
+                codeigniter_redirect("home_staff/");
             } else {
                 // 認証失敗
                 $this->_error("認証失敗", "入力されたコードが間違っています。");
@@ -1250,7 +1250,7 @@ class Home_staff extends MY_Controller
         // メールによる２段階認証が完了していない場合，ログイン画面を表示する
         if (isset($vars["main_page_type"]) && $vars["main_page_type"] !== "verify_access"
             && (!isset($_SESSION['staff_authorized']) || $_SESSION['staff_authorized'] === false)) {
-            redirect("home_staff/verify_access");
+            codeigniter_redirect("home_staff/verify_access");
         }
 
         // xs_main_title をセット

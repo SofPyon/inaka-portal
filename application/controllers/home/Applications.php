@@ -19,7 +19,7 @@ class Applications extends Home_base_controller
 
         if (count($vars["circle_info"]) === 1) {
           // アクセスできる団体が１つしかない場合，その団体の申請一覧ページに直接アクセスする
-            redirect("home/applications/circles/". $vars["circle_info"][0]->id);
+            codeigniter_redirect("home/applications/circles/". $vars["circle_info"][0]->id);
         } elseif (count($vars["circle_info"]) === 0) {
           // アクセスできる団体が１つもない場合，エラーを表示する
             $this->_error("エラー", "どの団体にも所属していないため、申請ページは表示できません。", 403);

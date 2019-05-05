@@ -91,7 +91,7 @@ class Applications_form extends Home_base_controller
                     $url .= "/b:{$boothId}";
                 }
                 $url .= "/forms/{$formId}/" . $answer_list[0]->id;
-                redirect($url);
+                codeigniter_redirect($url);
             }
 
             // もし， max_answers を超える数の申請をしようとしている場合，エラー表示
@@ -364,7 +364,7 @@ class Applications_form extends Home_base_controller
 
             // リダイレクト
             $this->session->set_flashdata("post_result", true);
-            redirect($url);
+            codeigniter_redirect($url);
         }
     }
 

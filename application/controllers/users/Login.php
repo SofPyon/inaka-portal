@@ -9,7 +9,7 @@ class Login extends Users_base_controller
     public function index()
     {
         if (! empty($this->_get_login_user())) {
-            redirect("home");
+            codeigniter_redirect("home");
         }
 
         $vars = [];
@@ -42,7 +42,7 @@ class Login extends Users_base_controller
           // バリデーション成功
             $userinfo = $this->users->get_user_by_login_id($login_id);
             $this->_login($userinfo->id);
-            redirect("/");
+            codeigniter_redirect("/");
         } else {
           // バリデーション失敗
           // 仮登録されているかどうかをチェックする
@@ -53,7 +53,7 @@ class Login extends Users_base_controller
                 session_regenerate_id(true);
                 $userinfo = $this->users->get_user_pre_by_login_id($login_id);
                 $this->session->set_flashdata('user_checked', $userinfo);
-                redirect("users/verify/status");
+                codeigniter_redirect("users/verify/status");
             }
         }
     }
