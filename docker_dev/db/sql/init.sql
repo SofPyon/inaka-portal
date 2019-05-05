@@ -51,6 +51,8 @@ CREATE TABLE `circle_user` (
 CREATE TABLE `circles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
+  `created_at` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
   `updated_at` datetime NOT NULL,
   `updated_by` int(11) NOT NULL,
   `notes` text,
