@@ -33,6 +33,8 @@ class Booths_model extends MY_Model
             "places.type AS place_type",
             "booths.id AS booth_id",
             "booths.name AS booth_name",
+            "booths.created_at AS created_at",
+            "booths.created_by AS created_by",
             "booths.updated_at AS updated_at",
             "booths.updated_by AS updated_by",
         ];
@@ -58,6 +60,8 @@ class Booths_model extends MY_Model
             "booths.circle_id AS circle_id",
             "booths.name AS name",
             "places.name AS place_name",
+            "booths.created_at AS created_at",
+            "booths.created_by AS created_by",
             "booths.updated_at AS updated_at",
             "booths.updated_by AS updated_by",
             "booths.notes AS notes",

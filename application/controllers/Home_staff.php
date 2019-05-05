@@ -577,6 +577,8 @@ class Home_staff extends MY_Controller
 
         $this->grocery_crud->columns('id', 'place_id', 'circle_id', 'name', 'updated_at', 'updated_by', 'notes');
         $this->grocery_crud->fields('place_id', 'circle_id', 'name', 'updated_at', 'updated_by', 'notes');
+        $this->grocery_crud->change_field_type('created_at', 'invisible');
+        $this->grocery_crud->change_field_type('created_by', 'invisible');
         $this->grocery_crud->change_field_type('updated_at', 'invisible');
         $this->grocery_crud->change_field_type('updated_by', 'invisible');
 
@@ -585,6 +587,7 @@ class Home_staff extends MY_Controller
         $this->grocery_crud->set_relation('place_id', 'places', '{name}(ID:{id})');
         $this->grocery_crud->set_relation('circle_id', 'circles', '{name}(ID:{id})');
         if ($this->grocery_crud->getstate() !== 'edit' && $this->grocery_crud->getstate() !== 'add') {
+            $this->grocery_crud->set_relation('created_by', 'users', '{student_id} {name_family} {name_given}');
             $this->grocery_crud->set_relation('updated_by', 'users', '{student_id} {name_family} {name_given}');
         }
 
