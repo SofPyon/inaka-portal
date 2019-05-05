@@ -41,10 +41,14 @@
     $LARAVEL_PATHS = [
         '/welcome'
     ];
+    $request_uri = $_SERVER['REQUEST_URI'];
 
-    if (in_array($_SERVER['REQUEST_URI'], $LARAVEL_PATHS, true)) {
-        require __DIR__. '/index_laravel.php';
-        exit;
+    foreach ($LARAVEL_PATHS as $path) {
+        $path = preg_quote($path);
+        if (preg_match('/^\\'. $path. '/', $request_uri)) {
+            require __DIR__. '/index_laravel.php';
+            exit;
+        }
     }
 })();
 
