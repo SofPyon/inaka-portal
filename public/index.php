@@ -65,6 +65,9 @@ function env($key, $default = null)
     return ! empty($value = getenv($key)) ? $value : $default;
 }
 
+// セッションのシリアライズ方式を変更する
+ini_set('session.serialize_handler', 'php_serialize');
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
