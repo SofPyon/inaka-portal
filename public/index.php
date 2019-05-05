@@ -36,6 +36,18 @@
  * @filesource
  */
 
+// 一部 Laravel にルーティング
+(function () {
+    $LARAVEL_PATHS = [
+        '/welcome'
+    ];
+
+    if (in_array($_SERVER['REQUEST_URI'], $LARAVEL_PATHS, true)) {
+        require __DIR__. '/index_laravel.php';
+        exit;
+    }
+})();
+
 require_once('../vendor/autoload.php');
 
 if (file_exists(__DIR__. '/../application/.env')) {
