@@ -725,8 +725,6 @@ class Home_staff extends MY_Controller
             $this->grocery_crud->set_relation('updated_by', 'users', '{student_id} {name_family} {name_given}');
         }
 
-        $this->grocery_crud->set_field_upload('image_filename', RP_UPLOAD_DIR_CRUD . '/booth_image');
-
         // ファイル表示リンクにする
         $this->grocery_crud->callback_column('image_filename', array($this, '_crud_download_image_filename'));
 
@@ -739,19 +737,6 @@ class Home_staff extends MY_Controller
         $vars += (array)$this->grocery_crud->render();
 
         $this->_render('home_staff/crud', $vars);
-    }
-
-
-    /**
-     * 画像ファイルのダウンロードリンクを表示させるための Grocery CRUD コールバック関数
-     */
-    public function _crud_download_image_filename($value, $row)
-    {
-        if (!empty($row->image_filename)) {
-            return $value = '<a href="'. base_url("uploads/booth_image/". $row->id). '"  target="_blank">'.
-                $row->image_filename. '</a>';
-        }
-        return $value = "-";
     }
 
     /**
