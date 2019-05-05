@@ -6,35 +6,35 @@
 class Booths_model extends MY_Model
 {
 
-  /**
-   * 全ブース数を取得する
-   * @return int 全ブース数
-   */
+    /**
+     * 全ブース数を取得する
+     * @return int 全ブース数
+     */
     public function count_all()
     {
         $this->db->select("count(id) AS c", false);
         return (int)$this->db->get("booths")->row()->c ?? 0;
     }
 
-  /**
-   * 指定された団体IDの団体が行うブースの情報を取得する
-   *  - circle_name : circles.name
-   *  - place_name : places.name ( ブースの場所名 )
-   *  - booth_id : booths.id ( ブースID )
-   *  - booth_name : booths.name ( ブース名 )
-   * @param  int         $circle_id 団体ID( circles.id )
-   * @return object[]               ブース情報オブジェクトの配列。存在しない場合は空配列。
-   */
+    /**
+     * 指定された団体IDの団体が行うブースの情報を取得する
+     *  - circle_name : circles.name
+     *  - place_name : places.name ( ブースの場所名 )
+     *  - booth_id : booths.id ( ブースID )
+     *  - booth_name : booths.name ( ブース名 )
+     * @param int $circle_id 団体ID( circles.id )
+     * @return object[]               ブース情報オブジェクトの配列。存在しない場合は空配列。
+     */
     public function get_booth_info_by_circle_id($circle_id)
     {
         $select = [
-        "circles.name AS circle_name",
-        "places.name AS place_name",
-        "places.type AS place_type",
-        "booths.id AS booth_id",
-        "booths.name AS booth_name",
-        "booths.updated_at AS updated_at",
-        "booths.updated_by AS updated_by",
+            "circles.name AS circle_name",
+            "places.name AS place_name",
+            "places.type AS place_type",
+            "booths.id AS booth_id",
+            "booths.name AS booth_name",
+            "booths.updated_at AS updated_at",
+            "booths.updated_by AS updated_by",
         ];
         $this->db->select(implode(",", $select), false);
         $this->db->from("booths");
@@ -45,23 +45,23 @@ class Booths_model extends MY_Model
         return $query->result();
     }
 
-  /**
-   * 指定されたブースIDのブースの情報を取得する
-   * @param  int         $booth_id  ブースID( booths.id )
-   * @return object|bool            ブース情報オブジェクトの配列。存在しない場合 false
-   */
+    /**
+     * 指定されたブースIDのブースの情報を取得する
+     * @param int $booth_id ブースID( booths.id )
+     * @return object|bool            ブース情報オブジェクトの配列。存在しない場合 false
+     */
     public function get_booth_info_by_booth_id($booth_id)
     {
         $select = [
-        "booths.id AS id",
-        "booths.place_id AS place_id",
-        "booths.circle_id AS circle_id",
-        "booths.name AS name",
-        "places.name AS place_name",
-        "booths.updated_at AS updated_at",
-        "booths.updated_by AS updated_by",
-        "booths.notes AS notes",
-        "places.type AS place_type",
+            "booths.id AS id",
+            "booths.place_id AS place_id",
+            "booths.circle_id AS circle_id",
+            "booths.name AS name",
+            "places.name AS place_name",
+            "booths.updated_at AS updated_at",
+            "booths.updated_by AS updated_by",
+            "booths.notes AS notes",
+            "places.type AS place_type",
         ];
         $this->db->select(implode(",", $select), false);
 
@@ -75,12 +75,12 @@ class Booths_model extends MY_Model
         }
     }
 
-  /**
-   * 指定されたブースIDのブース情報を編集することができるか
-   * @param  int $booth_id ブースID( circles.id )
-   * @param  int $user_id  ユーザーID( users.id )
-   * @return bool          編集可能の場合 true
-   */
+    /**
+     * 指定されたブースIDのブース情報を編集することができるか
+     * @param int $booth_id ブースID( circles.id )
+     * @param int $user_id ユーザーID( users.id )
+     * @return bool          編集可能の場合 true
+     */
     public function can_edit($booth_id, $user_id)
     {
 
