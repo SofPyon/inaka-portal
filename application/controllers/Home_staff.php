@@ -868,6 +868,7 @@ class Home_staff extends MY_Controller
             'is_public',
             'is_important',
             'created_at',
+            'created_by',
             'updated_at',
             'created_by',
             'notes'
@@ -880,17 +881,20 @@ class Home_staff extends MY_Controller
             'is_public',
             'is_important',
             'created_at',
+            'created_by',
             'updated_at',
             'created_by',
             'notes'
         );
         $this->grocery_crud->change_field_type('created_at', 'invisible');
+        $this->grocery_crud->change_field_type('created_by', 'invisible');
         $this->grocery_crud->change_field_type('updated_at', 'invisible');
         $this->grocery_crud->change_field_type('created_by', 'invisible');
 
         $this->grocery_crud->set_relation('schedule_id', 'schedules', '{name}(ID:{id})');
         if ($this->grocery_crud->getstate() !== 'edit' && $this->grocery_crud->getstate() !== 'add') {
             $this->grocery_crud->set_relation('created_by', 'users', '{student_id} {name_family} {name_given}');
+            $this->grocery_crud->set_relation('updated_by', 'users', '{student_id} {name_family} {name_given}');
         }
 
         $this->grocery_crud->required_fields('name', 'filename');
