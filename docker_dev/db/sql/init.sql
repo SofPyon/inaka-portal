@@ -22,7 +22,7 @@ CREATE TABLE `booths` (
   `circle_id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
-  `created_by` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
   `updated_at` datetime NOT NULL,
   `updated_by` int(11) NOT NULL,
   `notes` text,
