@@ -176,8 +176,8 @@ CREATE TABLE `schedules` (
 -- Create syntax for TABLE 'role_user'
 CREATE TABLE `role_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL COMMENT 'users.id',
   `role_id` int(11) NOT NULL COMMENT 'roles.id(0:Admin)',
+  `user_id` int(11) NOT NULL COMMENT 'users.id',
   `notes` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
