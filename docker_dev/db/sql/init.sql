@@ -146,9 +146,9 @@ CREATE TABLE `pages` (
   `title` varchar(255) NOT NULL DEFAULT '',
   `body` longtext NOT NULL,
   `created_at` datetime NOT NULL,
+  `created_by` int(11) unsigned NOT NULL,
   `updated_at` datetime NOT NULL,
-  `created_by` int(11) unsigned NOT NULL COMMENT 'user_id',
-  `updated_by` int(11) unsigned NOT NULL COMMENT 'user_id',
+  `updated_by` int(11) unsigned NOT NULL,
   `notes` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
