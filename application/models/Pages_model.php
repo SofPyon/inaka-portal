@@ -22,7 +22,7 @@ class Pages_model extends MY_Model
         $this->db->set("created_at", $datetime);
         $this->db->set("updated_at", $datetime);
         $this->db->set("created_by", $user->id);
-        $this->db->set("modified_by", $user->id);
+        $this->db->set("updated_by", $user->id);
         $this->db->set("notes", $notes);
         $this->db->insert("pages");
         return $this->db->insert_id();

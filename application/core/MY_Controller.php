@@ -112,7 +112,7 @@ class MY_Controller extends CI_Controller
         $this->grocery_crud->display_as('created_at', '作成日時');
         $this->grocery_crud->display_as('updated_at', '最終変更日時');
         $this->grocery_crud->display_as('created_by', '作成者');
-        $this->grocery_crud->display_as('modified_by', '最終変更者');
+        $this->grocery_crud->display_as('updated_by', '最終変更者');
         $this->grocery_crud->display_as('name_family', '姓');
         $this->grocery_crud->display_as('name_family_yomi', '姓(よみ)');
         $this->grocery_crud->display_as('name_given', '名');
@@ -159,7 +159,7 @@ class MY_Controller extends CI_Controller
         * See Also : https://www.grocerycrud.com/documentation/options_functions/callback_before_insert
         */
         $post_array['updated_at'] = date('Y-m-d H:i:s');
-        $post_array['modified_by'] = $this->_get_login_user()->id;
+        $post_array['updated_by'] = $this->_get_login_user()->id;
 
         return $post_array;
     }

@@ -34,7 +34,7 @@ class Booths_model extends MY_Model
         "booths.id AS booth_id",
         "booths.name AS booth_name",
         "booths.updated_at AS updated_at",
-        "booths.modified_by AS modified_by",
+        "booths.updated_by AS updated_by",
         ];
         $this->db->select(implode(",", $select), false);
         $this->db->from("booths");
@@ -59,7 +59,7 @@ class Booths_model extends MY_Model
         "booths.name AS name",
         "places.name AS place_name",
         "booths.updated_at AS updated_at",
-        "booths.modified_by AS modified_by",
+        "booths.updated_by AS updated_by",
         "booths.notes AS notes",
         "places.type AS place_type",
         ];

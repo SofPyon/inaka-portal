@@ -22,7 +22,7 @@ CREATE TABLE `booths` (
   `circle_id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `updated_at` datetime NOT NULL,
-  `modified_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
   `notes` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -50,7 +50,7 @@ CREATE TABLE `circles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `updated_at` datetime NOT NULL,
-  `modified_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
   `notes` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -143,7 +143,7 @@ CREATE TABLE `pages` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `created_by` int(11) NOT NULL COMMENT 'user_id',
-  `modified_by` int(11) NOT NULL COMMENT 'user_id',
+  `updated_by` int(11) NOT NULL COMMENT 'user_id',
   `notes` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
