@@ -601,8 +601,24 @@ class Home_staff extends MY_Controller
         $this->grocery_crud->display_as('id', '団体ID');
         $this->grocery_crud->display_as('name', '団体名');
 
-        $this->grocery_crud->columns('id', 'name', 'updated_at', 'updated_by', 'notes');
-        $this->grocery_crud->fields('name', 'members', 'updated_at', 'updated_by', 'notes');
+        $this->grocery_crud->columns(
+            'id',
+            'name',
+            'created_at',
+            'created_by',
+            'updated_at',
+            'updated_by',
+            'notes'
+        );
+        $this->grocery_crud->fields(
+            'name',
+            'members',
+            'created_at',
+            'created_by',
+            'updated_at',
+            'updated_by',
+            'notes'
+        );
         $this->grocery_crud->change_field_type('created_at', 'invisible');
         $this->grocery_crud->change_field_type('created_by', 'invisible');
         $this->grocery_crud->change_field_type('updated_at', 'invisible');
@@ -674,8 +690,27 @@ class Home_staff extends MY_Controller
         $this->grocery_crud->display_as('id', '企画ID');
         $this->grocery_crud->display_as('name', '企画名');
 
-        $this->grocery_crud->columns('id', 'place_id', 'circle_id', 'name', 'updated_at', 'updated_by', 'notes');
-        $this->grocery_crud->fields('place_id', 'circle_id', 'name', 'updated_at', 'updated_by', 'notes');
+        $this->grocery_crud->columns(
+            'id',
+            'place_id',
+            'circle_id',
+            'name',
+            'created_at',
+            'created_by',
+            'updated_at',
+            'updated_by',
+            'notes'
+        );
+        $this->grocery_crud->fields(
+            'place_id',
+            'circle_id',
+            'name',
+            'created_at',
+            'created_by',
+            'updated_at',
+            'updated_by',
+            'notes'
+        );
         $this->grocery_crud->change_field_type('created_at', 'invisible');
         $this->grocery_crud->change_field_type('created_by', 'invisible');
         $this->grocery_crud->change_field_type('updated_at', 'invisible');
