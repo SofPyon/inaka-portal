@@ -132,11 +132,11 @@ CREATE TABLE `forms` (
   `open_at` datetime NOT NULL,
   `close_at` datetime NOT NULL,
   `created_at` datetime NOT NULL,
+  `created_by` int(11) unsigned NOT NULL COMMENT 'フォーム作成者のユーザーID',
   `updated_at` datetime NOT NULL,
   `type` varchar(10) NOT NULL DEFAULT '' COMMENT 'circleかboothか',
   `max_answers` int(11) DEFAULT NULL COMMENT '最大回答数',
   `is_public` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '公開するか',
-  `created_by` int(11) unsigned NOT NULL COMMENT 'フォーム作成者のユーザーID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
