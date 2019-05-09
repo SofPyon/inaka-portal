@@ -39,7 +39,8 @@
 // 一部 Laravel にルーティング
 (function () {
     $LARAVEL_PATHS = [
-        '/welcome'
+        '/welcome',
+        '/_debugbar',
     ];
     $request_uri = $_SERVER['REQUEST_URI'];
 
