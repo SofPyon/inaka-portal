@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use DB;
+use Auth;
 
 /**
  * CodeIgniter 側で保存されたセッションを Laravel 側で扱えるようにする
@@ -25,11 +26,15 @@ class InjectSessionFromCodeIgniter
     private const LARAVEL_SESSION_TIMESTAMP_NAME = 'inaka_portal_laravel_session_timestamp';
 
     /**
-     * CodeIgniter と Laravel で共有するセッションのキー
+     * CodeIgniter と Laravel で共有するセッションのキー(ユーザーID以外)
      */
     private const SHARED_SESSION_KEY = [
-        'user_id'
     ];
+
+    /**
+     * CodeIgniter 側で、ログイン中のユーザーIDが格納されているセッションのキー名
+     */
+    private const CI_SESSION_USER_ID_KEY = 'user_id';
 
     /**
      * Handle an incoming request.
@@ -52,7 +57,7 @@ class InjectSessionFromCodeIgniter
 
         // CodeIgniter 側でセッションが保存されていない場合、作成
         if (!$ciSessionRecord) {
-            $newSessionId =  $this->getCISid();
+            $newSessionId = $this->getCISid();
 
             DB::table(self::CI_SESSION_TABLE_NAME)
                 ->insert([
@@ -83,10 +88,19 @@ class InjectSessionFromCodeIgniter
         $sessionTimestamp = (int)session(self::LARAVEL_SESSION_TIMESTAMP_NAME) ?? 0;
 
         if ($sessionTimestamp < (int)$ciSessionRecord->timestamp) {
+            // CodeIgniter からのセッションを Laravel のセッションに格納する
             foreach (self::SHARED_SESSION_KEY as $key) {
                 session([
                     $key => $sessionArray[$key] ?? null,
                 ]);
+            }
+
+            if (!empty($sessionArray[self::CI_SESSION_USER_ID_KEY])) {
+                // ユーザー ID が CodeIgniter 側で格納されている場合はログイン
+                Auth::loginUsingId((int)$sessionArray[self::CI_SESSION_USER_ID_KEY]);
+            } else {
+                // ユーザー ID が空の場合、ログアウト
+                Auth::logout();
             }
         }
 
@@ -100,6 +114,10 @@ class InjectSessionFromCodeIgniter
         foreach (self::SHARED_SESSION_KEY as $key) {
             $sessionArray[$key] = session($key, null);
         }
+
+        // ログイン中のユーザー ID 情報を ci_sessions に保存する
+        // なぜか CodeIgniter 側ではユーザー ID が string になっているので、ユーザー ID を string にして保存
+        $sessionArray[self::CI_SESSION_USER_ID_KEY] = !empty($userId = Auth::id()) ? (string)$userId : null;
 
         DB::table(self::CI_SESSION_TABLE_NAME)
             ->where('id', $ciSessionRecord->id)
