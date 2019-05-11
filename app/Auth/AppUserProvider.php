@@ -11,14 +11,14 @@ class AppUserProvider extends EloquentUserProvider
 {
     public function retrieveByCredentials(array $credentials): ?Authenticatable
     {
-        if (!$credentials['login_id']) {
+        if (empty($credentials['login_id'])) {
             return null;
         }
 
         /** @var Authenticatable $user */
         $user = $this->createModel()->newQuery()
-            ->where('email', $credentials['loginId'])
-            ->orWhere('student_id')
+            ->where('email', $credentials['login_id'])
+            ->orWhere('student_id', $credentials['login_id'])
             ->first();
 
         return $user;
