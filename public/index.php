@@ -40,6 +40,7 @@
 (function () {
     $LARAVEL_PATHS = [
         '/welcome',
+        '/login',
         '/_debugbar',
     ];
     $request_uri = $_SERVER['REQUEST_URI'];
