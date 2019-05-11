@@ -42,15 +42,18 @@
         '/welcome',
         // Auth
         '/login',
+        '/logout',
         '/password',
         // Debugbar
         '/_debugbar',
+        // 以下のルートはCodeIgniter側のものだが、404にしたいもの
+        '/users/logout',
     ];
     $request_uri = $_SERVER['REQUEST_URI'];
 
     foreach ($LARAVEL_PATHS as $path) {
-        $path = preg_quote($path);
-        if (preg_match('/^\\'. $path. '/', $request_uri)) {
+        $path = str_replace('/', '\/', preg_quote($path));
+        if (preg_match('/^'. $path. '/', $request_uri)) {
             require __DIR__. '/index_laravel.php';
             exit;
         }
