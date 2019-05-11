@@ -12,7 +12,7 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="text" class="col-md-4 col-form-label text-md-right">学籍番号・連絡先メールアドレス</label>
+                            <label for="login_id" class="col-md-4 col-form-label text-md-right">学籍番号・連絡先メールアドレス</label>
 
                             <div class="col-md-6">
                                 <input id="login_id" type="text" class="form-control @error('login_id') is-invalid @enderror" name="login_id" value="{{ old('login_id') }}" required autofocus>
