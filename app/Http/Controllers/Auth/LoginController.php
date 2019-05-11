@@ -39,6 +39,14 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except('logout', 'showLogout');
+    }
+
+    /**
+     * ログアウトページに GET リクエストされた場合
+     */
+    public function showLogout()
+    {
+        return view('auth.logout');
     }
 }
