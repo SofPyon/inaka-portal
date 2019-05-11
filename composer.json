@@ -60,12 +60,6 @@
 		"docker-stop": [
 			"cd docker_dev; docker-compose down"
 		],
-		"phpmd": [
-			"./vendor/bin/phpmd ./application/ text ./phpmd_rule.xml"
-		],
-		"phpcs": [
-			"./vendor/bin/phpcs --standard=PSR2 --colors ./application/"
-		],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
