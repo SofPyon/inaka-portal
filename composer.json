@@ -10,8 +10,9 @@
 		"vlucas/phpdotenv": "^3.3",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
-        "laravel/tinker": "^1.0"
-	},
+        "laravel/tinker": "^1.0",
+        "ext-mbstring": "*"
+    },
 	"require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
         "beyondcode/laravel-dump-server": "^1.0",
@@ -60,6 +61,18 @@
 		"docker-stop": [
 			"cd docker_dev; docker-compose down"
 		],
+        "migrate": [
+            "cd docker_dev; docker-compose run web php artisan migrate"
+        ],
+        "migrate:status": [
+            "cd docker_dev; docker-compose run web php artisan migrate:status"
+        ],
+        "migrate:rollback": [
+            "cd docker_dev; docker-compose run web php artisan migrate:rollback"
+        ],
+        "migrate:refresh": [
+            "cd docker_dev; docker-compose run web php artisan migrate:refresh"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

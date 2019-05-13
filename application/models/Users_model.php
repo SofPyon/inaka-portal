@@ -227,7 +227,7 @@ class Users_model extends MY_Model
         $this->db->set('password', $this->create_password_hash($plain_password));
 
         // 認証コード作成
-        $univemail = $student_id . RP_UNIVEMAIL_DOMAIN;
+        $univemail = $student_id . '@'. PORTAL_UNIVEMAIL_DOMAIN;
         $verifycodes = [];
         if (empty($student_id)) {
             // 学籍番号が空

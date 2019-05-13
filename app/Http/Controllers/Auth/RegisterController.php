@@ -4,6 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Eloquents\User;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Services\Auth\EmailService;
+use App\Services\Auth\VerifyService;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -31,42 +37,57 @@ class RegisterController extends Controller
     protected $redirectTo = '/home';
 
     /**
+     * @var EmailService
+     */
+    private $emailService;
+
+    /**
+     * @var VerifyService
+     */
+    private $verifyService;
+
+    /**
      * Create a new controller instance.
      *
+     * @param  EmailService  $emailService
+     * @param  VerifyService  $verifyService
      * @return void
      */
-    public function __construct()
+    public function __construct(EmailService $emailService, VerifyService $verifyService)
     {
         $this->middleware('guest');
+        $this->emailService = $emailService;
+        $this->verifyService = $verifyService;
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * ユーザー登録を実行する
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @param  RegisterRequest  $request
+     * @return Response
      */
-    protected function validator(array $data)
+    public function register(RegisterRequest $request): Response
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-    }
+        $user = new User;
+        $user->student_id = $request->student_id;
+        $user->name = $request->name;
+        $user->name_yomi = $request->name_yomi;
+        $user->email = $request->email;
+        $user->tel = $request->tel;
+        $user->password = Hash::make($request->password);
+        $user->save();
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Eloquents\User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        event(new Registered($user));
+
+        // メール認証に関する処理
+        if ($user->univemail === $user->email) {
+            $this->verifyService->markEmailAsVerified($user);
+        }
+        $this->emailService->sendAll($user);
+
+        $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
     }
 }

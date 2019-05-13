@@ -94,6 +94,12 @@ class MY_Controller extends CI_Controller
             codeigniter_redirect('users/login');
         } else {
             # ログインされている場合
+            // メール認証が完了していない場合、メール認証ページへリダイレクト
+            $user = $this->_get_login_user();
+            if (empty($user->email_verified_at) || empty($user->univemail_verified_at)) {
+                codeigniter_redirect('/email/verify');
+            }
+
             // login_return_uri がセットされている場合，そのページにアクセス
             if (isset($_SESSION["login_return_uri"])) {
                 $uri = $_SESSION["login_return_uri"];
@@ -224,28 +230,28 @@ class MY_Controller extends CI_Controller
 
         // $reply_to の指定がない場合，運営者の連絡先メールアドレスに設定する
         if (empty($reply_to)) {
-            $reply_to = RP_CONTACT_EMAIL;
+            $reply_to = PORTAL_CONTACT_EMAIL;
         }
 
         $this->email->initialize([
             'protocol' => 'smtp',
-            'smtp_host' => RP_SMTP_HOST,
-            'smtp_user' => RP_SMTP_USER,
-            'smtp_pass' => RP_SMTP_PASS,
-            'smtp_port' => RP_SMTP_PORT, // default: 587
+            'smtp_host' => MAIL_HOST,
+            'smtp_user' => MAIL_USERNAME,
+            'smtp_pass' => MAIL_PASSWORD,
+            'smtp_port' => MAIL_PORT, // default: 587
             'crlf' => "\r\n",
             'newline' => "\r\n",
             'wordwrap' => false,
             'charset' => 'utf-8',
         ]);
 
-        $this->email->from(RP_EMAIL_FROM, RP_EMAIL_FROM_NAME);
+        $this->email->from(MAIL_FROM_ADDRESS, MAIL_FROM_NAME);
         $this->email->to(mb_strtolower($to));
         if (!empty($cc)) {
             $this->email->cc(mb_strtolower($cc));
         }
         $this->email->reply_to(mb_strtolower($reply_to));
-        $this->email->subject(RP_EMAIL_SUBJECT_PREFIX. $subject);
+        $this->email->subject($subject);
         $this->email->message($template->render($vars));
         return $this->email->send();
     }

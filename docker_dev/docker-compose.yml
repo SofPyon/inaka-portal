@@ -3,8 +3,6 @@ version: '3'
 services:
   php-cli:
     container_name: portal_php_cli
-    environment:
-      CI_ENV: development
     build: ./web
     volumes:
       - ../:/var/www/html
@@ -12,8 +10,6 @@ services:
 
   web:
     container_name: portal_web
-    environment:
-      CI_ENV: development
     build: ./web
     ports:
       - 80:80
@@ -53,4 +49,5 @@ services:
     container_name: portal_mailhog
     image: mailhog/mailhog
     ports:
+      - 1025:1025
       - 8025:8025

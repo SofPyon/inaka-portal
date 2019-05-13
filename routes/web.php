@@ -11,11 +11,21 @@
 |
 */
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
+Route::get('/', 'IndexController');
 
-Auth::routes();
+Auth::routes([
+    'register' => true,
+    'reset' => false,
+    'verify' => false,
+]);
+
 Route::get('/logout', 'Auth\LoginController@showLogout');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('email/verify', 'Auth\Email\VerifyNoticeAction')->name('verification.notice');
+Route::get('email/verify/{type}/{user}', 'Auth\Email\VerifyAction')->name('verification.verify');
+Route::post('email/resend', 'Auth\Email\ResendAction')->name('verification.resend');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    // ログインされており、メールアドレス認証が済んでいる場合のみアクセス可能なルートはここへ
+    Route::get('/home', 'HomeController@index')->name('home');
+});

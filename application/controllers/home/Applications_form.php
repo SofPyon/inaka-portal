@@ -302,7 +302,7 @@ class Applications_form extends Home_base_controller
             // 失敗時のエラーメッセージ
             $error_msg = "申請の送信に失敗しました。恐れ入りますが、再度の送信をお試しください。\n";
             $error_msg .= "万が一、何度試してもこのエラーが表示される場合、手動で対応させていただきますので";
-            $error_msg .= " " . RP_CONTACT_EMAIL . " ";
+            $error_msg .= " " . PORTAL_CONTACT_EMAIL . " ";
             $error_msg .= "宛に、申請フォームの内容を記載した上でメールを送信してください。";
 
             if ($type === "new") {

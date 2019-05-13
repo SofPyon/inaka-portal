@@ -50,37 +50,16 @@ class InjectSessionFromCodeIgniter
 
         // CodeIgniter のセッションを管理している ci_sessions テーブルからデータを読み出し、
         // 特定のセッションについては Laravel 側でも扱えるようにする
-        $ciSessionRecord = DB::table(self::CI_SESSION_TABLE_NAME)
-            ->where('id', $_COOKIE['session_id'])
-            ->where('ip_address', $ipAddress)
-            ->first();
+        $ciSessionRecord = null;
+        if (!empty($_COOKIE['session_id'])) {
+            $ciSessionRecord = DB::table(self::CI_SESSION_TABLE_NAME)
+                ->where('id', $_COOKIE['session_id'])
+                ->where('ip_address', $ipAddress)
+                ->first();
+        }
 
         // CodeIgniter 側でセッションが保存されていない場合、作成
-        if (!$ciSessionRecord) {
-            $newSessionId = $this->getCISid();
-
-            DB::table(self::CI_SESSION_TABLE_NAME)
-                ->insert([
-                    'id' => $newSessionId,
-                    'ip_address' => $ipAddress,
-                    'timestamp' => time(),
-                    'data' => serialize([
-                        '__ci_last_regenerate' => time(),
-                    ])
-                ]);
-
-            $ciSessionRecord = DB::table(self::CI_SESSION_TABLE_NAME)->where('id', $newSessionId)->first();
-
-            setcookie(
-                'session_id',
-                $ciSessionRecord->id,
-                0,
-                '/',
-                '',
-                false,
-                true
-            );
-        }
+        $ciSessionRecord = $ciSessionRecord ?? $this->createCISessionRecord($ipAddress);
 
         // SHARED_SESSION_KEY と一致するキーのセッションを Laravel のセッションに格納していく
         // CodeIgniter 側のセッションが最新のときのみ処理する
@@ -129,10 +108,37 @@ class InjectSessionFromCodeIgniter
         return $response;
     }
 
+    private function createCISessionRecord(string $ipAddress): \stdClass
+    {
+        $newSessionId = $this->getCISid();
+
+        DB::table(self::CI_SESSION_TABLE_NAME)
+            ->insert([
+                'id' => $newSessionId,
+                'ip_address' => $ipAddress,
+                'timestamp' => time(),
+                'data' => serialize([
+                    '__ci_last_regenerate' => time(),
+                ])
+            ]);
+
+        $ciSessionRecord = DB::table(self::CI_SESSION_TABLE_NAME)->where('id', $newSessionId)->first();
+
+        setcookie(
+            'session_id',
+            $ciSessionRecord->id,
+            0,
+            '/',
+            '',
+            false,
+            true
+        );
+
+        return $ciSessionRecord;
+    }
+
     /**
      * CodeIgniter フォーマットのセッションIDを生成して返す
-     *
-     * @throws \Exception
      */
     private function getCISid(): string
     {

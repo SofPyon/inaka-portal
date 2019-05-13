@@ -1162,7 +1162,7 @@ class Home_staff extends MY_Controller
         $secret = $ga->createSecret();
         echo "Secret is: " . $secret . "\n\n";
 
-        $qrCodeUrl = $ga->getQRCodeGoogleUrl(RP_PORTAL_NAME, $secret);
+        $qrCodeUrl = $ga->getQRCodeGoogleUrl(APP_NAME, $secret);
         echo "QR-Code: <img src='" . $qrCodeUrl . "'>'\n\n";
 
         $oneCode = $ga->getCode($secret);
