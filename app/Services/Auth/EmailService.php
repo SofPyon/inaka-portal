@@ -46,7 +46,7 @@ class EmailService
      */
     public function sendToUnivemail(User $user)
     {
-        if ($user->hasVerifiedEmail()) {
+        if ($user->hasVerifiedUnivemail()) {
             return;
         }
 

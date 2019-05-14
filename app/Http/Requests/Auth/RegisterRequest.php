@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Eloquents\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -39,7 +40,7 @@ class RegisterRequest extends FormRequest
             // 姓と名の間であれば，何個でもスペースを入れてもよしとする
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'tel' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => array_merge(User::PASSWORD_RULES, ['confirmed']),
         ];
     }
 

@@ -37,7 +37,7 @@ class EmailVerificationMailable extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mails.auth.verify')
+        return $this->markdown('emails.auth.verify')
             ->subject('【重要】メール認証のお願い');
     }
 }

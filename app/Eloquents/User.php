@@ -27,6 +27,11 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
+     * パスワードのバリデーションルール
+     */
+    public const PASSWORD_RULES = ['required', 'string', 'min:8'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -116,6 +121,16 @@ class User extends Authenticatable
     public function getUnivemailAttribute()
     {
         return mb_strtolower($this->student_id). '@'. config('portal.univemail_domain');
+    }
+
+    /**
+     * email と univemail の両方でメール認証が完了しているかどうか
+     *
+     * @return bool
+     */
+    public function areBothEmailsVerified()
+    {
+        return $this->hasVerifiedEmail() && $this->hasVerifiedUnivemail();
     }
 
     /**

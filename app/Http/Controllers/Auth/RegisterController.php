@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Services\Auth\EmailService;
 use App\Services\Auth\VerifyService;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -66,7 +67,7 @@ class RegisterController extends Controller
      * @param  RegisterRequest  $request
      * @return Response
      */
-    public function register(RegisterRequest $request): Response
+    public function register(RegisterRequest $request): RedirectResponse
     {
         $user = new User;
         $user->student_id = $request->student_id;

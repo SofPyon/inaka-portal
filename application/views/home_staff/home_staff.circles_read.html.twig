@@ -30,7 +30,8 @@
 
       .circles-read-header-main,
       .circles-read-user-name,
-      .circles-read-user-email {
+      .circles-read-user-email,
+      .circles-read-user-tel {
         text-align: center;
       }
     }
@@ -90,6 +91,12 @@
                       <a href="mailto:{{ user.email }}">
                         <i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i>
                         {{ user.email }}
+                      </a>
+                    </p>
+                      <p class="circles-read-user-tel">
+                      <a href="tel:{{ user.tel }}">
+                        <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
+                        {{ user.tel }}
                       </a>
                     </p>
                     <p>

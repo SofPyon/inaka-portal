@@ -46,6 +46,8 @@
         '/register',
         '/password',
         '/email',
+        // Users
+        '/change_password',
         // Debugbar
         '/_debugbar',
         // 以下のルートはCodeIgniter側のものだが、404にしたいもの

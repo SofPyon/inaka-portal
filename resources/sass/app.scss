@@ -15,7 +15,6 @@ $narrow-container-width: 600px;
 //// _global.scss
 body {
     padding-top: $app-navbar-height + $spacer;
-    background: $light;
 }
 
 //// _layout_narrow.scss
@@ -36,31 +35,34 @@ body {
 }
 
 //// _spnav.scss
+.spnav-space {
+    height: 8rem;
+}
+
 .spnav {
     position: fixed;
-    bottom: 30px;
+    bottom: 0;
     left: 0;
     width: 100%;
-    padding: 0 30px;
+    background: #fff;
+    box-shadow: 0 -0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 
     &-list {
         display: flex;
         list-style: none;
-        padding-left: 0;
         margin: 0 auto;
+        padding: 0 15px 40px;
         justify-content: space-between;
         width: 100%;
-        max-width: $narrow-container-width;
-        background: #fff;
-        box-shadow: $box-shadow-sm;
+        max-width: $narrow-container-width - 30px;
 
         .nav-item {
             flex: 1;
         }
 
         .nav-link {
-            color: rgba(0, 0, 0, .5);
-            padding: 1rem .5rem;
+            color: $gray-600;
+            padding: .5rem;
             font-weight: bold;
             text-align: center;
             display: flex;
@@ -68,17 +70,18 @@ body {
             align-items: center;
 
             &:hover {
-                color: rgba(0, 0, 0, .75);
+                color: $gray-800;
             }
         }
 
         .nav-icon {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             margin-bottom: .5rem;
         }
 
         .nav-label {
             font-size: .6rem;
+            line-height: 1;
         }
     }
 }

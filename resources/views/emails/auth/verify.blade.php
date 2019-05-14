@@ -1,3 +1,4 @@
+@component('mail::message')
 # メール認証のお願い
 
 {{ $userName  }} 様
@@ -12,4 +13,5 @@
 
 @component('mail::panel')
 本メールに心当たりがない場合、そのままメールを破棄してください。
+@endcomponent
 @endcomponent

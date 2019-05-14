@@ -25,6 +25,11 @@ Route::get('email/verify', 'Auth\Email\VerifyNoticeAction')->name('verification.
 Route::get('email/verify/{type}/{user}', 'Auth\Email\VerifyAction')->name('verification.verify');
 Route::post('email/resend', 'Auth\Email\ResendAction')->name('verification.resend');
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('change_password', 'Users\ChangePasswordAction')->name('change_password');
+    Route::post('change_password', 'Users\PostChangePasswordAction');
+});
+
 Route::middleware(['auth', 'verified'])->group(function () {
     // ログインされており、メールアドレス認証が済んでいる場合のみアクセス可能なルートはここへ
     Route::get('/home', 'HomeController@index')->name('home');

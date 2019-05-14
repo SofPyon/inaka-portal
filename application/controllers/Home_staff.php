@@ -453,6 +453,7 @@ class Home_staff extends MY_Controller
             'name_given',
             'name_given_yomi',
             'email',
+            'tel',
             'is_staff',
             'created_at',
             'updated_at',
@@ -472,6 +473,7 @@ class Home_staff extends MY_Controller
             'name_family_yomi',
             'name_given',
             'name_given_yomi',
+            'tel',
             'is_staff',
             'updated_at',
             'notes'

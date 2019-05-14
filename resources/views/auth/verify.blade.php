@@ -5,33 +5,52 @@
         <div class="card-header">メール認証のお願い</div>
         <div class="card-body">
             <p class="text-center text-danger lead">
-                まだユーザー登録は完了していません！
+                <strong>まだユーザー登録は完了していません！</strong>
             </p>
             <p>以下のメールアドレスに確認メールを送信しました。<strong>メール送信から {{ config('auth.verification.expire', 60) }} 分以内に、</strong>確認メールに記載されている URL にアクセスしてください。</p>
 
-            <hr>
-
-            <p><strong class="text-danger">認証が完了していないメールアドレス一覧 :</strong></p>
-            <ul>
-                @unless (Auth::user()->hasVerifiedEmail())
-                    <li>{{ Auth::user()->email }}</li>
-                @endunless
-                @unless (Auth::user()->hasVerifiedUnivemail())
-                    <li>{{ Auth::user()->univemail }}</li>
-                @endunless
-            </ul>
-
-            <hr>
-
-            <p><strong class="text-success">認証が完了したメールアドレス一覧 :</strong></p>
-            <ul>
-                @if (Auth::user()->hasVerifiedEmail())
-                    <li>{{ Auth::user()->email }}</li>
+            <div class="row">
+                {{-- 大学提供メールアドレス --}}
+                <div class="col-sm-6 pr-sm-2">
+                    <div class="card mb-3 mb-sm-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ Auth::user()->univemail }}</h5>
+                            @if (Auth::user()->hasVerifiedUnivemail())
+                                <p class="card-text text-success">
+                                    <i class="fas fa-check"></i>
+                                    認証完了
+                                </p>
+                            @else
+                                <p class="card-text text-danger">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    メールを確認してください
+                                </p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                {{-- 連絡先メールアドレス --}}
+                @if (Auth::user()->email !== Auth::user()->univemail)
+                    <div class="col-sm-6 pl-sm-2">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ Auth::user()->email }}</h5>
+                                @if (Auth::user()->hasVerifiedEmail())
+                                    <p class="card-text text-success">
+                                        <i class="fas fa-check"></i>
+                                        認証完了
+                                    </p>
+                                @else
+                                    <p class="card-text text-danger">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        メールを確認してください
+                                    </p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                 @endif
-                @if (Auth::user()->hasVerifiedUnivemail() && Auth::user()->email !== Auth::user()->univemail)
-                    <li>{{ Auth::user()->univemail }}</li>
-                @endif
-            </ul>
+            </div>
         </div>
     </div>
 

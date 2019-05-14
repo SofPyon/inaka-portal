@@ -1,30 +1,30 @@
 @section('global_nav')
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ url('/home') }}">
             <i class="fas fa-fw fa-home nav-icon"></i>
             <span class="nav-label">ホーム</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ url('/home/pages') }}">
             <i class="fas fa-fw fa-newspaper nav-icon"></i>
             <span class="nav-label">お知らせ</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ url('/home/applications') }}">
             <i class="far fa-fw fa-edit nav-icon"></i>
             <span class="nav-label">申請</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ url('/home/documents') }}">
             <i class="far fa-fw fa-file-alt nav-icon"></i>
             <span class="nav-label">配布資料</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ url('/home/schedules') }}">
             <i class="far fa-fw fa-calendar-alt nav-icon"></i>
             <span class="nav-label">予定</span>
         </a>
@@ -41,13 +41,15 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
+
+    <meta name="format-detection" content="telephone=no">
 </head>
 </head>
 <body ontouchstart="">
@@ -62,16 +64,20 @@
         </a>
 
         @auth
-            <ul class="navbar-nav app-navbar-nav d-none d-lg-flex">
-                @yield('global_nav')
-            </ul>
+            @if (Gate::forUser(Auth::user())->allows('use-all-features'))
+                <ul class="navbar-nav app-navbar-nav d-none d-lg-flex">
+                    @yield('global_nav')
+                </ul>
+            @endif
         @endauth
         <ul class="navbar-nav ml-auto">
             @auth
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-user" aria-hidden="true"></i>
+                        <span class="d-none d-sm-inline">
                             {{ Auth::user()->name }}
+                        </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             @if (!empty($student_id = Auth::user()->student_id))
@@ -79,7 +85,7 @@
                                     {{ mb_strtoupper($student_id) }}
                                 </h6>
                             @endif
-                        <a class="dropdown-item" href="{{ url('users/change_password') }}">パスワードの変更</a>
+                        <a class="dropdown-item" href="{{ route('change_password') }}">パスワードの変更</a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
@@ -91,7 +97,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-user" aria-hidden="true"></i>
-                        メニュー
+                        <span class="d-none d-sm-inline">
+                            メニュー
+                        </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('login') }}">ログイン</a>
@@ -109,11 +117,14 @@
 @yield('content')
 
 @auth
-    <nav class="spnav d-block d-lg-none">
-        <ul class="spnav-list">
-            @yield('global_nav')
-        </ul>
-    </nav>
+    @if (Gate::forUser(Auth::user())->allows('use-all-features'))
+        <div class="spnav-space"></div>
+        <nav class="spnav d-block d-lg-none">
+            <ul class="spnav-list">
+                @yield('global_nav')
+            </ul>
+        </nav>
+    @endif
 @endauth
 
 </body>

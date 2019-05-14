@@ -19,7 +19,7 @@ class EnsureEmailIsVerified
         /** @var User $user */
         $user = $request->user();
 
-        if (! $user || ! $user->hasVerifiedEmail() || ! $user->hasVerifiedUnivemail()) {
+        if (! $user || ! $user->areBothEmailsVerified()) {
             return redirect()->route('verification.notice');
         }
 
