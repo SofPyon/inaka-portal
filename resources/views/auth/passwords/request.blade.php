@@ -15,11 +15,13 @@
                 </div>
             @endif
 
-            <p>まず、「{{ config('app.name') }}」にログインするためにしようしていた学籍番号または連絡先メールアドレスを入力してください。</p>
+            <p>まず、「{{ config('app.name') }}」にログインするために使用していた学籍番号または連絡先メールアドレスを入力してください。</p>
             <p>連絡先メールアドレスに対し、パスワード再設定に関するご案内を差し上げます。</p>
 
+            <hr>
+
             <div class="form-group">
-                <label for="login_id">学籍番号・連絡先メールアドレス</label>
+                <label for="login_id">学籍番号または連絡先メールアドレス</label>
                 <input id="login_id" type="text" class="form-control" name="login_id" value="{{ old('login_id') }}" required autofocus>
             </div>
 
