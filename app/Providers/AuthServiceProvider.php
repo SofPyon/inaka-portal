@@ -39,5 +39,10 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('use-all-features', function (User $user) {
             return $user->areBothEmailsVerified();
         });
+
+        // スタッフ
+        Gate::define('staff', function (User $user) {
+            return $user->is_staff === true;
+        });
     }
 }

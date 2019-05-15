@@ -40,11 +40,9 @@
                     ログイン
                 </button>
 
-                @if (Route::has('password.request'))
-                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                        パスワードをお忘れの場合はこちら
-                    </a>
-                @endif
+                <a class="btn btn-link" href="{{ route('password.request') }}">
+                    パスワードをお忘れの場合はこちら
+                </a>
             </div>
         </form>
     </div>

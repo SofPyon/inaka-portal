@@ -21,6 +21,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property Carbon $univemail_verified_at
  * @property string $tel
  * @property string $password
+ * @property bool $is_staff
  */
 class User extends Authenticatable
 {
@@ -52,6 +53,24 @@ class User extends Authenticatable
     protected $dates = [
         'email_verified_at', 'univemail_verified_at',
     ];
+
+    protected $casts = [
+        'is_staff' => 'bool',
+    ];
+
+
+    /**
+     * ログイン ID から該当ユーザーを取得する
+     *
+     * @param string $login_id
+     * @return User
+     */
+    public function firstByLoginId(string $login_id)
+    {
+        return $this->where('email', $login_id)
+            ->orWhere('student_id', $login_id)
+            ->first();
+    }
 
     /**
      * 学籍番号のアルファベットを大文字に変換してセットする(セッター)

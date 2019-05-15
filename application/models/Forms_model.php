@@ -207,9 +207,9 @@ class Forms_model extends MY_Model
             $booth = $this->booths->get_booth_info_by_booth_id($answer->booth_id);
         }
 
-        // form_answer_details
+        // answer_details
         $this->db->where("answer_id", $answer_id);
-        $details = $this->db->get("form_answer_details")->result();
+        $details = $this->db->get("answer_details")->result();
         $details_for_return = [];
         foreach ($details as $detail) {
             if (empty($details_for_return[$detail->question_id])) {
@@ -342,20 +342,20 @@ class Forms_model extends MY_Model
         // 回答ID
         $answer_id = $this->db->insert_id();
 
-        // form_answer_details に insert
+        // answer_details に insert
         foreach ($answers as $question_id => $answer) {
             if (is_array($answer)) {
                 foreach ($answer as $option) {
                     $this->db->set("answer_id", $answer_id);
                     $this->db->set("question_id", $question_id);
                     $this->db->set("answer", $option);
-                    $this->db->insert("form_answer_details");
+                    $this->db->insert("answer_details");
                 }
             } else {
                 $this->db->set("answer_id", $answer_id);
                 $this->db->set("question_id", $question_id);
                 $this->db->set("answer", $answer);
-                $this->db->insert("form_answer_details");
+                $this->db->insert("answer_details");
             }
         }
 
@@ -384,23 +384,23 @@ class Forms_model extends MY_Model
         $this->db->set("updated_at", $now);
         $this->db->update("answers");
 
-        // form_answer_details を update
+        // answer_details を update
         foreach ($answers as $question_id => $answer) {
             $this->db->where("answer_id", $answer_id);
             $this->db->where("question_id", $question_id);
-            $this->db->delete("form_answer_details");
+            $this->db->delete("answer_details");
             if (is_array($answer)) {
                 foreach ($answer as $option) {
                     $this->db->set("answer_id", $answer_id);
                     $this->db->set("question_id", $question_id);
                     $this->db->set("answer", $option);
-                    $this->db->insert("form_answer_details");
+                    $this->db->insert("answer_details");
                 }
             } else {
                 $this->db->set("answer_id", $answer_id);
                 $this->db->set("question_id", $question_id);
                 $this->db->set("answer", $answer);
-                $this->db->insert("form_answer_details");
+                $this->db->insert("answer_details");
             }
         }
 

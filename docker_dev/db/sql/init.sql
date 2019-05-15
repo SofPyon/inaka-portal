@@ -76,8 +76,8 @@ CREATE TABLE `documents` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Create syntax for TABLE 'form_answer_details'
-CREATE TABLE `form_answer_details` (
+-- Create syntax for TABLE 'answer_details'
+CREATE TABLE `answer_details` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '設問回答ID',
   `answer_id` int(11) unsigned NOT NULL COMMENT 'answers.id',
   `question_id` int(11) unsigned NOT NULL COMMENT '設問ID',

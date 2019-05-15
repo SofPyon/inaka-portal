@@ -13,7 +13,6 @@ class ResendAction extends Controller
 
     public function __construct(EmailService $emailService)
     {
-        $this->middleware('auth');
         $this->emailService = $emailService;
     }
 

@@ -38,7 +38,7 @@ class VerifyAction extends Controller
         Auth::login($user);
 
         $response = redirect()
-            ->route('verification.notice');
+            ->route($user->areBothEmailsVerified() ? 'verification.completed' : 'verification.notice');
 
         if ($result) {
             return $response->with('success_message', 'メール認証に成功しました。');
