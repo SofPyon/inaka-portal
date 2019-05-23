@@ -1,0 +1,68 @@
+<template>
+    <header class="editor-header editor-header-styling">
+        <div class="editor-header__title">
+            申請フォームエディター
+        </div>
+        <div class="editor-header__status">
+            <span class="text-muted editor-header__status__saving" v-if="is_saving">
+                <i class="fas fa-sync fa-spin fa-fw"></i>
+                保存中...
+            </span>
+            <span class="text-success editor-header__status__saved" v-if="is_saved">
+                <i class="fas fa-check fa-fw"></i>
+                保存しました
+            </span>
+        </div>
+        <div class="editor-header__actions">
+            <button class="btn btn-link">プレビュー</button>
+            <button class="btn btn-primary">公開する</button>
+        </div>
+    </header>
+</template>
+
+<script>
+    import { SAVE_STATUS_SAVING, SAVE_STATUS_SAVED } from "../store/editor";
+
+    export default {
+        computed: {
+            save_status() {
+                return this.$store.state.editor.save_status;
+            },
+            is_saving() {
+                return this.save_status === SAVE_STATUS_SAVING;
+            },
+            is_saved() {
+                return this.save_status === SAVE_STATUS_SAVED;
+            }
+        }
+    };
+</script>
+
+<style lang="scss" scoped>
+    .editor-header {
+        background: #fff;
+        box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &__status {
+            &__saved {
+                animation: saved 3s linear both;
+
+                @keyframes saved {
+                    from,
+                    90%{
+                        opacity: 1;
+                        visibility: visible;
+                    }
+
+                    to {
+                        opacity: 0;
+                        visibility: hidden;
+                    }
+                }
+            }
+        }
+    }
+</style>

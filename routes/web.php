@@ -63,7 +63,14 @@ Route::middleware(['auth', 'verified', 'can:staff'])
     ->prefix('/staff')
     ->name('staff.')
     ->group(function () {
-        // staff.forms.visual_editor
-        Route::get('/forms/visual_editor/{form}', 'Staff\Forms\VisualEditorAction')->name('forms.visual_editor');
-        Route::post('/forms/visual_editor/{form}/api')->name('forms.visual_editor.api');
+        // 申請フォームエディタ
+        Route::prefix('/forms/{form}')
+            ->name('forms.')
+            ->group(function () {
+                Route::get('/editor', 'Staff\Forms\EditorAction')->name('editor');
+                Route::get('/editor/api/')->name('editor.api');
+                Route::get('/editor/api/get_form', 'Staff\Forms\GetFormAction');
+                Route::get('/editor/api/get_questions', 'Staff\Forms\GetQuestionsAction');
+                Route::post('/editor/api/update_questions_order', 'Staff\Forms\UpdateQuestionsOrderAction');
+            });
     });

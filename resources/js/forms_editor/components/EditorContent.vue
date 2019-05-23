@@ -1,0 +1,95 @@
+<template>
+    <div class="editor-content editor-content-styling">
+        <div class="editor-preview">
+            <form-header />
+            <draggable
+                tag="div"
+                v-model="questions"
+                :disabled="is_saving"
+                :animation="200"
+                ghostClass="ghost"
+                handle=".form-item__handle"
+                @start="on_drag_start"
+                @end="on_drag_end"
+            >
+                <transition-group type="transition" :name="!drag ? 'flip-list' : 'no'">
+                    <component
+                        v-for="question in questions"
+                        :is="question_component_name(question.type)"
+                        :question_id="question.id"
+                        :key="question.id"
+                        class="question"
+                    />
+                </transition-group>
+            </draggable>
+        </div>
+    </div>
+</template>
+
+<script>
+    import draggable from 'vuedraggable';
+    import FormHeader from './form/FormHeader';
+    import QuestionText from "./form/QuestionText";
+    import { DRAG_START, DRAG_END, UPDATE_QUESTIONS_ORDER, SAVE_STATUS_SAVING } from "../store/editor";
+
+    export default {
+        components: {
+            draggable,
+            FormHeader,
+            QuestionText,
+        },
+        computed: {
+            is_saving() {
+                return this.$store.state.editor.save_status === SAVE_STATUS_SAVING;
+            },
+            drag() {
+                return this.$store.state.editor.drag;
+            },
+            questions: {
+                get() {
+                    return this.$store.state.editor.questions;
+                },
+                set(new_value) {
+                    this.$store.dispatch('editor/' + UPDATE_QUESTIONS_ORDER, new_value);
+                }
+            },
+        },
+        methods: {
+            question_component_name(question_type) {
+                return 'Question' + question_type.charAt(0).toUpperCase() + question_type.slice(1);
+            },
+            on_drag_start() {
+                this.$store.dispatch('editor/' + DRAG_START);
+            },
+            on_drag_end() {
+                this.$store.dispatch('editor/' + DRAG_END);
+            }
+        }
+    };
+</script>
+
+<style lang="scss" scoped>
+    .editor-content {
+        padding: 3rem;
+    }
+
+    .editor-preview {
+        width: 100%;
+        max-width: 960px;
+        margin: 0 auto;
+        background: #fff;
+        box-shadow: 0 .1rem .1rem rgba(0, 0, 0, 0.07);
+    }
+
+    .ghost {
+        opacity: .5;
+    }
+
+    .flip-list-move {
+        transition: transform 0.5s;
+    }
+
+    .no-move {
+        transition: transform 0s;
+    }
+</style>

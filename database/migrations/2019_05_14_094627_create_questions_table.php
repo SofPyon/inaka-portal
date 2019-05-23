@@ -16,8 +16,8 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('form_id');
-            $table->string('name');
-            $table->text('description');
+            $table->string('name')->nullable();
+            $table->text('description')->nullable();
             $table->string('type');
             $table->boolean('is_required')->default(false);
             $table->integer('number_min')->nullable();
