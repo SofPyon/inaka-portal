@@ -22,11 +22,22 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Form extends Model
 {
+    protected $fillable = [
+        'name',
+        'description',
+        'open_at',
+        'close_at',
+        'type',
+        'max_answers',
+        'is_public',
+    ];
+
     protected $dates = [
         'open_at', 'close_at',
     ];
 
     protected $casts = [
+        'max_answers' => 'int',
         'is_public' => 'bool',
     ];
 

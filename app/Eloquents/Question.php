@@ -29,8 +29,32 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Question extends Model
 {
+    protected $fillable = [
+        'name',
+        'description',
+        'type',
+        'is_required',
+        'number_min',
+        'number_max',
+        'allowed_types',
+        'max_size',
+        'max_width',
+        'max_height',
+        'min_width',
+        'min_height',
+        'priority',
+    ];
+
     protected $casts = [
         'is_required' => 'bool',
+        'number_min' => 'int',
+        'number_max' => 'int',
+        'max_size' => 'int',
+        'max_width' => 'int',
+        'max_height' => 'int',
+        'min_width' => 'int',
+        'min_height' => 'int',
+        'priority' => 'int',
     ];
 
     protected static function boot()

@@ -1,5 +1,5 @@
 <template>
-    <div class="form-item" :class="{'form-item--active': is_edit_panel_open, 'form-item--drag': drag}">
+    <div class="form-item" :class="{'form-item--active': is_edit_panel_open, 'form-item--drag': drag, 'form-item--saving': is_saving}">
         <div class="form-item__handle" v-if="!hide_handle && !is_saving">
             <i class="fas fa-grip-horizontal"></i>
         </div>
@@ -70,12 +70,12 @@
             color: #a7a7a7;
         }
 
-        &:hover:not(&--drag),
+        &:hover:not(&--drag):not(&--saving),
         &--active {
             box-shadow: 0 .25rem 1rem rgba(0, 0, 0, .2);
         }
 
-        &:hover:not(&--active) {
+        &:hover:not(&--active):not(&--saving) {
             z-index: 20;
         }
 

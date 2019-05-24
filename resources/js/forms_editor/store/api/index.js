@@ -9,5 +9,11 @@ export default {
     },
     update_questions_order(questions) {
         return Repository.post('update_questions_order', { questions });
+    },
+    update_question(question) {
+        return Repository.post('update_question', { question });
+    },
+    update_form(form) {
+        return Repository.post('update_form', { form });
     }
 };

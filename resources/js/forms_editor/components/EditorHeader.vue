@@ -3,7 +3,7 @@
         <div class="editor-header__title">
             申請フォームエディター
         </div>
-        <div class="editor-header__status">
+        <div class="editor-header__status" v-if="!is_error">
             <span class="text-muted editor-header__status__saving" v-if="is_saving">
                 <i class="fas fa-sync fa-spin fa-fw"></i>
                 保存中...
@@ -13,9 +13,15 @@
                 保存しました
             </span>
         </div>
+        <div class="editor-header__status" v-else>
+            <span class="text-danger editor-header__status__error">
+                <i class="fas fa-exclamation-circle fa-fw"></i>
+                エラーが発生しました
+            </span>
+        </div>
         <div class="editor-header__actions">
-            <button class="btn btn-link">プレビュー</button>
-            <button class="btn btn-primary">公開する</button>
+            <a class="btn btn-link" :href="preview_url" target="_blank">プレビュー</a>
+            <button class="btn btn-primary" :disabled="is_saving">公開する</button>
         </div>
     </header>
 </template>
@@ -33,6 +39,13 @@
             },
             is_saved() {
                 return this.save_status === SAVE_STATUS_SAVED;
+            },
+            is_error() {
+                return this.$store.state.editor.is_error;
+            },
+            preview_url() {
+                const form_id = this.$store.state.editor.form.id;
+                return `/home_staff/applications/preview/${form_id}`;
             }
         }
     };

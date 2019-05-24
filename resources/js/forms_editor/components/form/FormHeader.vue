@@ -8,13 +8,13 @@
             <div class="form-group row">
                 <label for="inputTitle" class="col-sm-2 col-form-label">タイトル</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control input-lg" id="inputTitle" v-model="name">
+                    <input type="text" class="form-control input-lg" id="inputTitle" v-model="name" @blur="save" :disabled="is_saving">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputDescription" class="col-sm-2 col-form-label">説明</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="inputDescription" v-model="description" />
+                    <textarea class="form-control" id="inputDescription" v-model="description" @blur="save" :disabled="is_saving" />
                 </div>
             </div>
         </template>
@@ -24,13 +24,21 @@
 <script>
     import FormItem from './FormItem';
     import marked from 'marked';
-    import { ITEM_HEADER, UPDATE_FORM_INFO } from '../../store/editor';
+    import { ITEM_HEADER, UPDATE_FORM, SAVE_FORM, SAVE_STATUS_SAVING } from '../../store/editor';
 
     export default {
         components: {
             FormItem,
         },
+        methods: {
+            save() {
+                this.$store.dispatch('editor/' + SAVE_FORM);
+            }
+        },
         computed: {
+            is_saving() {
+                return this.$store.state.editor.save_status === SAVE_STATUS_SAVING;
+            },
             item_id() {
                 return ITEM_HEADER;
             },
@@ -39,7 +47,7 @@
                     return this.$store.state.editor.form.name;
                 },
                 set(new_value) {
-                    this.$store.commit('editor/' + UPDATE_FORM_INFO, {
+                    this.$store.commit('editor/' + UPDATE_FORM, {
                         key: 'name',
                         value: new_value,
                     });
@@ -50,7 +58,7 @@
                     return this.$store.state.editor.form.description;
                 },
                 set(new_value) {
-                    this.$store.commit('editor/' + UPDATE_FORM_INFO, {
+                    this.$store.commit('editor/' + UPDATE_FORM, {
                         key: 'description',
                         value: new_value,
                     });

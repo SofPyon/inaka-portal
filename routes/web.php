@@ -70,7 +70,9 @@ Route::middleware(['auth', 'verified', 'can:staff'])
                 Route::get('/editor', 'Staff\Forms\EditorAction')->name('editor');
                 Route::get('/editor/api/')->name('editor.api');
                 Route::get('/editor/api/get_form', 'Staff\Forms\GetFormAction');
+                Route::post('/editor/api/update_form', 'Staff\Forms\UpdateFormAction');
                 Route::get('/editor/api/get_questions', 'Staff\Forms\GetQuestionsAction');
                 Route::post('/editor/api/update_questions_order', 'Staff\Forms\UpdateQuestionsOrderAction');
+                Route::post('/editor/api/update_question', 'Staff\Forms\UpdateQuestionAction');
             });
     });

@@ -5,9 +5,9 @@ export const CLOSE = 'CLOSE';
 export const ITEM_HEADER = 'header';
 export const TOGGLE_OPEN_STATE = 'TOGGLE_OPEN_STATE';
 export const SET_LOADED = 'SET_LOADED';
-export const SET_FORM_INFO = 'SET_FORM_INFO';
+export const SET_FORM = 'SET_FORM';
 export const SET_QUESTIONS = 'SET_QUESTIONS';
-export const UPDATE_FORM_INFO = 'UPDATE_FORM_INFO';
+export const UPDATE_FORM = 'UPDATE_FORM';
 export const UPDATE_QUESTION = 'UPDATE_QUESTION';
 export const SET_FORM_PUBLIC = 'SET_FORM_PUBLIC';
 export const SET_FORM_PRIVATE = 'SET_FORM_PRIVATE';
@@ -17,8 +17,12 @@ export const FETCH = 'FETCH';
 export const UPDATE_QUESTIONS_ORDER = 'UPDATE_QUESTIONS_ORDER';
 export const SET_SAVING = 'SET_SAVING';
 export const SET_SAVED = 'SET_SAVED';
+export const SAVE_QUESTION = 'SAVE_QUESTION';
+export const SAVE_FORM = 'SAVE_FORM';
+export const SET_ERROR = 'SET_ERROR';
 
 export const SAVE_STATUS_INIT = 'init';
+export const SAVE_STATUS_DIRTY = 'dirty';
 export const SAVE_STATUS_SAVING = 'saving';
 export const SAVE_STATUS_SAVED = 'saved';
 
@@ -27,6 +31,7 @@ const editor = {
     state: {
         loaded: false,
         save_status: SAVE_STATUS_INIT,
+        is_error: false,
         form: {},
         questions: [],
         // 現在、編集パネルが開いているFormItem
@@ -54,13 +59,13 @@ const editor = {
         [SET_LOADED] (state) {
             state.loaded = true;
         },
-        [SET_FORM_INFO] (state, form) {
+        [SET_FORM] (state, form) {
             state.form = form;
         },
         [SET_QUESTIONS] (state, questions) {
             state.questions = questions;
         },
-        [UPDATE_FORM_INFO] (state, payload) {
+        [UPDATE_FORM] (state, payload) {
             state.form = { ...state.form, [payload.key]: payload.value };
         },
         [UPDATE_QUESTION] (state, payload) {
@@ -86,16 +91,18 @@ const editor = {
         },
         [SET_SAVED] (state) {
             state.save_status = SAVE_STATUS_SAVED;
-        }
+        },
+        [SET_ERROR] (state) {
+            state.is_error = true;
+        },
     },
     actions: {
         async [FETCH] ({ commit }) {
-            commit(SET_FORM_INFO, (await API.get_form()).data);
+            commit(SET_FORM, (await API.get_form()).data);
             commit(SET_QUESTIONS, (await API.get_questions()).data);
             commit(SET_LOADED);
         },
         async [UPDATE_QUESTIONS_ORDER] ({ commit, state }, questions) {
-            // TODO: lodash の debounce を使い、頻繁に API リクエストが送信されないようにしたい
             commit(SET_SAVING);
             // 現状のquestions配列の状態をバックアップ
             const questions_backup = state.questions;
@@ -112,12 +119,12 @@ const editor = {
                         priority: question.priority,
                     };
                 }));
+                commit(SET_SAVED);
             } catch (e) {
-                alert('エラーが発生しました');
+                commit(SET_ERROR);
                 // バックアップをリストア
                 commit(SET_QUESTIONS, questions_backup);
             }
-            commit(SET_SAVED);
         },
         [DRAG_START] ({ commit }) {
             commit(CLOSE);
@@ -125,7 +132,25 @@ const editor = {
         },
         [DRAG_END] ({ commit }) {
             commit(DRAG_END);
-        }
+        },
+        async [SAVE_QUESTION] ({ commit, getters }, question_id) {
+            commit(SET_SAVING);
+            try {
+                await API.update_question(getters[GET_QUESTION_BY_ID](question_id));
+                commit(SET_SAVED);
+            } catch (e) {
+                commit(SET_ERROR);
+            }
+        },
+        async [SAVE_FORM] ({ commit, state}) {
+            commit(SET_SAVING);
+            try {
+                await API.update_form(state.form);
+                commit(SET_SAVED);
+            } catch (e) {
+                commit(SET_ERROR);
+            }
+        },
     }
 };
 
