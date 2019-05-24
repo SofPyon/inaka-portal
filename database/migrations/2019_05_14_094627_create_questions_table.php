@@ -23,11 +23,6 @@ class CreateQuestionsTable extends Migration
             $table->integer('number_min')->nullable();
             $table->integer('number_max')->nullable();
             $table->string('allowed_types')->nullable();
-            $table->integer('max_size')->nullable();
-            $table->integer('max_width')->nullable();
-            $table->integer('max_height')->nullable();
-            $table->integer('min_width')->nullable();
-            $table->integer('min_height')->nullable();
             $table->integer('priority')->nullable();
             $table->timestamps();
         });
