@@ -2,18 +2,20 @@
     <form-item :item_id="question_id">
         <template v-slot:content>
             <div class="form-group mb-0">
-                <label class="mb-1">
-                    {{ name }}
-                    <span class="badge badge-danger" v-if="is_required">必須</span>
-                </label>
-                <p class="form-text text-muted mb-2">
+                <h2>{{ name }}</h2>
+                <div>
                     {{ description }}
-                </p>
-                <input type="text" class="form-control" tabindex="-1">
+                </div>
             </div>
         </template>
         <template v-slot:edit-panel>
-            <edit-panel :question="question" />
+            <edit-panel
+                :question="question"
+                label_name="見出し"
+                :show_required_switch="false"
+                :label_number_max="false"
+                :label_number_min="false"
+            />
         </template>
     </form-item>
 </template>
@@ -39,13 +41,10 @@
                 return this.$store.getters['editor/' + GET_QUESTION_BY_ID](this.question_id);
             },
             name() {
-                return this.question.name || '(無題の設問)';
+                return this.question.name || '(無題のセクション見出し)';;
             },
             description() {
                 return this.question.description;
-            },
-            is_required() {
-                return this.question.is_required;
             },
         }
     };

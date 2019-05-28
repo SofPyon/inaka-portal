@@ -20,6 +20,8 @@ export const SET_SAVED = 'SET_SAVED';
 export const SAVE_QUESTION = 'SAVE_QUESTION';
 export const SAVE_FORM = 'SAVE_FORM';
 export const SET_ERROR = 'SET_ERROR';
+export const ADD_QUESTION = 'ADD_QUESTION';
+export const SET_OPTIONS = 'SET_OPTIONS';
 
 export const SAVE_STATUS_INIT = 'init';
 export const SAVE_STATUS_DIRTY = 'dirty';
@@ -95,6 +97,12 @@ const editor = {
         [SET_ERROR] (state) {
             state.is_error = true;
         },
+        [SET_OPTIONS] (state, payload) {
+            const question_index = state.questions.findIndex(question => question.id === payload.question_id);
+            const question = state.questions[question_index];
+            question['options'] = payload.options;
+            state.questions.splice(question_index, 1, question);
+        },
     },
     actions: {
         async [FETCH] ({ commit }) {
@@ -132,6 +140,17 @@ const editor = {
         },
         [DRAG_END] ({ commit }) {
             commit(DRAG_END);
+        },
+        async [ADD_QUESTION] ({ commit, state }, type) {
+            commit(SET_SAVING);
+            try {
+                const question = (await API.add_question(type)).data;
+                commit(SET_QUESTIONS, [...state.questions, question]);
+                commit(TOGGLE_OPEN_STATE, { item_id: question['id'] });
+                commit(SET_SAVED);
+            } catch (e) {
+                commit(SET_ERROR);
+            }
         },
         async [SAVE_QUESTION] ({ commit, getters }, question_id) {
             commit(SET_SAVING);

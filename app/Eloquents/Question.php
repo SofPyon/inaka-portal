@@ -24,6 +24,17 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Question extends Model
 {
+    const QUESTION_TYPES = [
+        'heading',
+        'text',
+        'number',
+        'textarea',
+        'radio',
+        'checkbox',
+        'select',
+        'upload',
+    ];
+
     protected $fillable = [
         'name',
         'description',
@@ -54,6 +65,11 @@ class Question extends Model
     public function form()
     {
         return $this->belongsTo(Form::class);
+    }
+
+    public function options()
+    {
+        return $this->hasMany(Option::class);
     }
 
     public function getAllowedTypesArrayAttribute()

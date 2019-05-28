@@ -2,6 +2,13 @@
     <div class="editor-content editor-content-styling">
         <div class="editor-preview">
             <form-header />
+            <div class="editor-content__no-question text-muted" v-if="questions.length === 0">
+                <p class="mb-4">
+                    <i class="far fa-edit fa-3x"></i>
+                </p>
+                <p class="lead">右側の[ツールパレット]から設問を追加しましょう</p>
+                <p class="mb-0">このフォームには設問が1つもありません。ツールパレットから設問を追加してください。</p>
+            </div>
             <draggable
                 tag="div"
                 v-model="questions"
@@ -30,6 +37,10 @@
     import draggable from 'vuedraggable';
     import FormHeader from './form/FormHeader';
     import QuestionText from "./form/QuestionText";
+    import QuestionHeading from "./form/QuestionHeading";
+    import QuestionTextarea from "./form/QuestionTextarea";
+    import QuestionNumber from "./form/QuestionNumber";
+    import QuestionUpload from "./form/QuestionUpload";
     import { DRAG_START, DRAG_END, UPDATE_QUESTIONS_ORDER, SAVE_STATUS_SAVING } from "../store/editor";
 
     export default {
@@ -37,6 +48,10 @@
             draggable,
             FormHeader,
             QuestionText,
+            QuestionHeading,
+            QuestionTextarea,
+            QuestionNumber,
+            QuestionUpload,
         },
         computed: {
             is_saving() {
@@ -71,6 +86,11 @@
 <style lang="scss" scoped>
     .editor-content {
         padding: 3rem;
+
+        &__no-question {
+            padding: 3rem;
+            text-align: center;
+        }
     }
 
     .editor-preview {

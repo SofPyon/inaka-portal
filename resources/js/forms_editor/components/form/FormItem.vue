@@ -1,5 +1,9 @@
 <template>
-    <div class="form-item" :class="{'form-item--active': is_edit_panel_open, 'form-item--drag': drag, 'form-item--saving': is_saving}">
+    <div
+        class="form-item"
+        :class="{'form-item--active': is_edit_panel_open, 'form-item--drag': drag, 'form-item--saving': is_saving}"
+        :ref="`form_item_${item_id}`"
+    >
         <div class="form-item__handle" v-if="!hide_handle && !is_saving">
             <i class="fas fa-grip-horizontal"></i>
         </div>
@@ -15,7 +19,7 @@
 </template>
 
 <script>
-    import { TOGGLE_OPEN_STATE, SAVE_STATUS_SAVING } from "../../store/editor";
+    import { TOGGLE_OPEN_STATE, SAVE_STATUS_SAVING, ITEM_HEADER } from "../../store/editor";
 
     export default {
         props: {
@@ -39,10 +43,33 @@
                 return this.$store.state.editor.open_item_id === this.item_id;
             },
         },
+        watch: {
+            is_edit_panel_open(value) {
+                if (value) {
+                    this.scroll_to_me();
+                }
+            }
+        },
+        created() {
+            if (this.is_edit_panel_open) {
+                this.scroll_to_me();
+            }
+        },
         methods: {
             toggle_open_state() {
                 this.$store.commit('editor/' + TOGGLE_OPEN_STATE, {
                     item_id: this.item_id,
+                });
+            },
+            scroll_to_me() {
+                this.$nextTick(() => {
+                    const top = this.$refs[`form_item_${this.item_id}`].getBoundingClientRect().top +  window.scrollY
+                        - document.querySelector('.editor-header').getBoundingClientRect().bottom - 16;
+                    console.log(top);
+                    window.scroll({
+                        top,
+                        behavior: 'smooth',
+                    });
                 });
             }
         }

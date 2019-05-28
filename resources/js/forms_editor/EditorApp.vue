@@ -17,7 +17,7 @@
     import EditorContent from './components/EditorContent';
     import EditorSidebar from './components/EditorSidebar';
     import EditorError from './components/EditorError';
-    import { FETCH, SAVE_STATUS_SAVING } from "./store/editor";
+    import { FETCH, SAVE_STATUS_SAVING, TOGGLE_OPEN_STATE, ITEM_HEADER } from "./store/editor";
 
     const on_before_unload = event => {
         event.preventDefault();
@@ -34,6 +34,9 @@
         },
         async mounted() {
             await this.$store.dispatch('editor/' + FETCH);
+            if (this.$store.state.editor.questions.length === 0) {
+                this.$store.commit('editor/' + TOGGLE_OPEN_STATE, { item_id: ITEM_HEADER });
+            }
         },
         computed: {
             loaded() {

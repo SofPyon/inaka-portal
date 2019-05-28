@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Staff\Forms;
 
 use App\Eloquents\Form;
+use App\Eloquents\Option;
 use App\Eloquents\Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -25,6 +26,15 @@ class GetQuestionsAction extends Controller
                 'priority' => $question->priority,
                 'created_at' => $question->created_at,
                 'updated_at' => $question->updated_at,
+                'options' => $question->options->map(function (Option $option) {
+                    return [
+                        'id' => $option->id,
+                        'value' => $option->value,
+                        'priority' => $option->priority,
+                        'created_at' => $option->created_at,
+                        'updated_at' => $option->updated_at,
+                    ];
+                }),
             ];
         });
     }

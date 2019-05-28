@@ -3,7 +3,13 @@
         <div class="editor-sidebar__header bg-gradient-secondary text-white">ツールパレット</div>
         <div class="editor-sidebar__body">
             <div class="editor-sidebar__tools">
-                <button v-for="tool in tools" :key="tool.type" class="btn editor-sidebar__tool border-light">
+                <button
+                    v-for="tool in tools"
+                    :key="tool.type"
+                    class="btn editor-sidebar__tool border-light"
+                    :disabled="is_saving"
+                    @click="add_question(tool.type)"
+                >
                     <i :class="`${tool.icon} fa-fw text-muted editor-sidebar__tool__icon`"></i>
                     <span class="editor-sidebar__tool__label">{{ tool.label }}</span>
                 </button>
@@ -13,8 +19,18 @@
 </template>
 
 <script>
+    import { SAVE_STATUS_SAVING, ADD_QUESTION } from "../store/editor";
+
     export default {
+        methods: {
+            async add_question(type) {
+                await this.$store.dispatch('editor/' + ADD_QUESTION, type);
+            },
+        },
         computed: {
+            is_saving() {
+                return this.$store.state.editor.save_status === SAVE_STATUS_SAVING;
+            },
             tools() {
                 return [
                     {
@@ -88,21 +104,22 @@
             width: 100%;
             box-shadow: 0 .1rem .1rem rgba(0, 0, 0, 0.07);
             margin-bottom: $editor-sidebar-padding;
+            padding: $editor-sidebar-padding;
             display: flex;
-            flex-direction: column;
             align-items: center;
+            text-align: left;
 
             &:last-child {
                 margin-bottom: 0;
             }
 
-            &:hover {
+            &:hover:not(:disabled) {
                 background: #f2f2f2;
             }
 
             &__icon {
                 font-size: 1.25rem;
-                margin-bottom: $editor-sidebar-padding / 2;
+                margin-right: $editor-sidebar-padding / 2;
             }
         }
     }

@@ -9,11 +9,11 @@
                 <p class="form-text text-muted mb-2">
                     {{ description }}
                 </p>
-                <input type="text" class="form-control" tabindex="-1">
+                <input type="number" class="form-control" tabindex="-1">
             </div>
         </template>
         <template v-slot:edit-panel>
-            <edit-panel :question="question" />
+            <edit-panel :question="question" label_number_min="最低数" label_number_max="最大数" />
         </template>
     </form-item>
 </template>

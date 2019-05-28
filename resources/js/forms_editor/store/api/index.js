@@ -7,6 +7,9 @@ export default {
     get_questions() {
         return Repository.get('get_questions');
     },
+    add_question(type) {
+        return Repository.post('add_question', { type });
+    },
     update_questions_order(questions) {
         return Repository.post('update_questions_order', { questions });
     },

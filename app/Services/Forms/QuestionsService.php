@@ -10,6 +10,30 @@ use App\Eloquents\Question;
 class QuestionsService
 {
     /**
+     * 設問を追加する
+     *
+     * @param Form $form 設問を追加する対象のフォーム
+     * @param string $type 設問タイプ
+     * @return Question
+     * @throws \Exception
+     */
+    public function addQuestion(Form $form, string $type): Question
+    {
+        if (! in_array($type, Question::QUESTION_TYPES, true)) {
+            throw new \Exception('無効な設問タイプです');
+        }
+        // 適切なpriorityを設定するために、最もpriorityの値が大きい設問を取得する
+        $question_max_priority = Question::select('priority')->orderBy('priority', 'desc')->first();
+        $max_priority = is_object($question_max_priority) ? (int)$question_max_priority->priority : 0;
+        /** @var Question $question */
+        $question = $form->questions()->create([
+            'type' => $type,
+            'priority' => $max_priority + 1,
+        ]);
+        return $question;
+    }
+
+    /**
      * 設問順序を更新する
      *
      * @param Form $form 変更したい設問が含まれているフォーム
