@@ -84,6 +84,9 @@
         transition: .25s ease box-shadow, .25s ease z-index;
         position: relative;
         z-index: 10;
+        background: #fff;
+        border: 1px solid transparent;
+        border-left-width: 5px;
 
         &__handle {
             cursor: move;
@@ -99,7 +102,9 @@
 
         &:hover:not(&--drag),
         &--active {
-            box-shadow: 0 .25rem 1rem rgba(0, 0, 0, .2);
+            border: 1px solid #007bff;
+            border-left-width: 5px;
+            border-radius: 5px;
         }
 
         &:hover:not(&--active) {
@@ -117,7 +122,6 @@
         &__content {
             padding: $form-item-padding;
             cursor: pointer;
-            background: #fff;
 
             &__inner {
                 pointer-events: none;
