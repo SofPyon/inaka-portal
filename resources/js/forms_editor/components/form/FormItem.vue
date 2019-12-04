@@ -4,7 +4,7 @@
         :class="{'form-item--active': is_edit_panel_open, 'form-item--drag': drag}"
         :ref="`form_item_${item_id}`"
     >
-        <div class="form-item__handle" v-if="!hide_handle && !is_saving">
+        <div class="form-item__handle" v-if="!hide_handle">
             <i class="fas fa-grip-horizontal"></i>
         </div>
         <div class="form-item__content" @click="toggle_open_state">
