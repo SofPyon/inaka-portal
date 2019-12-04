@@ -40,6 +40,9 @@
     import QuestionTextarea from "./form/QuestionTextarea";
     import QuestionNumber from "./form/QuestionNumber";
     import QuestionUpload from "./form/QuestionUpload";
+    import QuestionRadio from "./form/QuestionRadio";
+    import QuestionSelect from "./form/QuestionSelect";
+    import QuestionCheckbox from "./form/QuestionCheckbox";
     import { DRAG_START, DRAG_END, UPDATE_QUESTIONS_ORDER } from "../store/editor";
     import { SAVE_STATUS_SAVING } from "../store/status";
 
@@ -52,6 +55,9 @@
             QuestionTextarea,
             QuestionNumber,
             QuestionUpload,
+            QuestionRadio,
+            QuestionSelect,
+            QuestionCheckbox,
         },
         computed: {
             is_saving() {
