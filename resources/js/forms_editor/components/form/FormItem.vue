@@ -1,7 +1,7 @@
 <template>
     <div
         class="form-item"
-        :class="{'form-item--active': is_edit_panel_open, 'form-item--drag': drag, 'form-item--saving': is_saving}"
+        :class="{'form-item--active': is_edit_panel_open, 'form-item--drag': drag}"
         :ref="`form_item_${item_id}`"
     >
         <div class="form-item__handle" v-if="!hide_handle && !is_saving">
@@ -97,12 +97,12 @@
             color: #a7a7a7;
         }
 
-        &:hover:not(&--drag):not(&--saving),
+        &:hover:not(&--drag),
         &--active {
             box-shadow: 0 .25rem 1rem rgba(0, 0, 0, .2);
         }
 
-        &:hover:not(&--active):not(&--saving) {
+        &:hover:not(&--active) {
             z-index: 20;
         }
 
@@ -132,7 +132,7 @@
             box-shadow: inset 0 .3rem .25rem -.2rem rgba(0, 0, 0, .07);
             background: lighten(#f8fafc, 1%);
             border-bottom: 1px solid #f8fafc;
-            
+
             &--open {
                 display: block;
             }

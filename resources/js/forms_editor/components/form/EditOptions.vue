@@ -3,7 +3,6 @@
         <draggable
             tag="ul"
             v-model="options"
-            :disabled="is_saving"
         >
             <li v-for="options">
 
@@ -25,9 +24,6 @@
                 question: {
                     required: true,
                 }
-            },
-            is_saving() {
-                return this.$store.state.editor.save_status === SAVE_STATUS_SAVING;
             },
             options: {
                 get() {

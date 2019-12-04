@@ -7,7 +7,6 @@
                     v-for="tool in tools"
                     :key="tool.type"
                     class="btn editor-sidebar__tool border-light"
-                    :disabled="is_saving"
                     @click="add_question(tool.type)"
                 >
                     <i :class="`${tool.icon} fa-fw text-muted editor-sidebar__tool__icon`"></i>

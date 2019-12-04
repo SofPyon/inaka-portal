@@ -12,7 +12,6 @@
             <draggable
                 tag="div"
                 v-model="questions"
-                :disabled="is_saving"
                 :animation="200"
                 ghostClass="ghost"
                 handle=".form-item__handle"

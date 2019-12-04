@@ -3,7 +3,7 @@
         <div class="row mb-2">
             <div class="offset-sm-2 col-sm-10" v-if="show_required_switch">
                 <label class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" v-model="is_required" :disabled="is_saving">
+                    <input type="checkbox" class="custom-control-input" v-model="is_required">
                     <span class="custom-control-label">回答必須</span>
                 </label>
             </div>
@@ -11,31 +11,31 @@
         <label class="form-group row" v-if="label_name">
             <span class="col-sm-2 col-form-label">{{ label_name }}</span>
             <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="name" @blur="save" :disabled="is_saving" />
+                <input type="text" class="form-control" v-model="name" @blur="save" />
             </div>
         </label>
         <label class="form-group row" v-if="label_description">
             <span class="col-sm-2 col-form-label">{{ label_description }}</span>
             <div class="col-sm-10">
-                <textarea class="form-control" v-model="description" @blur="save" :disabled="is_saving" />
+                <textarea class="form-control" v-model="description" @blur="save" />
             </div>
         </label>
         <label class="form-group row" v-if="label_number_min">
             <span class="col-sm-2 col-form-label">{{ label_number_min }}</span>
             <div class="col-sm-10">
-                <input type="number" min="0" class="form-control" v-model="number_min" @blur="save" :disabled="is_saving" />
+                <input type="number" min="0" class="form-control" v-model="number_min" @blur="save" />
             </div>
         </label>
         <label class="form-group row" v-if="label_number_max">
             <span class="col-sm-2 col-form-label">{{ label_number_max }}</span>
             <div class="col-sm-10">
-                <input type="number" min="0" class="form-control" v-model="number_max" @blur="save" :disabled="is_saving" />
+                <input type="number" min="0" class="form-control" v-model="number_max" @blur="save" />
             </div>
         </label>
         <label class="form-group row" v-if="show_allowed_types">
             <span class="col-sm-2 col-form-label">許可される拡張子(<code>|</code>区切りで指定)</span>
             <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="allowed_types" @blur="save" :disabled="is_saving" />
+                <input type="text" class="form-control" v-model="allowed_types" @blur="save" />
                 <small class="form-text text-muted mb-0">
                     画像アップロードを許可したい場合 : <code>png|jpg|jpeg|gif</code> と入力。
                 </small>
@@ -87,9 +87,6 @@
             }
         },
         computed: {
-            is_saving() {
-                return this.$store.state.editor.save_status === SAVE_STATUS_SAVING;
-            },
             name: {
                 get() {
                     return this.question.name;

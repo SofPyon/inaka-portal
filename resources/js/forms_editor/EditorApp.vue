@@ -47,6 +47,7 @@
             },
             is_saving() {
                 return this.$store.state.editor.save_status === SAVE_STATUS_SAVING;
+                // is_saving の状態は、以下で watch されている
             },
         },
         watch: {

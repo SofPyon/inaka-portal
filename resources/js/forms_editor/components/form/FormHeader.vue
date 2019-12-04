@@ -8,13 +8,13 @@
             <div class="form-group row">
                 <label for="inputTitle" class="col-sm-2 col-form-label">タイトル</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control input-lg" id="inputTitle" v-model="name" @blur="save" :disabled="is_saving">
+                    <input type="text" class="form-control input-lg" id="inputTitle" v-model="name" @blur="save">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputDescription" class="col-sm-2 col-form-label">説明</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="inputDescription" v-model="description" @blur="save" :disabled="is_saving" />
+                    <textarea class="form-control" id="inputDescription" v-model="description" @blur="save" />
                 </div>
             </div>
         </template>
@@ -36,9 +36,6 @@
             }
         },
         computed: {
-            is_saving() {
-                return this.$store.state.editor.save_status === SAVE_STATUS_SAVING;
-            },
             item_id() {
                 return ITEM_HEADER;
             },
