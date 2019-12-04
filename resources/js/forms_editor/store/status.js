@@ -5,12 +5,15 @@ export const SAVE_STATUS_SAVED = 'saved';
 
 export const SET_SAVING = 'SET_SAVING';
 export const SET_SAVED = 'SET_SAVED';
+export const ENQUEUED = 'ENQUEUED';
+export const DEQUEUED = 'DEQUEUED';
 export const SET_ERROR = 'SET_ERROR';
 
 export default {
     namespaced: true,
     state: {
         save_status: SAVE_STATUS_INIT,
+        request_queued_count: 0,
         is_error: false,
     },
     mutations: {
@@ -19,6 +22,12 @@ export default {
         },
         [SET_SAVED](state) {
             state.save_status = SAVE_STATUS_SAVED;
+        },
+        [ENQUEUED](state) {
+            state.request_queued_count++;
+        },
+        [DEQUEUED](state) {
+            state.request_queued_count = Math.max(0, state.request_queued_count - 1);
         },
         [SET_ERROR](state) {
             state.is_error = true;

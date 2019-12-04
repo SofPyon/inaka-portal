@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import vm from '../../'
-import { SET_SAVING, SET_SAVED, SET_ERROR } from '../status'
+import { SET_SAVING, SET_SAVED, ENQUEUED, DEQUEUED, SET_ERROR } from '../status'
 
 const baseURL = JSON.parse(document.querySelector('#forms-editor-config').dataset.apiBaseUrl);
 
@@ -12,11 +12,11 @@ const axios = Axios.create({
 })
 
 let is_processing = false;
-let queued_count = 0;
 
+// TODO: getリクエストの時に「保存中」とか出てこないようにする
 axios.interceptors.request.use((config) => {
     vm.$store.commit('status/' + SET_SAVING)
-    ++queued_count
+    vm.$store.commit('status/' + ENQUEUED)
     return new Promise((resolve) => {
         const interval = setInterval(() => {
             if (!is_processing) {
@@ -32,16 +32,15 @@ axios.interceptors.response.use(
     // リクエスト成功時
     (response) => {
         is_processing = false
-        queued_count = Math.max(0, queued_count - 1)
-        console.log(queued_count)
-        if (queued_count === 0) {
+        vm.$store.commit('status/' + DEQUEUED)
+        if (vm.$store.state.status.request_queued_count === 0) {
             vm.$store.commit('status/' + SET_SAVED)
         }
         return response
     },
     // リクエスト失敗時
     (error) => {
-        queued_count = Math.max(0, queued_count - 1)
+        vm.$store.commit('status/' + DEQUEUED)
         vm.$store.commit('status/' + SET_ERROR)
         throw error
     }

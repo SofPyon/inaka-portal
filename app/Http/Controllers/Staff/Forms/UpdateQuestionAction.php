@@ -16,6 +16,8 @@ class UpdateQuestionAction extends Controller
         $this->questionsService = $questionsService;
     }
 
+    // TODO: ちゃんとバリデーションする
+    // TODO: is_required は null にできないよ！的な SQL エラーが発生しないようにする
     public function __invoke(Form $form, Request $request)
     {
         $question_id = (int)$request->question['id'];

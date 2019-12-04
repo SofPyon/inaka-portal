@@ -7,6 +7,9 @@
             <span class="text-muted editor-header__status__saving" v-if="is_saving">
                 <i class="fas fa-sync fa-spin fa-fw"></i>
                 保存中...
+                <template v-if="request_queued_count > 1">
+                    ({{ request_queued_count }} 件処理中)
+                </template>
             </span>
             <span class="text-success editor-header__status__saved" v-if="is_saved">
                 <i class="fas fa-check fa-fw"></i>
@@ -36,6 +39,9 @@
             },
             is_saving() {
                 return this.save_status === SAVE_STATUS_SAVING;
+            },
+            request_queued_count() {
+                return this.$store.state.status.request_queued_count;
             },
             is_saved() {
                 return this.save_status === SAVE_STATUS_SAVED;
