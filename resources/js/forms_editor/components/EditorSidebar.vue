@@ -8,6 +8,7 @@
                     :key="tool.type"
                     class="btn editor-sidebar__tool border-light"
                     @click="add_question(tool.type)"
+                    :disabled="is_saving"
                 >
                     <i :class="`${tool.icon} fa-fw text-muted editor-sidebar__tool__icon`"></i>
                     <span class="editor-sidebar__tool__label">{{ tool.label }}</span>
