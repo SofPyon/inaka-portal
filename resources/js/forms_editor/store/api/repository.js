@@ -11,15 +11,16 @@ const axios = Axios.create({
     }
 })
 
-const MAX_REQUEST_COUNT = 1;
-let pending_requests = 0;
+let is_processing = false;
+let queued_count = 0;
 
 axios.interceptors.request.use((config) => {
     vm.$store.commit('status/' + SET_SAVING)
+    ++queued_count
     return new Promise((resolve) => {
         const interval = setInterval(() => {
-            if (pending_requests < MAX_REQUEST_COUNT) {
-                ++pending_requests
+            if (!is_processing) {
+                is_processing = true
                 clearInterval(interval)
                 resolve(config)
             }
@@ -30,15 +31,17 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(
     // リクエスト成功時
     (response) => {
-        pending_requests = Math.max(0, pending_requests - 1)
-        if (pending_requests === 0) {
+        is_processing = false
+        queued_count = Math.max(0, queued_count - 1)
+        console.log(queued_count)
+        if (queued_count === 0) {
             vm.$store.commit('status/' + SET_SAVED)
         }
         return response
     },
     // リクエスト失敗時
     (error) => {
-        pending_requests = Math.max(0, pending_requests - 1)
+        queued_count = Math.max(0, queued_count - 1)
         vm.$store.commit('status/' + SET_ERROR)
         throw error
     }
