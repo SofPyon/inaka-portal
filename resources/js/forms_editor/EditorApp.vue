@@ -43,7 +43,7 @@
                 return this.$store.state.editor.loaded;
             },
             is_error() {
-                return this.$store.state.editor.is_error;
+                return this.$store.state.status.is_error;
             },
             is_saving() {
                 return this.$store.state.editor.save_status === SAVE_STATUS_SAVING;

@@ -1,4 +1,6 @@
 import Axios from 'axios';
+import Vue from 'vue'
+import { SET_ERROR } from '../status'
 
 const baseURL = JSON.parse(document.querySelector('#forms-editor-config').dataset.apiBaseUrl);
 
@@ -33,6 +35,7 @@ axios.interceptors.response.use(
     // リクエスト失敗時
     (error) => {
         pending_requests = Math.max(0, pending_requests - 1)
+        Vue.store.commit('status/' + SET_ERROR)
         throw error
     }
 )

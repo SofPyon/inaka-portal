@@ -19,7 +19,6 @@ export const SET_SAVING = 'SET_SAVING';
 export const SET_SAVED = 'SET_SAVED';
 export const SAVE_QUESTION = 'SAVE_QUESTION';
 export const SAVE_FORM = 'SAVE_FORM';
-export const SET_ERROR = 'SET_ERROR';
 export const ADD_QUESTION = 'ADD_QUESTION';
 export const SET_OPTIONS = 'SET_OPTIONS';
 
@@ -28,12 +27,11 @@ export const SAVE_STATUS_DIRTY = 'dirty';
 export const SAVE_STATUS_SAVING = 'saving';
 export const SAVE_STATUS_SAVED = 'saved';
 
-const editor = {
+export default {
     namespaced: true,
     state: {
         loaded: false,
         save_status: SAVE_STATUS_INIT,
-        is_error: false,
         form: {},
         questions: [],
         // 現在、編集パネルが開いているFormItem
@@ -94,9 +92,6 @@ const editor = {
         [SET_SAVED] (state) {
             state.save_status = SAVE_STATUS_SAVED;
         },
-        [SET_ERROR] (state) {
-            state.is_error = true;
-        },
         [SET_OPTIONS] (state, payload) {
             const question_index = state.questions.findIndex(question => question.id === payload.question_id);
             const question = state.questions[question_index];
@@ -129,7 +124,6 @@ const editor = {
                 }));
                 commit(SET_SAVED);
             } catch (e) {
-                commit(SET_ERROR);
                 // バックアップをリストア
                 commit(SET_QUESTIONS, questions_backup);
             }
@@ -143,34 +137,20 @@ const editor = {
         },
         async [ADD_QUESTION] ({ commit, state }, type) {
             commit(SET_SAVING);
-            try {
-                const question = (await API.add_question(type)).data;
-                commit(SET_QUESTIONS, [...state.questions, question]);
-                commit(TOGGLE_OPEN_STATE, { item_id: question['id'] });
-                commit(SET_SAVED);
-            } catch (e) {
-                commit(SET_ERROR);
-            }
+            const question = (await API.add_question(type)).data;
+            commit(SET_QUESTIONS, [...state.questions, question]);
+            commit(TOGGLE_OPEN_STATE, { item_id: question['id'] });
+            commit(SET_SAVED);
         },
         async [SAVE_QUESTION] ({ commit, getters }, question_id) {
             commit(SET_SAVING);
-            try {
-                await API.update_question(getters[GET_QUESTION_BY_ID](question_id));
-                commit(SET_SAVED);
-            } catch (e) {
-                commit(SET_ERROR);
-            }
+            await API.update_question(getters[GET_QUESTION_BY_ID](question_id));
+            commit(SET_SAVED);
         },
         async [SAVE_FORM] ({ commit, state}) {
             commit(SET_SAVING);
-            try {
-                await API.update_form(state.form);
-                commit(SET_SAVED);
-            } catch (e) {
-                commit(SET_ERROR);
-            }
+            await API.update_form(state.form);
+            commit(SET_SAVED);
         },
     }
 };
-
-export default editor;

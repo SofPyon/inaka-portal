@@ -41,7 +41,7 @@
                 return this.save_status === SAVE_STATUS_SAVED;
             },
             is_error() {
-                return this.$store.state.editor.is_error;
+                return this.$store.state.status.is_error;
             },
             preview_url() {
                 const form_id = this.$store.state.editor.form.id;
