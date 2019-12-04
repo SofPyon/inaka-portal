@@ -7,7 +7,7 @@ Vue.use(Vuex);
 
 Vue.component('editor-app', EditorApp);
 
-const editorApp = new Vue({
+export default new Vue({
     el: '#forms-editor-container',
     store,
     template: '<editor-app />',
