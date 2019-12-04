@@ -63,6 +63,9 @@ class QuestionsService
     public function updateQuestion(int $question_id, array $question)
     {
         $eloquent = Question::findOrFail($question_id);
+        if (empty($question['is_required'])) {
+            $question['is_required'] = false;
+        }
         $eloquent->fill($question);
         $eloquent->save();
     }
