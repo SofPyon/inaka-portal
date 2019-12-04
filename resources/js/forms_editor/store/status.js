@@ -3,6 +3,7 @@ export const SAVE_STATUS_DIRTY = 'dirty';
 export const SAVE_STATUS_SAVING = 'saving';
 export const SAVE_STATUS_SAVED = 'saved';
 
+export const SET_DIRTY = 'SET_DIRTY';
 export const SET_SAVING = 'SET_SAVING';
 export const SET_SAVED = 'SET_SAVED';
 export const ENQUEUED = 'ENQUEUED';
@@ -17,6 +18,9 @@ export default {
         is_error: false,
     },
     mutations: {
+        [SET_DIRTY](state) {
+            state.save_status = SAVE_STATUS_DIRTY;
+        },
         [SET_SAVING](state) {
             state.save_status = SAVE_STATUS_SAVING;
         },
