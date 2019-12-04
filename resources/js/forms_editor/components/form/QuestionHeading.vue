@@ -1,5 +1,5 @@
 <template>
-    <form-item :item_id="question_id">
+    <form-item :item_id="question_id" type_label="セクション見出し">
         <template v-slot:content>
             <div class="form-group mb-0">
                 <h2>{{ name }}</h2>

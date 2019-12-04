@@ -1,5 +1,5 @@
 <template>
-    <form-item class="form-header" :item_id="item_id" :hide_handle="true">
+    <form-item class="form-header" :item_id="item_id" type_label="フォームの設定" :hide_handle="true">
         <template v-slot:content>
             <h1 class="form-header__name">{{ computed_name }}</h1>
             <div v-html="description_html" />

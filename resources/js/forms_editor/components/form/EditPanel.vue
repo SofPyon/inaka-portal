@@ -1,10 +1,11 @@
 <template>
     <div class="edit-panel">
-        <div class="row mb-2">
-            <div class="offset-sm-2 col-sm-10" v-if="show_required_switch">
+        <div class="form-group row" v-if="show_required_switch">
+            <span class="col-sm-2 col-form-label">回答必須か</span>
+            <div class="col-sm-10">
                 <label class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" v-model="is_required" :disabled="is_deleting">
-                    <span class="custom-control-label">回答必須</span>
+                    <span class="custom-control-label">この設問への回答は必須</span>
                 </label>
             </div>
         </div>

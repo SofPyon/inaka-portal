@@ -1,5 +1,5 @@
 <template>
-    <form-item :item_id="question_id">
+    <form-item :item_id="question_id" type_label="ファイルアップロード">
         <template v-slot:content>
             <div class="form-group mb-0">
                 <label class="mb-1">

@@ -13,6 +13,9 @@
             </div>
         </div>
         <div class="form-item__edit-panel" :class="{'form-item__edit-panel--open': is_edit_panel_open}">
+            <div class="form-item__edit-panel__type">
+                {{ type_label }}
+            </div>
             <slot name="edit-panel" />
         </div>
     </div>
@@ -25,6 +28,10 @@
     export default {
         props: {
             item_id: {
+                required: true,
+            },
+            type_label: {
+                type: String,
                 required: true,
             },
             hide_handle: {
@@ -139,6 +146,13 @@
 
             &--open {
                 display: block;
+            }
+
+            &__type {
+                font-weight: bold;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid #ccc;
+                margin-bottom: 1rem;
             }
         }
     }
