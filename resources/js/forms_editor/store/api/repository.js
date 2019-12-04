@@ -13,8 +13,9 @@ const axios = Axios.create({
 
 let is_processing = false;
 
-// TODO: getリクエストの時に「保存中」とか出てこないようにする
 axios.interceptors.request.use((config) => {
+    if (config.method === 'get') return config;
+
     vm.$store.commit('status/' + SET_SAVING)
     vm.$store.commit('status/' + ENQUEUED)
     return new Promise((resolve) => {
