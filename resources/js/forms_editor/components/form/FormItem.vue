@@ -66,7 +66,6 @@
                 this.$nextTick(() => {
                     const top = this.$refs[`form_item_${this.item_id}`].getBoundingClientRect().top +  window.scrollY
                         - document.querySelector('.editor-header').getBoundingClientRect().bottom - 16;
-                    console.log(top);
                     window.scroll({
                         top,
                         behavior: 'smooth',
