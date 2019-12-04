@@ -87,6 +87,7 @@
                 this.$store.dispatch('editor/' + SAVE_QUESTION, this.question.id);
             }
         },
+        // TODO: 変更点がない場合、saveメソッドが実行されないようにする
         computed: {
             name: {
                 get() {
