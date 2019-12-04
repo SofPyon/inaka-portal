@@ -3,7 +3,7 @@
         <div class="row mb-2">
             <div class="offset-sm-2 col-sm-10" v-if="show_required_switch">
                 <label class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" v-model="is_required">
+                    <input type="checkbox" class="custom-control-input" v-model="is_required" :disabled="is_deleting">
                     <span class="custom-control-label">回答必須</span>
                 </label>
             </div>
@@ -11,41 +11,52 @@
         <label class="form-group row" v-if="label_name">
             <span class="col-sm-2 col-form-label">{{ label_name }}</span>
             <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="name" @blur="save" />
+                <input type="text" class="form-control" v-model="name" @blur="save" :disabled="is_deleting" />
             </div>
         </label>
         <label class="form-group row" v-if="label_description">
             <span class="col-sm-2 col-form-label">{{ label_description }}</span>
             <div class="col-sm-10">
-                <textarea class="form-control" v-model="description" @blur="save" />
+                <textarea class="form-control" v-model="description" @blur="save" :disabled="is_deleting" />
             </div>
         </label>
         <label class="form-group row" v-if="label_number_min">
             <span class="col-sm-2 col-form-label">{{ label_number_min }}</span>
             <div class="col-sm-10">
-                <input type="number" min="0" class="form-control" v-model="number_min" @blur="save" />
+                <input type="number" min="0" class="form-control" v-model="number_min" @blur="save" :disabled="is_deleting" />
             </div>
         </label>
         <label class="form-group row" v-if="label_number_max">
             <span class="col-sm-2 col-form-label">{{ label_number_max }}</span>
             <div class="col-sm-10">
-                <input type="number" min="0" class="form-control" v-model="number_max" @blur="save" />
+                <input type="number" min="0" class="form-control" v-model="number_max" @blur="save" :disabled="is_deleting" />
             </div>
         </label>
         <label class="form-group row" v-if="show_allowed_types">
             <span class="col-sm-2 col-form-label">許可される拡張子(<code>|</code>区切りで指定)</span>
             <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="allowed_types" @blur="save" />
+                <input type="text" class="form-control" v-model="allowed_types" @blur="save" :disabled="is_deleting" />
                 <small class="form-text text-muted mb-0">
                     画像アップロードを許可したい場合 : <code>png|jpg|jpeg|gif</code> と入力。
                 </small>
             </div>
         </label>
+        <div class="row mb-2">
+            <div class="offset-sm-2 col-sm-10">
+                <button
+                    class="btn btn-danger"
+                    @click="deleteQuestion"
+                    :disabled="is_deleting"
+                >
+                    削除
+                </button>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-    import { UPDATE_QUESTION, SAVE_QUESTION } from '../../store/editor';
+    import { UPDATE_QUESTION, SAVE_QUESTION, DELETE_QUESTION } from '../../store/editor';
     import { SAVE_STATUS_SAVING } from '../../store/status';
 
     export default {
@@ -82,9 +93,20 @@
                 default: false,
             }
         },
+        data() {
+            return {
+                is_deleting: false,
+            };
+        },
         methods: {
             save() {
                 this.$store.dispatch('editor/' + SAVE_QUESTION, this.question.id);
+            },
+            deleteQuestion() {
+                if (window.confirm('設問を削除すると、この設問に対する回答も全て削除されます。本当に削除しますか？')) {
+                    this.is_deleting = true;
+                    this.$store.dispatch('editor/' + DELETE_QUESTION, this.question.id);
+                }
             }
         },
         // TODO: 変更点がない場合、saveメソッドが実行されないようにする

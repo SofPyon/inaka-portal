@@ -16,6 +16,9 @@ export default {
     update_question(question) {
         return Repository.post('update_question', { question });
     },
+    delete_question(question) {
+        return Repository.post('delete_question', { question })
+    },
     update_form(form) {
         return Repository.post('update_form', { form });
     }

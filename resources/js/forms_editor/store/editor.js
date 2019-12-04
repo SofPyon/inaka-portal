@@ -9,6 +9,7 @@ export const SET_FORM = 'SET_FORM';
 export const SET_QUESTIONS = 'SET_QUESTIONS';
 export const UPDATE_FORM = 'UPDATE_FORM';
 export const UPDATE_QUESTION = 'UPDATE_QUESTION';
+export const DELETE_QUESTION = 'DELETE_QUESTION';
 export const SET_FORM_PUBLIC = 'SET_FORM_PUBLIC';
 export const SET_FORM_PRIVATE = 'SET_FORM_PRIVATE';
 export const DRAG_START = 'DRAG_START';
@@ -66,6 +67,10 @@ export default {
             const question = state.questions[question_index];
             question[payload.key] = payload.value;
             state.questions.splice(question_index, 1, question);
+        },
+        [DELETE_QUESTION] (state, question_id) {
+            const question_index = state.questions.findIndex(question => question.id === question_id);
+            state.questions.splice(question_index, 1);
         },
         [SET_FORM_PUBLIC] (state) {
             state.form = { ...state.form, is_public: true };
@@ -125,10 +130,14 @@ export default {
             commit(SET_QUESTIONS, [...state.questions, question]);
             commit(TOGGLE_OPEN_STATE, { item_id: question['id'] });
         },
-        async [SAVE_QUESTION] ({ commit, getters }, question_id) {
+        async [DELETE_QUESTION]({ commit }, question_id) {
+            await API.delete_question(question_id);
+            commit(DELETE_QUESTION, question_id);
+        },
+        async [SAVE_QUESTION] ({ getters }, question_id) {
             await API.update_question(getters[GET_QUESTION_BY_ID](question_id));
         },
-        async [SAVE_FORM] ({ commit, state}) {
+        async [SAVE_FORM] ({ state}) {
             await API.update_form(state.form);
         },
     }

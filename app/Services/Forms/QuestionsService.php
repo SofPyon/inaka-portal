@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace App\Services\Forms;
 
+use \DB;
 use App\Eloquents\Form;
 use App\Eloquents\Question;
 
 class QuestionsService
 {
+    private $answerDetailsService;
+
+    public function __construct(AnswerDetailsService $answerDetailsService)
+    {
+        $this->answerDetailsService = $answerDetailsService;
+    }
+
     /**
      * 設問を追加する
      *
@@ -57,5 +65,19 @@ class QuestionsService
         $eloquent = Question::findOrFail($question_id);
         $eloquent->fill($question);
         $eloquent->save();
+    }
+
+    /**
+     * 設問を削除する
+     *
+     * @param int $question_id 設問ID
+     */
+    public function deleteQuestion(int $question_id)
+    {
+        DB::transaction(function () use ($question_id) {
+            $eloquent = Question::findOrFail($question_id);
+            $eloquent->delete();
+            $this->answerDetailsService->deleteAnswerDetailsByQuestionId($question_id);
+        });
     }
 }

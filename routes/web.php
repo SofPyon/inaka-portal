@@ -76,5 +76,6 @@ Route::middleware(['auth', 'verified', 'can:staff'])
                 Route::post('/editor/api/add_question', 'Staff\Forms\AddQuestionAction');
                 Route::post('/editor/api/update_questions_order', 'Staff\Forms\UpdateQuestionsOrderAction');
                 Route::post('/editor/api/update_question', 'Staff\Forms\UpdateQuestionAction');
+                Route::post('/editor/api/delete_question', 'Staff\Forms\DeleteQuestionAction');
             });
     });
