@@ -45,7 +45,8 @@
 </template>
 
 <script>
-    import { UPDATE_QUESTION, SAVE_QUESTION, SAVE_STATUS_SAVING } from '../../store/editor';
+    import { UPDATE_QUESTION, SAVE_QUESTION } from '../../store/editor';
+    import { SAVE_STATUS_SAVING } from '../../store/status';
 
     export default {
         props: {

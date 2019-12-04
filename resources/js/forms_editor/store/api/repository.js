@@ -1,6 +1,6 @@
 import Axios from 'axios';
-import Vue from 'vue'
-import { SET_ERROR } from '../status'
+// import Vue from 'vue'
+// import { SET_SAVING, SET_SAVED, SET_ERROR } from '../status'
 
 const baseURL = JSON.parse(document.querySelector('#forms-editor-config').dataset.apiBaseUrl);
 
@@ -15,6 +15,7 @@ const MAX_REQUEST_COUNT = 1;
 let pending_requests = 0;
 
 axios.interceptors.request.use((config) => {
+    // Vue.$store.commit('status/' + SET_SAVING)
     return new Promise((resolve) => {
         const interval = setInterval(() => {
             if (pending_requests < MAX_REQUEST_COUNT) {
@@ -30,12 +31,15 @@ axios.interceptors.response.use(
     // リクエスト成功時
     (response) => {
         pending_requests = Math.max(0, pending_requests - 1)
+        // if (pending_requests === 0) {
+        //     Vue.$store.commit('status/' + SET_SAVED)
+        // }
         return response
     },
     // リクエスト失敗時
     (error) => {
         pending_requests = Math.max(0, pending_requests - 1)
-        Vue.store.commit('status/' + SET_ERROR)
+        // Vue.$store.commit('status/' + SET_ERROR)
         throw error
     }
 )

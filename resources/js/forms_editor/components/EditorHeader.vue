@@ -27,12 +27,12 @@
 </template>
 
 <script>
-    import { SAVE_STATUS_SAVING, SAVE_STATUS_SAVED } from "../store/editor";
+    import { SAVE_STATUS_SAVING, SAVE_STATUS_SAVED } from "../store/status";
 
     export default {
         computed: {
             save_status() {
-                return this.$store.state.editor.save_status;
+                return this.$store.state.status.save_status;
             },
             is_saving() {
                 return this.save_status === SAVE_STATUS_SAVING;

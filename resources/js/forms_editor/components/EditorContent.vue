@@ -40,7 +40,8 @@
     import QuestionTextarea from "./form/QuestionTextarea";
     import QuestionNumber from "./form/QuestionNumber";
     import QuestionUpload from "./form/QuestionUpload";
-    import { DRAG_START, DRAG_END, UPDATE_QUESTIONS_ORDER, SAVE_STATUS_SAVING } from "../store/editor";
+    import { DRAG_START, DRAG_END, UPDATE_QUESTIONS_ORDER } from "../store/editor";
+    import { SAVE_STATUS_SAVING } from "../store/status";
 
     export default {
         components: {
@@ -54,7 +55,7 @@
         },
         computed: {
             is_saving() {
-                return this.$store.state.editor.save_status === SAVE_STATUS_SAVING;
+                return this.$store.state.status.save_status === SAVE_STATUS_SAVING;
             },
             drag() {
                 return this.$store.state.editor.drag;

@@ -17,7 +17,8 @@
     import EditorContent from './components/EditorContent';
     import EditorSidebar from './components/EditorSidebar';
     import EditorError from './components/EditorError';
-    import { FETCH, SAVE_STATUS_SAVING, TOGGLE_OPEN_STATE, ITEM_HEADER } from "./store/editor";
+    import { FETCH, TOGGLE_OPEN_STATE, ITEM_HEADER } from "./store/editor";
+    import { SAVE_STATUS_SAVING } from './store/status';
 
     const on_before_unload = event => {
         event.preventDefault();
@@ -46,7 +47,7 @@
                 return this.$store.state.status.is_error;
             },
             is_saving() {
-                return this.$store.state.editor.save_status === SAVE_STATUS_SAVING;
+                return this.$store.state.status.save_status === SAVE_STATUS_SAVING;
                 // is_saving の状態は、以下で watch されている
             },
         },

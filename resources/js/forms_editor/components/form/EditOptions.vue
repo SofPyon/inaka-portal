@@ -13,7 +13,8 @@
 
 <script>
     import draggable from 'vuedraggable';
-    import { DRAG_START, DRAG_END, UPDATE_QUESTION, SAVE_STATUS_SAVING } from "../../store/editor";
+    import { DRAG_START, DRAG_END, UPDATE_QUESTION } from "../../store/editor";
+    import { SAVE_STATUS_SAVING } from '../../store/status';
 
     export default {
         components: {

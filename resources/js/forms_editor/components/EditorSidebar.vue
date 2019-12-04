@@ -18,7 +18,8 @@
 </template>
 
 <script>
-    import { SAVE_STATUS_SAVING, ADD_QUESTION } from "../store/editor";
+    import { ADD_QUESTION } from "../store/editor";
+    import { SAVE_STATUS_SAVING } from "../store/status";
 
     export default {
         methods: {
@@ -28,7 +29,7 @@
         },
         computed: {
             is_saving() {
-                return this.$store.state.editor.save_status === SAVE_STATUS_SAVING;
+                return this.$store.state.status.save_status === SAVE_STATUS_SAVING;
             },
             tools() {
                 return [

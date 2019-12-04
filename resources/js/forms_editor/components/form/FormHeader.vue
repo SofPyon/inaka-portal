@@ -24,7 +24,8 @@
 <script>
     import FormItem from './FormItem';
     import marked from 'marked';
-    import { ITEM_HEADER, UPDATE_FORM, SAVE_FORM, SAVE_STATUS_SAVING } from '../../store/editor';
+    import { ITEM_HEADER, UPDATE_FORM, SAVE_FORM } from '../../store/editor';
+    import { SAVE_STATUS_SAVING } from '../../store/status';
 
     export default {
         components: {

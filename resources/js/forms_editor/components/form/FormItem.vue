@@ -19,7 +19,8 @@
 </template>
 
 <script>
-    import { TOGGLE_OPEN_STATE, SAVE_STATUS_SAVING, ITEM_HEADER } from "../../store/editor";
+    import { TOGGLE_OPEN_STATE, ITEM_HEADER } from "../../store/editor";
+    import { SAVE_STATUS_SAVING } from '../../store/status';
 
     export default {
         props: {
@@ -34,7 +35,7 @@
         },
         computed: {
             is_saving() {
-                return this.$store.state.editor.save_status === SAVE_STATUS_SAVING;
+                return this.$store.state.status.save_status === SAVE_STATUS_SAVING;
             },
             drag() {
                 return this.$store.state.editor.drag;
