@@ -43,13 +43,13 @@
             </div>
         </label>
         <div class="row mb-2">
-            <div class="offset-sm-2 col-sm-10">
+            <div class="offset-sm-2 col-sm-10 text-right">
                 <button
-                    class="btn btn-danger"
+                    class="btn btn-link text-danger p-0"
                     @click="deleteQuestion"
                     :disabled="is_deleting"
                 >
-                    削除
+                    この項目を削除
                 </button>
             </div>
         </div>
