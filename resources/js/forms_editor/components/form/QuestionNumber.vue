@@ -9,7 +9,7 @@
                 <p class="form-text text-muted mb-2">
                     {{ description }}
                 </p>
-                <input type="number" class="form-control" tabindex="-1">
+                <input type="number" class="form-control" tabindex="-1" placeholder="整数入力">
             </div>
         </template>
         <template v-slot:edit-panel>

@@ -9,7 +9,7 @@
                 <p class="form-text text-muted mb-2">
                     {{ description }}
                 </p>
-                <textarea class="form-control" tabindex="-1"></textarea>
+                <textarea class="form-control" tabindex="-1" placeholder="複数行入力"></textarea>
             </div>
         </template>
         <template v-slot:edit-panel>
