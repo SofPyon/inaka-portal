@@ -22,12 +22,12 @@
         "docker-bash": "cd docker_dev/ && docker-compose exec web bash"
     },
     "devDependencies": {
-        "axios": "^0.18.0",
+        "axios": "^0.19",
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
         "jquery": "^3.2",
         "laravel-mix": "^4.0.7",
-        "lodash": "^4.17.5",
+        "lodash": "^4.17.13",
         "popper.js": "^1.12",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
