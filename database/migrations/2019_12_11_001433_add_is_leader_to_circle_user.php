@@ -26,7 +26,7 @@ class AddIsLeaderToCircleUser extends Migration
     public function down()
     {
         Schema::table('circle_user', function (Blueprint $table) {
-            //
+            $table->dropColumn('is_leader');
         });
     }
 }
