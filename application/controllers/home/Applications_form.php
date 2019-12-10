@@ -218,6 +218,11 @@ class Applications_form extends Home_base_controller
             // 共通ルール
             $rules[] = "trim";
 
+            // (heading)メール送信時、見出しっぽく表示する
+            if ($question->type === "heading") {
+                $answers_for_email[$question->name] = '%heading%';
+            }
+
             // (number)数値範囲
             if ($question->type === "number") {
                 // 数字か
