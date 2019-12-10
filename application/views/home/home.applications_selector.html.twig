@@ -19,7 +19,7 @@
       </div>
       <div class="list-group">
         {% for circle in circle_info %}
-        <a href="{{ base_url("home/applications/circles/#{circle.id}") }}" class="list-group-item" style="padding-top:14px;padding-bottom:14px">
+        <a href="{{ str_replace('%circle_id%', circle.id, url_format) }}" class="list-group-item" style="padding-top:14px;padding-bottom:14px">
           <i class="fa fa-users fa-fw" aria-hidden="true"></i>
           {{ circle.name }}
         </a>

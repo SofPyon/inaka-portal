@@ -22,11 +22,11 @@ class Applications_form extends Home_base_controller
     /**
      * 申請フォーム表示
      *
-     * URL : フォームID/団体ID/タイプ(/ブースID)
+     * URL : フォームID/タイプ(/ブースID)
      * ( タイプ : new か 回答ID )
      * config/routes.php も参照のこと
      */
-    public function index($formId, $circleId, $type, $boothId = null)
+    public function index($formId, $type, $boothId = null)
     {
         $this->load->library("form_validation");
 
@@ -57,6 +57,13 @@ class Applications_form extends Home_base_controller
         // TODO: エラーではなく，ブース選択画面を表示させたほうが親切
         if ($vars["form"]->type === "booth" && empty($boothId)) {
             $this->_error("申請フォームエラー", "ブースが指定されていません。");
+        }
+
+        // 団体IDがない場合は、団体を選択する画面を表示jする
+        $circleId = $this->input->get('circle_id');
+        if (! $circleId) {
+            $this->_choose_circle($vars);
+            return;
         }
 
         // アクセス権がない場合はエラー
@@ -142,6 +149,30 @@ class Applications_form extends Home_base_controller
 
         $vars["answers"] = $answers;
         $this->_render('home/applications_form', $vars);
+    }
+
+    /**
+     * 回答する団体を選択する画面
+     *
+     * フォームにアクセス時、団体IDが省略された場合、上のindex メソッドから
+     * このメソッドが呼び出される
+     */
+    private function _choose_circle($vars)
+    {
+        $vars["circle_info"] = $this->circles->get_circle_info_by_user_id($this->_get_login_user()->id);
+
+        $form_id = (int)$vars['form']->id;
+        $vars['url_format'] = base_url("forms/{$form_id}/answers/new/?circle_id=%circle_id%");
+
+        if (count($vars["circle_info"]) === 1) {
+            // アクセスできる団体が１つしかない場合，その団体の回答ページに直接アクセスする
+            codeigniter_redirect(str_replace('%circle_id%', $vars["circle_info"][0]->id, $vars['url_format']));
+        } elseif (count($vars["circle_info"]) === 0) {
+            // アクセスできる団体が１つもない場合，エラーを表示する
+            $this->_error("エラー", "どの団体にも所属していないため、申請ページは表示できません。", 403);
+        }
+
+        $this->_render('home/applications_selector', $vars);
     }
 
     private function _post_index($vars, $answers_on_db, $type, $formId, $boothId, $circleId, $answer_id, &$answers)
