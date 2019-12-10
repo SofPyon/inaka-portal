@@ -59,11 +59,24 @@ class Applications_form extends Home_base_controller
             $this->_error("申請フォームエラー", "ブースが指定されていません。");
         }
 
-        // 団体IDがない場合は、団体を選択する画面を表示jする
-        $circleId = $this->input->get('circle_id');
-        if (! $circleId) {
-            $this->_choose_circle($vars);
-            return;
+        $circleId = null;
+
+        if ($type !== "new") {
+            // $type は 回答更新時の場合、回答ID
+            $answer_id = $type;
+
+            // 回答情報を取得
+            $answer_info = $this->forms->get_answer_by_answer_id($answer_id);
+
+            // 団体IDは回答情報から取得
+            $circleId = $answer_info->circle->id;
+        } else {
+            // 団体IDがない場合は、団体を選択する画面を表示する
+            $circleId = $this->input->get('circle_id');
+            if (! $circleId) {
+                $this->_choose_circle($vars);
+                return;
+            }
         }
 
         // アクセス権がない場合はエラー
@@ -93,11 +106,13 @@ class Applications_form extends Home_base_controller
 
             // もし，max_answers が 1で，かつ，すでに申請されている場合， update へリダイレクト
             if ((int)$vars["form"]->max_answers === 1 && count($answer_list) > 0) {
-                $url = "home/applications/{$circleId}";
-                if ($vars["form"]->type === "booth") {
-                    $url .= "/b:{$boothId}";
-                }
-                $url .= "/forms/{$formId}/" . $answer_list[0]->id;
+                // TODO: ブース単位で回答するフォームについては考慮しない
+                // (2019/12/10)
+                // $url = "home/applications/{$circleId}";
+                // if ($vars["form"]->type === "booth") {
+                //     $url .= "/b:{$boothId}";
+                // }
+                $url = "/forms/{$formId}/answers/". $answer_list[0]->id. "/edit";
                 codeigniter_redirect($url);
             }
 
@@ -112,12 +127,6 @@ class Applications_form extends Home_base_controller
         } else {
             // すでに行った申請の確認・変更
             $vars["type"] = "update";
-
-            // $type は 回答ID
-            $answer_id = $type;
-
-            // 回答情報を取得
-            $answer_info = $this->forms->get_answer_by_answer_id($answer_id);
 
             // 存在しない回答の時エラー
             if ($answer_info === false) {
@@ -162,7 +171,7 @@ class Applications_form extends Home_base_controller
         $vars["circle_info"] = $this->circles->get_circle_info_by_user_id($this->_get_login_user()->id);
 
         $form_id = (int)$vars['form']->id;
-        $vars['url_format'] = base_url("forms/{$form_id}/answers/new/?circle_id=%circle_id%");
+        $vars['url_format'] = base_url("forms/{$form_id}/answers/new?circle_id=%circle_id%");
 
         if (count($vars["circle_info"]) === 1) {
             // アクセスできる団体が１つしかない場合，その団体の回答ページに直接アクセスする
