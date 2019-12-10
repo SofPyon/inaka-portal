@@ -257,7 +257,7 @@ class Applications_form extends Home_base_controller
                     }
                 } else {
                     $value = $this->input->post($name);
-                    $answers_for_email[$question->name] = $question->options[$value]->value;
+                    $answers_for_email[$question->name] = !empty($question->options) ? $question->options[$value]->value : null;
                 }
             }
 
