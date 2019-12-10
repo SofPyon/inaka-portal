@@ -370,11 +370,14 @@ class Applications_form extends Home_base_controller
             }
 
             // リダイレクト先のURL
-            $url = "home/applications/{$circleId}";
-            if ($vars["form"]->type === "booth") {
-                $url .= "/b:{$boothId}";
-            }
-            $url .= "/forms/{$formId}/{$answer_id}";
+            // TODO: ブース単位で回答するフォームについては考慮しない
+            // (2019/12/10)
+            // $url = "home/applications/{$circleId}";
+            // if ($vars["form"]->type === "booth") {
+            //     $url .= "/b:{$boothId}";
+            // }
+            // $url .= "/forms/{$formId}/{$answer_id}";
+            $url = "/forms/{$formId}/answers/{$answer_id}/edit";
 
             // 完了メールを送信
             $vars_email = [];
