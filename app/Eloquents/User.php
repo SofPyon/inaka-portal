@@ -201,4 +201,9 @@ class User extends Authenticatable
             'univemail_verified_at' => $this->freshTimestamp(),
         ])->save();
     }
+
+    public function getUserByStudentId($student_id)
+    {
+        return $this->where('student_id', $student_id)->first();
+    }
 }
