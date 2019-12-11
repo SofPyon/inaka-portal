@@ -93,6 +93,7 @@ export default {
 
 <style lang="scss" scoped>
 .form-header {
+
   &__name {
     font-size: 1.5rem;
   }

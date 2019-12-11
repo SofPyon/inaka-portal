@@ -59,17 +59,19 @@ export default {
 
 <style lang="scss" scoped>
 .editor-header {
+  align-items: center;
   background: #fff;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
-  align-items: center;
 
   &__status {
+
     &__saved {
       animation: saved 3s linear both;
 
       @keyframes saved {
+
         from,
         90% {
           opacity: 1;

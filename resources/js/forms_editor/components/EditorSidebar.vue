@@ -98,20 +98,20 @@ $editor-sidebar-padding: 1rem;
 
   &__body {
     flex: 1;
+    -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
     overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
     padding: $editor-sidebar-padding;
   }
 
   &__tool {
-    width: 100%;
+    align-items: center;
     box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.07);
+    display: flex;
     margin-bottom: $editor-sidebar-padding;
     padding: $editor-sidebar-padding;
-    display: flex;
-    align-items: center;
     text-align: left;
+    width: 100%;
 
     &:last-child {
       margin-bottom: 0;

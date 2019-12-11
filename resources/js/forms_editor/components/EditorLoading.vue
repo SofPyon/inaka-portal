@@ -10,25 +10,26 @@
 
 <style lang="scss" scoped>
 .editor-loading {
+  align-items: center;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  left: 0;
   position: fixed;
   top: 0;
-  left: 0;
   width: 100vw;
-  height: 100vh;
   z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background: #fff;
 
   &__brand-icon {
-    font-size: 3rem;
-    display: block;
-    margin-bottom: 1.5rem;
     animation: icon 1s ease both;
+    display: block;
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
 
     @keyframes icon {
+
       from {
         opacity: 0;
         transform: translateY(-10rem);
@@ -52,6 +53,7 @@
     margin-bottom: 2rem;
 
     @keyframes title {
+
       from {
         opacity: 0;
       }
@@ -72,6 +74,7 @@
     animation: loading-wrap 2s ease both;
 
     @keyframes loading-wrap {
+
       from {
         opacity: 0;
       }

@@ -107,11 +107,11 @@ export default {
 }
 
 .editor-preview {
-  width: 100%;
-  max-width: 960px;
-  margin: 0 auto;
   background: #fff;
   box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.07);
+  margin: 0 auto;
+  max-width: 960px;
+  width: 100%;
 }
 
 .ghost {
