@@ -33,9 +33,9 @@
 
 
         <div class="form-group row">
-            <label for="festivalInput" class="col-sm-2 col-form-label">学園祭係</label>
+            <label for="membersInput" class="col-sm-2 col-form-label">学園祭係(副責任者)</label>
             <div class="col-sm-10">
-                <select id="festivalInput" class="custom-select" name="festivals" multiple>
+                <select id="membersInput" class="custom-select" name="members" multiple>
                     @foreach ($users as $user)
                         <option value="{{ $user->id }}" >{{ $user->student_id }} {{ $user->name_family }} {{ $user->name_given }}</option>
                     @endforeach

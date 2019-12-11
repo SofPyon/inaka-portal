@@ -30,7 +30,7 @@ class CircleUser extends Model
         ]);
     }
 
-    public function getMembers(Circle $circle)
+    public function getUsers(Circle $circle)
     {
         $members = $this->where('circle_id', $circle->id)->orderBy('is_leader', 'desc')->get();
         return $members;
@@ -48,7 +48,7 @@ class CircleUser extends Model
         return $leaders;
     }
 
-    public function getFes(Circle $circle)
+    public function getMembers(Circle $circle)
     {
         $fes = $this->where('circle_id', $circle->id)->where('is_leader', false)->get();
         return $fes;

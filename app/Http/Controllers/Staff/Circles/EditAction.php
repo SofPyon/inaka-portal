@@ -21,7 +21,7 @@ class EditAction extends Controller
         $users = $this->user->all();
         $this->circle = $circle;
         $this->circle->leaders = $this->circle_user->getLeaders($this->circle);
-        $this->circle->fes = $this->circle_user->getFes($this->circle);
+        $this->circle->members = $this->circle_user->getMembers($this->circle);
 
         return view('staff.circles.edit')
             ->with('circle', $this->circle)
