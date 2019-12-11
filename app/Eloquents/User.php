@@ -58,7 +58,6 @@ class User extends Authenticatable
         'is_staff' => 'bool',
     ];
 
-
     /**
      * ログイン ID から該当ユーザーを取得する
      *

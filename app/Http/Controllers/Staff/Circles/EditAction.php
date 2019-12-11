@@ -15,6 +15,7 @@ class EditAction extends Controller
         $this->user = $user;
         $this->circle_user = $circle_user;
     }
+
     public function __invoke(Circle $circle)
     {
         $users = $this->user->all();

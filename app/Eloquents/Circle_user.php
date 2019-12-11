@@ -21,7 +21,7 @@ class Circle_user extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function add(Circle $circle,User $user, $is_leader = false)
+    public function add(Circle $circle, User $user, $is_leader = false)
     {
         $this->create([
             'circle_id' => $circle->id,
@@ -39,12 +39,10 @@ class Circle_user extends Model
     public function get_leaders(Circle $circle)
     {
         $leaders = $this->where('circle_id', $circle->id)->where('is_leader', true)->get();
-        if(empty($leaders))
-        {
+        if (empty($leaders)) {
             return null;
         }
-        foreach($leaders as $leader)
-        {
+        foreach ($leaders as $leader) {
             $leader = $leader->user();
         }
         return $leaders;

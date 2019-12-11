@@ -9,5 +9,4 @@ class Circle extends Model
     protected $fillable = [
         'name',
     ];
-    
 }
