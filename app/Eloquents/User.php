@@ -5,6 +5,8 @@ namespace App\Eloquents;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Eloquents\Circle;
+use App\Eloquents\CircleUser;
 
 /**
  * @property string $id
@@ -57,6 +59,11 @@ class User extends Authenticatable
     protected $casts = [
         'is_staff' => 'bool',
     ];
+
+    public function circles()
+    {
+        return $this->belongsToMany(Circle::class)->using(CircleUser::class)->withPivot('is_leader');
+    }
 
     /**
      * ログイン ID から該当ユーザーを取得する
