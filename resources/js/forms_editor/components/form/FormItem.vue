@@ -104,7 +104,6 @@ $form-item-padding: 1.5rem;
   position: relative;
   transition: 0.25s ease box-shadow, 0.25s ease z-index;
   z-index: 10;
-
   &__handle {
     color: #a7a7a7;
     cursor: move;
@@ -116,36 +115,29 @@ $form-item-padding: 1.5rem;
     top: 0;
     width: 100%;
   }
-
   &:hover:not(&--drag),
   &--active {
     border: 1px solid #007bff;
     border-left-width: 5px;
     border-radius: 5px;
   }
-
   &:hover:not(&--active) {
     z-index: 20;
   }
-
   &:hover &__handle {
     display: block;
   }
-
   &--active {
     z-index: 15;
   }
-
   &__content {
     cursor: pointer;
     padding: $form-item-padding;
-
     &__inner {
       pointer-events: none;
       user-select: none;
     }
   }
-
   &__edit-panel {
     background: lighten(#f8fafc, 1%);
     border-bottom: 1px solid #f8fafc;
@@ -153,11 +145,9 @@ $form-item-padding: 1.5rem;
     display: none;
     overflow: hidden;
     padding: $form-item-padding;
-
     &--open {
       display: block;
     }
-
     &__type {
       border-bottom: 1px solid #ccc;
       font-weight: bold;

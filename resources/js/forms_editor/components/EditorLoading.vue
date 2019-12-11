@@ -21,7 +21,6 @@
   top: 0;
   width: 100vw;
   z-index: 9999;
-
   &__brand-icon {
     animation: icon 1s ease both;
     display: block;
@@ -29,67 +28,55 @@
     margin-bottom: 1.5rem;
 
     @keyframes icon {
-
       from {
         opacity: 0;
         transform: translateY(-10rem);
       }
-
       75% {
         opacity: 0.75;
         transform: translateY(-1rem);
       }
-
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
   }
-
   &__title {
     animation: title 1s ease both;
     font-size: 1.25rem;
     margin-bottom: 2rem;
 
     @keyframes title {
-
       from {
         opacity: 0;
       }
-
       75% {
         opacity: 0;
         transform: translateY(2rem);
       }
-
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
   }
-
   &__loading-wrap {
     animation: loading-wrap 2s ease both;
 
     @keyframes loading-wrap {
-
       from {
         opacity: 0;
       }
-
       75% {
         opacity: 0;
       }
-
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
   }
-
   &__loading {
     font-size: 1.25rem;
   }

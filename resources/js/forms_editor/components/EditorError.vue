@@ -33,7 +33,6 @@ export default {
   top: 0;
   width: 100vw;
   z-index: 9999;
-
   &__modal {
     background: #fff;
     max-width: 360px;

@@ -26,7 +26,6 @@ body {
   background: #fff;
   box-shadow: $box-shadow-sm;
   height: $app-navbar-height;
-
   .nav-link {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
@@ -46,7 +45,6 @@ body {
   left: 0;
   position: fixed;
   width: 100%;
-
   &-list {
     display: flex;
     justify-content: space-between;
@@ -55,11 +53,9 @@ body {
     max-width: $narrow-container-width - 30px;
     padding: 0 15px 40px;
     width: 100%;
-
     .nav-item {
       flex: 1;
     }
-
     .nav-link {
       align-items: center;
       color: $gray-600;
@@ -68,17 +64,14 @@ body {
       font-weight: bold;
       padding: 0.5rem;
       text-align: center;
-
       &:hover {
         color: $gray-800;
       }
     }
-
     .nav-icon {
       font-size: 1.25rem;
       margin-bottom: 0.5rem;
     }
-
     .nav-label {
       font-size: 0.6rem;
       line-height: 1;

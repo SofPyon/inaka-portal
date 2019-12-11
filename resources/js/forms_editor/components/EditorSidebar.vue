@@ -91,11 +91,9 @@ $editor-sidebar-padding: 1rem;
   box-shadow: -0.1rem 0 0.1rem rgba(0, 0, 0, 0.07);
   display: flex;
   flex-direction: column;
-
   &__header {
     padding: $editor-sidebar-padding;
   }
-
   &__body {
     flex: 1;
     -webkit-overflow-scrolling: touch;
@@ -103,7 +101,6 @@ $editor-sidebar-padding: 1rem;
     overflow-y: scroll;
     padding: $editor-sidebar-padding;
   }
-
   &__tool {
     align-items: center;
     box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.07);
@@ -112,15 +109,12 @@ $editor-sidebar-padding: 1rem;
     padding: $editor-sidebar-padding;
     text-align: left;
     width: 100%;
-
     &:last-child {
       margin-bottom: 0;
     }
-
     &:hover:not(:disabled) {
       background: #f2f2f2;
     }
-
     &__icon {
       font-size: 1.25rem;
       margin-right: $editor-sidebar-padding / 2;

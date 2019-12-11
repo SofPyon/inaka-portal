@@ -64,20 +64,16 @@ export default {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
-
   &__status {
-
     &__saved {
       animation: saved 3s linear both;
 
       @keyframes saved {
-
         from,
         90% {
           opacity: 1;
           visibility: visible;
         }
-
         to {
           opacity: 0;
           visibility: hidden;

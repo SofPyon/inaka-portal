@@ -99,7 +99,6 @@ export default {
 <style lang="scss" scoped>
 .editor-content {
   padding: 3rem;
-
   &__no-question {
     padding: 3rem;
     text-align: center;
