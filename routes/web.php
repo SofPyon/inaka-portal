@@ -78,4 +78,5 @@ Route::middleware(['auth', 'verified', 'can:staff'])
                 Route::post('/editor/api/update_question', 'Staff\Forms\UpdateQuestionAction');
                 Route::post('/editor/api/delete_question', 'Staff\Forms\DeleteQuestionAction');
             });
+        Route::get('/circles/edit/{circle}', 'Staff\Circles\EditAction');
     });

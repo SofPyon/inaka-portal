@@ -17,12 +17,13 @@ class EditAction extends Controller
     }
     public function __invoke(Circle $circle)
     {
+        $users = $this->user->all();
         $this->circle = $circle;
         $this->circle->leaders = $this->circle_user->get_leaders($this->circle);
         $this->circle->fes = $this->circle_user->get_fes($this->circle);
 
         return view('staff.circles.edit')
             ->with('circle', $this->circle)
-            ->with('users', $this->user->all());
+            ->with('users', $users);
     }
 }
