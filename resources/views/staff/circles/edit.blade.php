@@ -3,7 +3,6 @@
 @section('title', '団体情報編集')
 
 @section('content')
-<body>
 <div class="container">
 
 
@@ -47,5 +46,4 @@
 </form>
 
 </div>
-</body>
 @endsection
