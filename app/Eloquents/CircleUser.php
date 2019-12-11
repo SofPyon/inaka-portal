@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Eloquents\Circle;
 use App\Eloquents\User;
 
-class Circle_user extends Model
+class CircleUser extends Model
 {
     public $timestamps = false;
     protected $table = 'circle_user';
@@ -30,13 +30,13 @@ class Circle_user extends Model
         ]);
     }
 
-    public function get_members(Circle $circle)
+    public function getMembers(Circle $circle)
     {
         $members = $this->where('circle_id', $circle->id)->orderBy('is_leader', 'desc')->get();
         return $members;
     }
 
-    public function get_leaders(Circle $circle)
+    public function getLeaders(Circle $circle)
     {
         $leaders = $this->where('circle_id', $circle->id)->where('is_leader', true)->get();
         if (empty($leaders)) {
@@ -48,7 +48,7 @@ class Circle_user extends Model
         return $leaders;
     }
 
-    public function get_fes(Circle $circle)
+    public function getFes(Circle $circle)
     {
         $fes = $this->where('circle_id', $circle->id)->where('is_leader', false)->get();
         return $fes;
