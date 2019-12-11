@@ -5,19 +5,18 @@ namespace App\Http\Controllers\Staff\Circles;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use App\Eloquents\Circle;
-use App\Eloquents\User;
 use Illuminate\Support\Facades\Auth;
+use App\Eloquents\User;
+use App\Eloquents\Circle;
 
-class StoreAction extends Controller
+class CreateAction extends Controller
 {
-    public function __construct(User $user, Circle $circle)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->circle = $circle;
     }
 
-    public function __invoke(Circle $circle, Request $request)
+    public function __invoke(Request $request)
     {
         $messages = [
             'name.required' => '団体名は必ず入力してください',
@@ -28,7 +27,7 @@ class StoreAction extends Controller
         ];
 
         $validator = Validator::make($request->all(),[
-            'name'      => ['required', 'unique:circles,name,'.$circle->id.',id', 'max:255'],
+            'name'      => ['required', 'unique:circles,name', 'max:255'],
             'leader'    => ['nullable', 'regex:/^[0-9a-z ]*$/', 'exists:users,student_id'],
             'members'   => ['nullable', 'regex:/^[0-9a-z (\r\n)]*$/'],
         ], $messages);
@@ -59,15 +58,18 @@ class StoreAction extends Controller
         if ($validator->fails())
         {
             return redirect()
-                ->route('staff.circles.edit', $circle)
-                ->withErrors($validator)
-                ->withInput();
+            ->route('staff.circles.create')
+            ->withErrors($validator)
+            ->withInput();
         }
 
         // 保存処理
-        $circle->name = $request->name;
-        $circle->notes = $request->notes;
-        $circle->updated_by = Auth::id();
+        $circle = Circle::create([
+            'name'  => $request->name,
+            'notes' => $request->notes,
+            'created_by' => Auth::id(),
+            'updated_by' => Auth::id(),
+        ]);
         $circle->users()->detach();
         $leader = $this->user->getUserByStudentId($request->leader);
         $leader->circles()->attach(1, ['circle_id' => $circle->id, 'user_id' => $leader->id, 'is_leader' => True]);
@@ -75,7 +77,6 @@ class StoreAction extends Controller
         {
             $member->circles()->attach(1, ['circle_id' => $circle->id, 'user_id' => $member->id, 'is_leader' => False]);
         }
-        $circle->save();
         return redirect('/home_staff/circles/read/'. $circle->id);
         
     }

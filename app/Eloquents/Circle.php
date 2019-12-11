@@ -10,6 +10,9 @@ class Circle extends Model
 {
     protected $fillable = [
         'name',
+        'created_by',
+        'updated_by',
+        'notes',
     ];
 
     public function users()

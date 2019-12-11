@@ -80,4 +80,6 @@ Route::middleware(['auth', 'verified', 'can:staff'])
             });
         Route::get('/circles/edit/{circle}', 'Staff\Circles\EditAction')->name('circles.edit');
         Route::post('/circles/{circle}/update', 'Staff\Circles\StoreAction')->name('circles.store');
+        Route::get('/circles/create', 'Staff\Circles\NewAction')->name('circles.create');
+        Route::post('/circles/create', 'Staff\Circles\CreateAction');
     });

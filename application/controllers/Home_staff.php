@@ -600,10 +600,10 @@ class Home_staff extends MY_Controller
             return $this->_circles_read($circle_id);
         } elseif ($this->uri->segment(3) === "edit") {
             $circle_id = $this->uri->segment(4);
-            $edit_url = array('staff', 'circles', 'edit', $circle_id);
+            $edit_url = ['staff', 'circles', 'edit', $circle_id];
             codeigniter_redirect(base_url($edit_url));
         } elseif ($this->uri->segment(3) === "add") {
-            $edit_url = array('staff', 'circles', 'add');
+            $edit_url = ['staff', 'circles', 'create'];
             codeigniter_redirect(base_url($edit_url));
         }
 
