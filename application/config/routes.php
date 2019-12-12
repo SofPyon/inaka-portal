@@ -54,7 +54,7 @@ $route['404_override'] = 'Home/error_404';
 $route['translate_uri_dashes'] = false;
 
 // 回答の新規作成（団体単位で回答するフォーム）
-$route["forms/(:num)/answers/new"] = "home/Applications_form/index/$1/new";
+$route["forms/(:num)/answers/create"] = "home/Applications_form/index/$1/create";
 
 // 回答の編集（団体単位で回答するフォーム）
 $route["forms/(:num)/answers/(:num)/edit"] = "home/Applications_form/index/$1/$2";

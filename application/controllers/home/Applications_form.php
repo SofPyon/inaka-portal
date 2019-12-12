@@ -23,7 +23,7 @@ class Applications_form extends Home_base_controller
      * 申請フォーム表示
      *
      * URL : フォームID/タイプ(/ブースID)
-     * ( タイプ : new か 回答ID )
+     * ( タイプ : create か 回答ID )
      * config/routes.php も参照のこと
      */
     public function index($formId, $type, $boothId = null)
@@ -61,7 +61,7 @@ class Applications_form extends Home_base_controller
 
         $circleId = null;
 
-        if ($type !== "new") {
+        if ($type !== "create") {
             // $type は 回答更新時の場合、回答ID
             $answer_id = $type;
 
@@ -98,12 +98,12 @@ class Applications_form extends Home_base_controller
 
         // $type で分ける
         $answers_on_db = [];
-        if ($type === "new") {
+        if ($type === "create") {
             // 新規申請の作成
-            $vars["type"] = "new";
+            $vars["type"] = "create";
 
             // フォームの送信先URL
-            $vars["form_action"] = base_url("/forms/{$formId}/answers/new?circle_id={$circleId}");
+            $vars["form_action"] = base_url("/forms/{$formId}/answers/create?circle_id={$circleId}");
 
             $answer_list = $this->forms->get_answers($formId, $circleId, $boothId);
 
@@ -177,7 +177,7 @@ class Applications_form extends Home_base_controller
         $vars["circle_info"] = $this->circles->get_circle_info_by_user_id($this->_get_login_user()->id);
 
         $form_id = (int)$vars['form']->id;
-        $vars['url_format'] = base_url("forms/{$form_id}/answers/new?circle_id=%circle_id%");
+        $vars['url_format'] = base_url("forms/{$form_id}/answers/create?circle_id=%circle_id%");
 
         if (count($vars["circle_info"]) === 1) {
             // アクセスできる団体が１つしかない場合，その団体の回答ページに直接アクセスする
@@ -269,7 +269,7 @@ class Applications_form extends Home_base_controller
 
             // (upload)検証とアップロード処理
             if ($question->type === "upload") {
-                if ($vars["type"] === "new" ||
+                if ($vars["type"] === "create" ||
                     ($vars["type"] === "update" &&
                         (!empty($_FILES["answers"]["name"][$question->id])
                             && $this->input->post("answers[" . $question->id . "]") !== "__delete__"))) {
@@ -356,7 +356,7 @@ class Applications_form extends Home_base_controller
             $error_msg .= " " . PORTAL_CONTACT_EMAIL . " ";
             $error_msg .= "宛に、申請フォームの内容を記載した上でメールを送信してください。";
 
-            if ($type === "new") {
+            if ($type === "create") {
                 $answer_id = $this->forms->add_answer(
                     $answers,
                     $vars["form"]->type,
@@ -365,7 +365,7 @@ class Applications_form extends Home_base_controller
                     $boothId
                 );
                 if ($answer_id === false) {
-                    // new 失敗
+                    // create 失敗
                     $this->_error("申請フォームエラー", $error_msg);
                 }
             } else {
@@ -390,7 +390,7 @@ class Applications_form extends Home_base_controller
             $vars_email["name_to"] = $this->_get_login_user()->name_family . " " .
                 $this->_get_login_user()->name_given;
             $vars_email["form_name"] = $vars["form"]->name;
-            $vars_email["type"] = $type === "new" ? "新規作成" : "更新";
+            $vars_email["type"] = $type === "create" ? "新規作成" : "更新";
             $vars_email["update_form_url"] = base_url($url);
             $vars_email["circle"] = $vars["circle"];
             if (!empty($vars["booth"])) {
