@@ -4,7 +4,8 @@
 
 @section('content')
 <div class="container">
-    <form method="post" action="{{ route('staff.circles.store', $circle) }}">
+    <form method="post" action="{{ route('staff.circles.update', $circle) }}">
+        @method('patch')
         @csrf
         <div class="card">
             <div class="card-body">
@@ -13,7 +14,7 @@
                     <div class="col-sm-10">
                         <input
                             id="nameInput"
-                            class="form-control @if ($errors->has('name')) is-invalid @endif"
+                            class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                             type="text"
                             name="name"
                             value="{{ old('name', $circle->name) }}"
@@ -31,7 +32,7 @@
                 <div class="form-group row">
                     <label for="leaderInput" class="col-sm-2 col-form-label">責任者の学籍番号</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control @if ($errors->has('leader')) is-invalid @endif" id="leaderInput" name="leader" value="{{ old('leader', empty($leader) ? '' : $leader->student_id) }}">
+                        <input type="text" class="form-control {{ $errors->has('leader') ? 'is-invalid' : '' }}" id="leaderInput" name="leader" value="{{ old('leader', empty($leader) ? '' : $leader->student_id) }}">
                         @error('leader')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -42,7 +43,7 @@
                 <div class="form-group row">
                     <label for="membersInput" class="col-sm-2 col-form-label">学園祭係(副責任者)の学籍番号</label>
                     <div class="col-sm-4">
-                        <textarea id="membersInput" class="form-control @if ($errors->has('members')) is-invalid @endif" name="members" rows="3">@if(!empty(old('members'))){{ old('members') }}@else @foreach($members as $member){{ $member->student_id }}&#13;@endforeach @endif</textarea>
+                        <textarea id="membersInput" class="form-control {{ $errors->has('members') ? 'is-invalid' : '' }}" name="members" rows="3">{{ old('members', $members) }}</textarea>
                         @error('members')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

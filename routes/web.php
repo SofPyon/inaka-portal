@@ -80,8 +80,8 @@ Route::middleware(['auth', 'verified', 'can:staff'])
             });
 
         // 団体情報編集
-        Route::get('/circles/edit/{circle}', 'Staff\Circles\EditAction')->name('circles.edit');
-        Route::post('/circles/{circle}/update', 'Staff\Circles\StoreAction')->name('circles.store');
-        Route::get('/circles/create', 'Staff\Circles\NewAction')->name('circles.create');
-        Route::post('/circles/create', 'Staff\Circles\CreateAction');
+        Route::get('/circles/{circle}/edit', 'Staff\Circles\EditAction')->name('circles.edit');
+        Route::patch('/circles/{circle}', 'Staff\Circles\UpdateAction')->name('circles.update');
+        Route::get('/circles/create', 'Staff\Circles\CreateAction')->name('circles.create');
+        Route::post('/circles', 'Staff\Circles\StoreAction')->name('circles.new');
     });

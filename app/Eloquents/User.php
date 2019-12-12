@@ -78,6 +78,16 @@ class User extends Authenticatable
             ->first();
     }
 
+    public function firstByStudentId($student_id)
+    {
+        return $this->where('student_id', $student_id)->first();
+    }
+
+    public function getByStudentIdIn(array $student_ids)
+    {
+        return $this->whereIn('student_id', $student_ids)->get();
+    }
+
     /**
      * 学籍番号のアルファベットを大文字に変換してセットする(セッター)
      *
@@ -200,10 +210,5 @@ class User extends Authenticatable
         return $this->forceFill([
             'univemail_verified_at' => $this->freshTimestamp(),
         ])->save();
-    }
-
-    public function getUserByStudentId($student_id)
-    {
-        return $this->where('student_id', $student_id)->first();
     }
 }
