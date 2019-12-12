@@ -303,7 +303,7 @@ class Applications_form extends Home_base_controller
                         $answers_for_email[$question->name] = "(アップロードしたファイルを削除しました)";
                     } else {
                         // 現状，DBにあるデータを，そのまま維持する
-                        $answers[$question->id] = $answers_on_db[$question->id];
+                        $answers[$question->id] = $answers_on_db[$question->id] ?? null;
 
                         // メール送信用
                         $answers_for_email[$question->name] = "";
