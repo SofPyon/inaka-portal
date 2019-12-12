@@ -102,6 +102,9 @@ class Applications_form extends Home_base_controller
             // 新規申請の作成
             $vars["type"] = "new";
 
+            // フォームの送信先URL
+            $vars["form_action"] = base_url("/forms/{$formId}/answers/new?circle_id={$circleId}");
+
             $answer_list = $this->forms->get_answers($formId, $circleId, $boothId);
 
             // もし，max_answers が 1で，かつ，すでに申請されている場合， update へリダイレクト
@@ -127,6 +130,9 @@ class Applications_form extends Home_base_controller
         } else {
             // すでに行った申請の確認・変更
             $vars["type"] = "update";
+
+            // フォームの送信先URL
+            $vars["form_action"] = base_url("/forms/{$formId}/answers/{$answer_id}/edit");
 
             // 存在しない回答の時エラー
             if ($answer_info === false) {
