@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'フォームエディター - ' . config('app.name'))
+@section('title', '申請フォームエディター - ' . config('app.name'))
 
 @push('css')
     <link href="{{ mix('css/forms_editor.css') }}" rel="stylesheet">
