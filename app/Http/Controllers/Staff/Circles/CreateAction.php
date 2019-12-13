@@ -9,6 +9,6 @@ class CreateAction extends Controller
 {
     public function __invoke()
     {
-        return view('staff.circles.create');
+        return view('staff.circles.form');
     }
 }

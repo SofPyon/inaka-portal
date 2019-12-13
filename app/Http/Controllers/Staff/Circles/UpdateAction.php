@@ -41,6 +41,8 @@ class UpdateAction extends Controller
             $member->circles()->attach($circle->id, ['is_leader' => false]);
         }
         $circle->save();
-        return redirect('/home_staff/circles/read/' . $circle->id);
+        return redirect()
+            ->route('staff.circles.edit', $circle)
+            ->with('toast', '団体情報を更新しました');
     }
 }

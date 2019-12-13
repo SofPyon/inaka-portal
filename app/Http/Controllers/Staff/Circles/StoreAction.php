@@ -47,6 +47,6 @@ class StoreAction extends Controller
 
         return redirect()
             ->route('staff.circles.create')
-            ->with('toast', '作成しました');
+            ->with('toast', '団体情報を作成しました');
     }
 }
