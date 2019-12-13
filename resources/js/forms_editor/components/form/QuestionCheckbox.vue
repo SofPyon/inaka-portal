@@ -9,7 +9,11 @@
       </div>
     </template>
     <template v-slot:edit-panel>
-      <edit-panel :question="question" />
+      <edit-panel
+        :question="question"
+        :label_number_min="false"
+        :label_number_max="false"
+      />
     </template>
   </form-item>
 </template>
