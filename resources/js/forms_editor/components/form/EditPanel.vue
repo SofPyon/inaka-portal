@@ -64,9 +64,9 @@
       </div>
     </label>
     <label class="form-group row" v-if="show_allowed_types">
-      <span class="col-sm-2 col-form-label"
-        >許可される拡張子(<code>|</code>区切りで指定)</span
-      >
+      <span class="col-sm-2 col-form-label">
+        許可される拡張子(<code>|</code>区切りで指定)
+      </span>
       <div class="col-sm-10">
         <input
           type="text"
