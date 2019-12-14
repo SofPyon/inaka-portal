@@ -24,17 +24,26 @@ class UpdateInfoAction extends Controller
         $univemail_flag = false;
         $user = User::find(Auth::id());
         if ($user->email !== $request->email) {
+            $user->email = $request->email;
             $user->email_verified_at = null;
             $email_flag = true;
         }
-        if ($user->student_id !== $request->student_id) {
-            $user->student_id = $request->student_id;
-            $user->univemail_verified_at = null;
-            $univemail_flag = true;
+        if (!empty($request->student_id)) {
+            if ($user->student_id !== $request->student_id) {
+                $user->student_id = $request->student_id;
+                $user->univemail_verified_at = null;
+                $univemail_flag = true;
+            }
         }
-        $user->name = $request->name;
-        $user->name_yomi = $request->name_yomi;
-        $user->email = $request->email;
+
+        if (!empty($request->name)) {
+            $user->name = $request->name;
+        }
+
+        if (!empty($request->name_yomi)) {
+            $user->name_yomi = $request->name_yomi;
+        }
+        
         $user->tel = $request->tel;
 
         $user->save();

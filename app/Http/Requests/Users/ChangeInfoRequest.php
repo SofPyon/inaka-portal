@@ -49,6 +49,18 @@ class ChangeInfoRequest extends FormRequest
         ];
     }
 
+    public function attributes()
+    {
+        return [
+            'student_id' => '学籍番号',
+            'name' => '名前',
+            'name_yomi' => '名前(よみ)',
+            'email' => '連絡先メールアドレス',
+            'tel' => '連絡先電話番号',
+            'password' => 'パスワード',
+        ];
+    }
+
     public function messages()
     {
         return [
@@ -66,7 +78,15 @@ class ChangeInfoRequest extends FormRequest
         $circles = $user->circles->all();
         if (!empty($circles)) {
             $validator->after(function ($validator) use ($user) {
-                if ($this->student_id !== $user->student_id) {
+                if (!empty($this->name) && $this->name !== $user->name) {
+                    $validator->errors()->add('name', '団体に所属しているため変更できません');
+                }
+                
+                if (!empty($this->name_yomi) && $this->name_yomi !== $user->name_yomi) {
+                    $validator->errors()->add('name_yomi', '団体に所属しているため変更できません');
+                }
+
+                if (!empty($this->student_id) && $this->student_id !== $user->student_id) {
                     $validator->errors()->add('student_id', '団体に所属しているため変更できません');
                 }
             });
