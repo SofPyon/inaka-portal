@@ -53,6 +53,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/logout', 'Auth\LoginController@showLogout');
     Route::get('/user/edit', 'Users\ChangeInfoAction')->name('user.edit');
     Route::patch('/user/update', 'Users\UpdateInfoAction')->name('user.update');
+    Route::get('/user/delete', 'Users\DeleteAction')->name('user.delete');
+    Route::delete('/user/delete', 'Users\DestroyAction'); // Laravel に移行後 /user に変更する
 });
 
 // ログインされており、メールアドレス認証が済んでいる場合のみアクセス可能なルート

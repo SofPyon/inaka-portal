@@ -75,6 +75,7 @@
             <p>
                 <a href="{{ route('user.edit') }}" class="btn btn-primary" role="button" target="_blank">登録情報の変更</a>
                 <a href="{{ route('change_password') }}" class="btn btn-primary" role="button" target="_blank">パスワードの変更</a>
+                <a href="{{ route('user.delete') }}" class="btn btn-danger">アカウントの削除</a>
             </p>
         </div>
     </div>
