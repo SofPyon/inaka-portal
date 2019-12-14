@@ -39,6 +39,7 @@
         ],
         "*.php": [
             "composer phpcbf",
+            "composer phpcs",
             "git add"
         ]
     },
