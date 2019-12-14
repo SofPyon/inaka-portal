@@ -51,6 +51,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/change_password', 'Users\ChangePasswordAction')->name('change_password');
     Route::post('/change_password', 'Users\PostChangePasswordAction');
     Route::get('/logout', 'Auth\LoginController@showLogout');
+    Route::get('/user/edit', 'Users\ChangeInfoAction')->name('user.edit');
+    Route::patch('/user/update', 'Users\UpdateInfoAction')->name('user.update');
 });
 
 // ログインされており、メールアドレス認証が済んでいる場合のみアクセス可能なルート

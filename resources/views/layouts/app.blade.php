@@ -93,6 +93,7 @@
                                 </h6>
                             @endif
                         <a class="dropdown-item" href="{{ route('change_password') }}">パスワードの変更</a>
+                        <a class="dropdown-item" href="{{ route('user.edit') }}">登録情報の変更</a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
