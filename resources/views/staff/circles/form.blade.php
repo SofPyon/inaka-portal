@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', empty($circle) ? '団体情報新規作成' : '団体情報編集' )
+@section('title', (empty($circle) ? '団体情報新規作成' : '団体情報編集') . ' - ' . config('app.name') )
 
 @section('content')
 <div class="container">
@@ -14,6 +14,14 @@
         @csrf
         <div class="card">
             <div class="card-body">
+                @isset ($circle)
+                <div class="form-group row">
+                    <label for="circleIdInput" class="col-sm-2 col-form-label">団体ID</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="circleIdInput" value="{{ $circle->id }}">
+                    </div>
+                </div>
+                @endisset
                 <div class="form-group row">
                     <label for="nameInput" class="col-sm-2 col-form-label">団体名</label>
                     <div class="col-sm-10">
