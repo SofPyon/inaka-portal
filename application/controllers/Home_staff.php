@@ -244,6 +244,8 @@ class Home_staff extends MY_Controller
 
         $this->grocery_crud->required_fields('name', 'open_at', 'close_at', 'type', 'is_public');
 
+        // $this->grocery_crud->add_action('エディターで編集', '', '', 'btn btn-success', array($this, 'link_to_editor'), '<i class="fa fa-th-list"></i>');
+
         if ($this->grocery_crud->getstate() !== 'edit' && $this->grocery_crud->getstate() !== 'add') {
             $this->grocery_crud->set_relation('created_by', 'users', '{student_id} {name_family} {name_given}');
         }
@@ -259,6 +261,7 @@ class Home_staff extends MY_Controller
         );
 
         $this->grocery_crud->unset_delete();
+        $this->grocery_crud->set_editor();
 
         $vars += (array)$this->grocery_crud->render();
 
@@ -278,6 +281,11 @@ class Home_staff extends MY_Controller
             return $value = "(不正な値:{$row->type})";
         }
     }
+
+    // function link_to_editor($id , $row)
+    // {
+    //     return base_url("/staff/forms/{$id}/editor");
+    // }
 
     /**
      * 申請フォーム情報ページ(個別表示)
