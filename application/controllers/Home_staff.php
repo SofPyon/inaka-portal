@@ -242,6 +242,8 @@ class Home_staff extends MY_Controller
 
         $this->grocery_crud->required_fields('name', 'open_at', 'close_at', 'type', 'is_public');
 
+        $this->grocery_crud->add_action('エディターで編集', '', '', 'btn btn-success', array($this, 'link_to_editor'));
+
         if ($this->grocery_crud->getstate() !== 'edit' && $this->grocery_crud->getstate() !== 'add') {
             $this->grocery_crud->set_relation('created_by', 'users', '{student_id} {name_family} {name_given}');
         }
@@ -277,6 +279,11 @@ class Home_staff extends MY_Controller
         }
     }
 
+    function link_to_editor($id , $row)
+    {
+        return base_url("/staff/forms/{$id}/editor");
+    }
+
     /**
      * 申請フォーム情報ページ(個別表示)
      *
@@ -303,6 +310,8 @@ class Home_staff extends MY_Controller
             $vars["statistics"] = $this->forms->get_statistics_by_form_id($form_id);
             // 申請フォームのURL
             $vars["public_form_url"] = base_url("/forms/{$form_id}/answers/create");
+            // エディターのURL
+            $vars["editor_url"] = base_url("/staff/forms/{$form_id}/editor");
         } else {
             // 存在しない場合
             show_404();
