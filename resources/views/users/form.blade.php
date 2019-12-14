@@ -67,7 +67,7 @@
 
                 <div class="col-md-8">
                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email', isset($user) ? $user->email : '' ) }}" required autocomplete="email">
-
+                    <small class="form-text text-muted">連絡先メールアドレスとして学校発行のメールアドレスもご利用になれます</small>
                     @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
