@@ -48,25 +48,27 @@ class CheckFormRequest extends FormRequest
 
     public function withValidator($validator)
     {
-        $not_verify = [];
+        $unverified_student_ids = [];
 
-        $member_ids = str_replace(["\r\n", "\r", "\n"], "\n", $this->members);
-        $member_ids = explode("\n", $member_ids);
-        $member_ids = array_filter($member_ids, "strlen");
+        $non_registered_member_ids = str_replace(["\r\n", "\r", "\n"], "\n", $this->members);
+        $non_registered_member_ids = explode("\n", $non_registered_member_ids);
+        $non_registered_member_ids = array_filter($non_registered_member_ids, "strlen");
 
-        $members = $this->user->getByStudentIdIn($member_ids);
+        $members = $this->user->getByStudentIdIn($non_registered_member_ids);
 
         foreach ($members as $member) {
-            $member_ids = array_diff($member_ids, [$member->student_id]);
-            ($member->areBothEmailsVerified() ? '' : array_push($not_verify, $member->student_id));
+            $non_registered_member_ids = array_diff($non_registered_member_ids, [$member->student_id]);
+            if (!$member->areBothEmailsVerified()) {
+                $unverified_student_ids[] = $member->student_id;
+            }
         }
-        $validator->after(function ($validator) use ($member_ids, $not_verify) {
-            if (!empty($member_ids)) {
-                $validator->errors()->add('members', '未登録：' . implode(' ', $member_ids));
+        $validator->after(function ($validator) use ($non_registered_member_ids, $unverified_student_ids) {
+            if (!empty($non_registered_member_ids)) {
+                $validator->errors()->add('members', '未登録：' . implode(' ', $non_registered_member_ids));
             }
 
-            if (!empty($not_verify)) {
-                $validator->errors()->add('members', 'メール未認証：' . implode(' ', $not_verify));
+            if (!empty($unverified_student_ids)) {
+                $validator->errors()->add('members', 'メール未認証：' . implode(' ', $unverified_student_ids));
             }
         });
     }
