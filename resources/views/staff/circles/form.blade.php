@@ -46,9 +46,9 @@
                     <label for="leaderInput" class="col-sm-2 col-form-label">責任者の学籍番号</label>
                     <div class="col-sm-4">
                         <input type="text" class="form-control {{ $errors->has('leader') ? 'is-invalid' : '' }}" id="leaderInput" name="leader" value="{{ old('leader', empty($leader) ? '' : $leader->student_id) }}">
-                        @error('leader')
+                        @foreach ($errors->get('leader') as $message)
                             <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        @endforeach
                     </div>
                 </div>
 
