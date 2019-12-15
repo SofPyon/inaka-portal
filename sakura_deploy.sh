@@ -15,6 +15,7 @@
 #
 # 【ポータルに関する設定】
 # APP_NAME=(ポータルの名称)
+# APP_KEY=(ローカル環境で php artisan key:generate --show を実行した時に表示される文字列)
 # APP_URL=(ポータルのURL)
 # PORTAL_ADMIN_NAME=(ポータルの運営組織名)
 # PORTAL_CONTACT_EMAIL=(運営組織への連絡メールアドレス)
@@ -54,6 +55,7 @@ php dist/artisan key:generate >& /dev/null
 echo ".env ファイルの作成 Start"
 cd dist/
 yarn replace "%APP_NAME%" "${APP_NAME}" .env >& /dev/null
+yarn replace "%APP_KEY%" "${APP_KEY}" .env >& /dev/null
 yarn replace "%APP_URL%" "${APP_URL}" .env >& /dev/null
 yarn replace "%PORTAL_ADMIN_NAME%" "${PORTAL_ADMIN_NAME}" .env >& /dev/null
 yarn replace "%PORTAL_CONTACT_EMAIL%" "${PORTAL_CONTACT_EMAIL}" .env >& /dev/null
