@@ -36,10 +36,7 @@
 # MAIL_FROM_ADDRESS=(ポータルから送信されるメールの差出人)
 # MAIL_FROM_NAME=(ユーザーフレンドリーな差出人名)
 
-# メンテナンスモードを有効にする
-echo "メンテナンスモード On"
-ssh ${SSH_USERNAME}@${SSH_HOST} -o StrictHostKeyChecking=no "cd /home/${SSH_USERNAME}/${DEPLOY_DIRECTORY}/; if [ -f ./artisan ]; then; php artisan down --message=\"メンテナンス中です\"; fi" >& /dev/null
-echo "メンテナンスモード On 完了"
+echo "【デプロイスクリプト Start】"
 
 rm -rf dist/
 
@@ -84,6 +81,15 @@ yarn replace "/../" "/../../${DEPLOY_DIRECTORY}/" public/index_laravel.php >& /d
 cd ../
 echo "パスの修正 End"
 
+echo "メンテナンスモード On"
+ssh ${SSH_USERNAME}@${SSH_HOST} -o StrictHostKeyChecking=no <<EOC
+cd /home/${SSH_USERNAME}/${DEPLOY_DIRECTORY}/
+if [ -f artisan ]; then
+    php artisan down --message=メンテナンス中です
+fi
+EOC
+echo "メンテナンスモード On 完了"
+
 echo "デプロイ Start"
 rsync -avz --update -e "ssh -o StrictHostKeyChecking=no" ./dist/ "${SSH_USERNAME}@${SSH_HOST}:/home/${SSH_USERNAME}/${DEPLOY_DIRECTORY}/" >& /dev/null
 
@@ -95,3 +101,5 @@ echo "デプロイ End"
 echo "メンテナンスモード解除"
 ssh ${SSH_USERNAME}@${SSH_HOST} -o StrictHostKeyChecking=no "cd /home/${SSH_USERNAME}/${DEPLOY_DIRECTORY}/; php artisan up" >& /dev/null
 echo "メンテナンスモード解除完了"
+
+echo "【デプロイスクリプト End】"
