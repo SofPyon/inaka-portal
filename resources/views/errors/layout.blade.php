@@ -1,22 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>@yield('title')</title>
 
-        <!-- Fonts -->
-        <link rel="dns-prefetch" href="//fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-
         <!-- Styles -->
         <style>
             html, body {
                 background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 100;
+                color: #333;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
                 height: 100vh;
                 margin: 0;
             }
@@ -39,17 +34,36 @@
                 text-align: center;
             }
 
+            .app-name {
+
+            }
+
+            .app-name a {
+                color: #333;
+                text-decoration: none;
+            }
+
+            .app-name a:hover {
+                text-decoration: underline;
+            }
+
             .title {
                 font-size: 36px;
-                padding: 20px;
+                font-weight: bold;
             }
         </style>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
             <div class="content">
+                <div class="app-name">
+                    <a href="{{ url('/') }}">
+                        {{ config('app.name') }}
+                    </a>
+                </div>
                 <div class="title">
-                    @yield('message')
+                    {{-- @yield('message') --}}
+                    メンテナンス中です
                 </div>
             </div>
         </div>
