@@ -31,8 +31,8 @@ class CheckFormRequest extends FormRequest
     {
         return [
             'name'      => ['required', 'max:255'],
-            'leader'    => ['nullable', 'regex:/^[0-9a-z ]*$/', 'exists:users,student_id'],
-            'members'   => ['nullable', 'regex:/^[0-9a-z (\r\n)]*$/'],
+            'leader'    => ['nullable', 'exists:users,student_id'],
+            'members'   => ['nullable'],
         ];
     }
 
@@ -43,12 +43,13 @@ class CheckFormRequest extends FormRequest
             'name.unique'   => 'すでに存在する団体名です',
             'name.max'      => '255文字以下で入力してください',
             'leader.exists' => 'この学籍番号は登録されていません',
-            'regex'         => '学籍番号を確認してください',
         ];
     }
 
     public function withValidator($validator)
     {
+        $not_verify = [];
+
         $member_ids = str_replace(["\r\n", "\r", "\n"], "\n", $this->members);
         $member_ids = explode("\n", $member_ids);
         $member_ids = array_filter($member_ids, "strlen");
@@ -57,10 +58,15 @@ class CheckFormRequest extends FormRequest
 
         foreach ($members as $member) {
             $member_ids = array_diff($member_ids, [$member->student_id]);
+            ($member->areBothEmailsVerified() ? '' : array_push($not_verify, $member->student_id));
         }
-        $validator->after(function ($validator) use ($member_ids) {
+        $validator->after(function ($validator) use ($member_ids, $not_verify) {
             if (!empty($member_ids)) {
                 $validator->errors()->add('members', '未登録：' . implode(' ', $member_ids));
+            }
+
+            if (!empty($not_verify)) {
+                $validator->errors()->add('members', 'メール未認証：' . implode(' ', $not_verify));
             }
         });
     }
