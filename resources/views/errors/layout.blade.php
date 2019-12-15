@@ -62,8 +62,7 @@
                     </a>
                 </div>
                 <div class="title">
-                    {{-- @yield('message') --}}
-                    メンテナンス中です
+                    @yield('message')
                 </div>
             </div>
         </div>
