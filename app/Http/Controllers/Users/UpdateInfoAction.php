@@ -43,13 +43,14 @@ class UpdateInfoAction extends Controller
         if (!empty($request->name_yomi)) {
             $user->name_yomi = $request->name_yomi;
         }
-        
+
         $user->tel = $request->tel;
 
         if (!$user->save()) {
             return redirect()
                 ->route('user.edit')
-                ->with('error_message', 'ユーザー情報の更新に失敗しました');
+                ->with('error_message', 'ユーザー情報の更新に失敗しました')
+                ->withInput();
         }
 
         if ($user->univemail === $user->email) {
