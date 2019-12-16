@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace App\Services\Emails;
 
+use Illuminate\Database\Eloquent\Collection;
+use Carbon\CarbonImmutable;
+use App\Eloquents\User;
 use App\Eloquents\Email;
+use App\Mail\Emails\SendEmailServiceMailable;
 
+/**
+ * メールを一斉送信するためのサービスクラス
+ */
 class SendEmailService
 {
     private const NUMBERS_PER_EXECUTE = 60; // 1回の処理で取得するメールレコード数
@@ -14,14 +21,18 @@ class SendEmailService
     private const NUM_RETRY_PER_EMAIL_ADDRESS = 3; // 送信失敗した場合，リトライする回数
     private const NUM_RETRY_PER_JOB = 10; // １回のジョブで繰り返す回数
 
-    public function enqueue()
+    public function bulkEnqueue(string $subject, string $body, Collection $users_email_to)
     {
-        for ($i = 0; $i < 10; ++$i) {
-            $email = new Email();
-            $email->subject = "件名";
-            // ...
-            $email->save();
-        }
+        $created_at = new CarbonImmutable();
+        Email::insert($users_email_to->map(function (User $user) {
+            return [
+                'subject' => $subject,
+                'body' => $body,
+                'email_to' => $user->email,
+                'email_to_name' => $user->name,
+                'created_at' => $created_at,
+            ];
+        }));
     }
 
     public function runJob()
@@ -34,7 +45,7 @@ class SendEmailService
 
         $emails = Email::orderBy('id', 'ASC')
                             ->where('is_locked', false) // 排他ロックされていない
-                            ->where('is_sent', false)   // かつ，未送信
+                            ->whereNull('is_sent')   // かつ，未送信
                             ->where('count_failed', '<', self::NUM_RETRY_PER_EMAIL_ADDRESS) // かつ，リトライ上限に達していないレコード
                             ->take(self::NUMBERS_PER_EXECUTE)
                             ->get();           // 最新 self::NUMBERS_PER_EXECUTE 件を取得
@@ -44,7 +55,12 @@ class SendEmailService
             $email->save();
 
             try {
-                // ...何らかの送信処理...
+                $this->sendEmail(
+                    $email->subject,
+                    $email->body,
+                    $email->email_to,
+                    $email->email_to_name
+                );
 
                 // 送信済みフラグセット
                 $email->is_sent = true;
@@ -60,13 +76,13 @@ class SendEmailService
                 $email->is_locked = false;
                 $email->save();
 
-                // ...今度CRONが起動したらやり直す
+                // エラーになった場合、次回CRONが起動した時に送信再試行する
             }
 
             // 現在実行中の runJob で、失敗回数が self::NUM_RETRY_PER_JOB 回を超えたら
             // サーバー側の設定ミスなどが考えられるので、処理を中止する
             if ($count_failed_now > self::NUM_RETRY_PER_JOB) {
-                // ...管理者にメールするなりログに書き込むなりする...
+                // TODO: 管理者にメールするなりログに書き込むなりする...
 
                 // とりあえず強制終了
                 break;
@@ -80,5 +96,14 @@ class SendEmailService
             // スリープ
             sleep(self::SEND_INTERVAL_SEC);
         }
+    }
+
+    private function sendEmail(string $subject, string $body, string $email_to, string $email_to_name)
+    {
+        $recipient = new \stdClass();
+        $recipient->email = $email_to;
+        $recipient->name = $email_to_name;
+        Mail::to($recipient)
+            ->send(new SendEmailServiceMailable($subject, $body));
     }
 }
