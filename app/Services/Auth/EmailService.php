@@ -68,13 +68,14 @@ class EmailService
         $recipient->email = $email;
         $recipient->name = $name;
 
-        if ($type === 'register') {
-            Mail::to($recipient)
-            ->send(new EmailVerificationMailable($verifyUrl, $name));
-        } elseif ($type === 'edit') {
+        if ($type === 'edit') {
             Mail::to($recipient)
             ->send(new EditEmailVerificationMailable($verifyUrl, $name));
+            return true;
         }
+
+        Mail::to($recipient)
+        ->send(new EmailVerificationMailable($verifyUrl, $name));
     }
 
     /**
