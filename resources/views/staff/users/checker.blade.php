@@ -19,11 +19,16 @@
 
 @if (!empty(request('student_id')))
 <div class="card {{ isset($user) ? $user->areBothEmailsVerified() ? 'border-success' : 'border-warning' : 'border-danger' }}">
-    <div class="card-header lead text-uppercase text-monospace">
-        {{ request('student_id') }} 
+    <div class="card-header lead d-flex align-items-center">
+        <span class="text-uppercase text-monospace d-inline-block mr-2">
+            {{ request('student_id') }}
+        </span>
         @if (isset($user))
             {{ $user->name }}（{{ $user->name_yomi }}）
-            <a href="{{ url('/home_staff/users/read/' . $user->id)}}" class="btn btn-primary float-right" role="button"><i class="fa fa-eye mr-1" aria-hidden="true"></i>詳細</a>
+            <a href="{{ url('/home_staff/users/read/' . $user->id)}}" class="btn btn-primary ml-auto" role="button">
+                <i class="fa fa-eye mr-1" aria-hidden="true"></i>
+                詳細
+            </a>
         @endif
     </div>
     <div class="card-body">
