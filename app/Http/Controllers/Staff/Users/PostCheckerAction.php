@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Eloquents\User;
 
-class CheckAction extends Controller
+class PostCheckerAction extends Controller
 {
     public function __construct(User $user)
     {
