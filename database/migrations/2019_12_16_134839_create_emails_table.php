@@ -19,7 +19,7 @@ class CreateEmailsTable extends Migration
             $table->longText('body');
             $table->string('email_to');
             $table->string('email_to_name');
-            $table->boolean('is_locked')->default(false);
+            $table->timestamp('locked_at')->nullable();
             $table->timestamp('sent_at')->nullable();
             $table->integer('count_failed')->default(0);
             $table->timestamps();
