@@ -67,11 +67,6 @@ class Question extends Model
         return $this->belongsTo(Form::class);
     }
 
-    public function options()
-    {
-        return $this->hasMany(Option::class);
-    }
-
     public function getAllowedTypesArrayAttribute()
     {
         return explode('|', $this->allowed_types);
