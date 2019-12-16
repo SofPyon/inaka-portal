@@ -95,6 +95,12 @@
                             編集
                         </a>
                     </p>
+                    <p>
+                        <a href="{{ editor_url }}" class="btn btn-default">
+                            <i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                            エディター
+                        </a>
+                    </p>
                 </div>
                 <div class="col-md-6 applications-read-header-main">
                     <h1 class="applications-read-name">
@@ -111,6 +117,11 @@
                         <a href="{{ public_form_url }}" target="_blank" rel="noopener">
                             {{ public_form_url }}
                         </a>
+                        {% if (form.is_public == 0) %}
+                            <span class="label label-danger">非公開</span>
+                        {% else %}
+                            <span class="label label-success">公開</span>
+                        {% endif %}
                     </p>
                     <hr>
                     <div>

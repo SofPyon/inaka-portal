@@ -5,6 +5,8 @@ namespace App\Eloquents;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Eloquents\Circle;
+use App\Eloquents\CircleUser;
 
 /**
  * @property string $id
@@ -28,8 +30,15 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
-     * パスワードのバリデーションルール
+     * バリデーションルール
      */
+    public const STUDENT_ID_RULES = ['filled', 'string'];
+    public const NAME_RULES = ['filled', 'string', 'max:255', 'regex:/^([^\s　]+)([\s　]+)([^\s　]+)$/u'];
+        // 姓と名の間であれば，何個でもスペースを入れてもよしとする
+    public const NAME_YOMI_RULES = ['filled', 'string', 'max:255', 'regex:/^([ぁ-んァ-ヶー]+)([\s　]+)([ぁ-んァ-ヶー]+)$/u'];
+        // 姓と名の間であれば，何個でもスペースを入れてもよしとする
+    public const EMAIL_RULES = ['required', 'string', 'email', 'max:255'];
+    public const TEL_RULES = ['required', 'string', 'max:255'];
     public const PASSWORD_RULES = ['required', 'string', 'min:8'];
 
     /**
@@ -58,6 +67,21 @@ class User extends Authenticatable
         'is_staff' => 'bool',
     ];
 
+    public function circles()
+    {
+        return $this->belongsToMany(Circle::class)->using(CircleUser::class)->withPivot('is_leader');
+    }
+
+    /**
+     * メール認証が完了しているユーザーだけに限定するクエリスコープ
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeVerified($query)
+    {
+        return $query->whereNotNull('email_verified_at')->whereNotNull('univemail_verified_at');
+    }
 
     /**
      * ログイン ID から該当ユーザーを取得する
@@ -70,6 +94,16 @@ class User extends Authenticatable
         return $this->where('email', $login_id)
             ->orWhere('student_id', $login_id)
             ->first();
+    }
+
+    public function firstByStudentId($student_id)
+    {
+        return $this->where('student_id', $student_id)->first();
+    }
+
+    public function getByStudentIdIn(array $student_ids)
+    {
+        return $this->whereIn('student_id', $student_ids)->get();
     }
 
     /**

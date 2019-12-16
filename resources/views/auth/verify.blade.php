@@ -1,5 +1,7 @@
 @extends('layouts.single_column')
 
+@section('title', 'メール認証のお願い - ' . config('app.name'))
+
 @section('main')
     <div class="card mb-3">
         <div class="card-header">メール認証のお願い</div>
@@ -54,16 +56,27 @@
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-header">確認メールが見つからない場合・確認メールの URL にアクセスするとエラーになる場合</div>
+    <div class="card mb-3">
+        <div class="card-header">確認メールの再送</div>
         <div class="card-body">
-            <p>確認メールを再送するには、以下のボタンを選んでください。</p>
+            <p>確認メールが見つからない場合・確認メールの URL にアクセスするとエラーになる場合、以下のボタンより確認メールを再送できます。</p>
             <form action="{{ route('verification.resend') }}" method="post">
                 @csrf
                 <button class="btn btn-primary">
-                    確認メールを再送する
+                    確認メールを再送
                 </button>
             </form>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">誤った情報でユーザー登録してしまった場合</div>
+        <div class="card-body">
+            <p>
+                <a href="{{ route('user.edit') }}" class="btn btn-primary" role="button" target="_blank">登録情報の変更</a>
+                <a href="{{ route('change_password') }}" class="btn btn-primary" role="button" target="_blank">パスワードの変更</a>
+                <a href="{{ route('user.delete') }}" class="btn btn-danger">アカウントの削除</a>
+            </p>
         </div>
     </div>
 @endsection

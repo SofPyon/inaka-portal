@@ -1,5 +1,7 @@
 @extends('layouts.single_column')
 
+@section('title', 'メール認証の完了 - ' . config('app.name'))
+
 @section('main')
     <div class="card mb-3">
         <div class="card-header">メール認証完了</div>
@@ -12,7 +14,7 @@
             </p>
             <p class="text-center mb-0">
                 <a href="{{ route('home') }}" class="btn btn-primary">
-                    ダッシュボードにアクセスする
+                    ダッシュボードにアクセス
                 </a>
             </p>
         </div>

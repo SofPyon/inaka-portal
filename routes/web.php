@@ -51,6 +51,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/change_password', 'Users\ChangePasswordAction')->name('change_password');
     Route::post('/change_password', 'Users\PostChangePasswordAction');
     Route::get('/logout', 'Auth\LoginController@showLogout');
+    Route::get('/user/edit', 'Users\EditInfoAction')->name('user.edit');
+    Route::patch('/user/update', 'Users\UpdateInfoAction')->name('user.update');
+    Route::get('/user/delete', 'Users\DeleteAction')->name('user.delete');
+    Route::delete('/user/delete', 'Users\DestroyAction'); // Laravel に移行後 /user に変更する
 });
 
 // ログインされており、メールアドレス認証が済んでいる場合のみアクセス可能なルート
@@ -78,4 +82,15 @@ Route::middleware(['auth', 'verified', 'can:staff', 'staffAuthed'])
                 Route::post('/editor/api/update_question', 'Staff\Forms\UpdateQuestionAction');
                 Route::post('/editor/api/delete_question', 'Staff\Forms\DeleteQuestionAction');
             });
+
+        // メール一斉送信
+        Route::get('/send_emails', 'Staff\SendEmails\ListAction')->name('send_emails');
+        Route::post('/send_emails', 'Staff\SendEmails\StoreAction');
+        Route::delete('/send_emails', 'Staff\SendEmails\DestroyAction');
+
+        // 団体情報編集
+        Route::get('/circles/{circle}/edit', 'Staff\Circles\EditAction')->name('circles.edit');
+        Route::patch('/circles/{circle}', 'Staff\Circles\UpdateAction')->name('circles.update');
+        Route::get('/circles/create', 'Staff\Circles\CreateAction')->name('circles.create');
+        Route::post('/circles', 'Staff\Circles\StoreAction')->name('circles.new');
     });

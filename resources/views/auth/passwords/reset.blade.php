@@ -1,5 +1,7 @@
 @extends('layouts.single_column')
 
+@section('title', 'パスワードの再設定 - ' . config('app.name'))
+
 @section('main')
     <div class="card">
         <div class="card-header">パスワードを再設定</div>
@@ -34,7 +36,7 @@
                 <div class="form-group row mb-0">
                     <div class="col-md-8 offset-md-4">
                         <button type="submit" class="btn btn-primary">
-                            登録する
+                            登録
                         </button>
                     </div>
                 </div>

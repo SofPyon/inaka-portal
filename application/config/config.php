@@ -3,10 +3,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 |--------------------------------------------------------------------------
-| ポータル設定 
+| ポータル設定
 |--------------------------------------------------------------------------
 |
-| ポータルに関する各種設定を行います。実際の設定は、 application/.env 
+| ポータルに関する各種設定を行います。実際の設定は、 application/.env
 | ファイル上で行なってください。
 |
 | 注意 : これは Codeigniter の機能では あ り ま せ ん。Ridaisai Portal(RP) の独自機能です。
@@ -29,6 +29,13 @@ if (!defined('APP_NAME')) {
     define('APP_NAME', codeigniter_env('APP_NAME', 'ポータル名称未設定'));
 }
 
+# ポータル管理者の組織名
+// ポータルを管理している実行委員会名などを指定します。
+if (!defined('PORTAL_ADMIN_NAME')) {
+    define('PORTAL_ADMIN_NAME', codeigniter_env('PORTAL_ADMIN_NAME', '組織名未設定'));
+}
+
+
 # 連絡先メールアドレス
 // ここで設定したメールアドレスが、運営者の連絡先として表示されるほか、お問い合わせフォームの送信先として使用されます。
 if (!defined('PORTAL_CONTACT_EMAIL')) {
@@ -37,7 +44,7 @@ if (!defined('PORTAL_CONTACT_EMAIL')) {
 
 # 大学発行メールアドレスのドメイン
 // Notice: 学籍番号@ドメイン という形式のメールアドレスが発行されない大学では
-//   ridaisai_portal は利用できません。
+//   inaka-portal は利用できません。
 if (!defined('PORTAL_UNIVEMAIL_DOMAIN')) {
     define('PORTAL_UNIVEMAIL_DOMAIN', codeigniter_env('PORTAL_UNIVEMAIL_DOMAIN', 'example.com'));
 }
@@ -53,8 +60,10 @@ if (!defined('RP_UPLOAD_DIR')) {
 // RP_UPLOAD_DIR と似た設定ですが、設定方法が異なります。
 // 先頭にスラッシュ(/)をつけることは で き ま せ ん。
 // public/index.php からみたディレクトリを指定してください。
-if (!defined('RP_UPLOAD_DIR_CRUD')) {
-    define('RP_UPLOAD_DIR_CRUD', codeigniter_env('RP_UPLOAD_DIR_CRUD', '../application/uploads'));
+// ただし、さくらのレンタルサーバーにデプロイする場合、sakura_deploy.sh ファイルに
+// 記載されている PORTAL_UPLOAD_DIR_CRUD についての指示に従ってください
+if (!defined('PORTAL_UPLOAD_DIR_CRUD')) {
+    define('PORTAL_UPLOAD_DIR_CRUD', codeigniter_env('PORTAL_UPLOAD_DIR_CRUD', '../application/uploads'));
 }
 
 # LINE Notify スタッフ同報設定
