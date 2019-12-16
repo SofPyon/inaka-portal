@@ -11,7 +11,7 @@
                 @csrf
                 <input type="text" class="form-control" name="student_id" placeholder="学籍番号">
                 <button type="submit" class="btn btn-primary ml-1">確認</button>
-                <a href="{{ url('/home_staff') }}" class="btn btn-light ml-1">キャンセル</a>
+                <a href="{{ url('/home_staff') }}" class="btn btn-light ml-1">戻る</a>
             </div>
         </form>
     </div>
