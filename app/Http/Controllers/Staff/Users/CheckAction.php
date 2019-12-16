@@ -19,7 +19,6 @@ class CheckAction extends Controller
 
         // checker.blade.php の キャンセルボタン のリンクは Laravel以降後に修正
         return view('staff.users.checker')
-            ->with('user', $user)
-            ->with('student_id', $request->student_id);
+            ->with('user', $user);
     }
 }

@@ -17,9 +17,9 @@
     </div>
 </div>
 
-@if (isset($student_id))
+@if (!empty(request('student_id')))
 <div class="card {{ isset($user) ? $user->areBothEmailsVerified() ? 'border-success' : 'border-warning' : 'border-danger' }}">
-    <div class="card-header lead text-uppercase text-monospace">{{ $student_id }}</div>
+    <div class="card-header lead text-uppercase text-monospace">{{ request('student_id') }}</div>
     <div class="card-body">
         @if (isset($user))
             <h4 class="{{ $user->areBothEmailsVerified() ? 'text-success' : 'text-warning' }} mb-1 card-title">{{ $user->areBothEmailsVerified() ? '登録済み' : 'メールの認証が済んでいません' }}</h4>
@@ -32,7 +32,7 @@
             <h5 class="card-title">{{ $user->name }}（{{ $user->name_yomi }}）</h5>
             <a href="{{ url('/home_staff/users/read/' . $user->id)}}" class="btn btn-primary" role="button"><i class="fa fa-eye mr-1" aria-hidden="true"></i>詳細</a>
         @else
-            <p class="text-danger lead">未登録</p>
+            <h5 class="text-danger card-title">未登録</h5>
         @endif
     </div>
 </div>
