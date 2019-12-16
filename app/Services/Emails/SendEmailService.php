@@ -44,16 +44,16 @@ class SendEmailService
         $count_failed_now = 0;
 
         $emails = Email::orderBy('id', 'ASC')
-                            ->where('is_locked', false) // 排他ロックされていない
+                            ->whereNull('locked_at') // 排他ロックされていない
                             ->whereNull('sent_at')   // かつ，未送信
                             ->where('count_failed', '<', self::NUM_RETRY_PER_EMAIL_ADDRESS) // かつ，リトライ上限に達していないレコード
                             ->take(self::NUMBERS_PER_EXECUTE)
                             ->get();           // 最新 self::NUMBERS_PER_EXECUTE 件を取得
         foreach ($emails as $email) {
-            $sent_at = now();
+            $now = now();
 
             // ロック処理
-            $email->is_locked = true;
+            $email->locked_at = $now;
             $email->save();
 
             try {
@@ -65,7 +65,8 @@ class SendEmailService
                 );
 
                 // 送信済みフラグセット
-                $email->sent_at = $sent_at;
+                $email->sent_at = $now;
+                $email->locked_at = null;
                 $email->save();
             } catch (Exception $e) {
                 // 送信失敗したので失敗カウントを1つ追加
@@ -75,7 +76,7 @@ class SendEmailService
                 // TODO: エラーの内容をログに残せたら良さそう
 
                 // ロック解除
-                $email->is_locked = false;
+                $email->locked_at = null;
                 $email->save();
 
                 // エラーになった場合、次回CRONが起動した時に送信再試行する
