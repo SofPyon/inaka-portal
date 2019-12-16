@@ -6,11 +6,9 @@
     <div class="card mb-3">
         <div class="card-header">メール認証のお願い</div>
         <div class="card-body">
-            @if (!(Auth::user()->created_at < Auth::user()->updated_at))
-                <p class="text-center text-danger lead">
-                    <strong>まだユーザー登録は完了していません！</strong>
-                </p>
-            @endif
+            <p class="text-center text-danger lead">
+                <strong>{{ Auth::user()->created_at < Auth::user()->updated_at ? 'まだユーザー情報の変更は完了していません！' : 'まだユーザー登録は完了していません！' }}</strong>
+            </p>
             <p>以下のメールアドレスに確認メールを送信しました。<strong>メール送信から {{ config('auth.verification.expire', 60) }} 分以内に、</strong>確認メールに記載されている URL にアクセスしてください。</p>
 
             <div class="row">
