@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Emails;
 
 use Illuminate\Database\Eloquent\Collection;
-use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\Mail;
 use App\Eloquents\User;
 use App\Eloquents\Email;
 use App\Mail\Emails\SendEmailServiceMailable;
@@ -21,10 +21,10 @@ class SendEmailService
     private const NUM_RETRY_PER_EMAIL_ADDRESS = 3; // 送信失敗した場合，リトライする回数
     private const NUM_RETRY_PER_JOB = 10; // １回のジョブで繰り返す回数
 
-    public function bulkEnqueue(string $subject, string $body, Collection $users_email_to)
+    public static function bulkEnqueue(string $subject, string $body, Collection $users_email_to)
     {
-        $created_at = new CarbonImmutable();
-        Email::insert($users_email_to->map(function (User $user) {
+        $created_at = now();
+        Email::insert($users_email_to->map(function (User $user) use ($subject, $body, $created_at) {
             return [
                 'subject' => $subject,
                 'body' => $body,
@@ -32,12 +32,12 @@ class SendEmailService
                 'email_to_name' => $user->name,
                 'created_at' => $created_at,
             ];
-        }));
+        })->toArray());
     }
 
-    public function runJob()
+    public static function runJob()
     {
-        $start_time = now(); // 開始時刻(UNIXエポック) (秒)
+        $start_time = time(); // 開始時刻(UNIXエポック) (秒)
 
         // 今期失敗回数
         // (この関数が呼び出されて以降失敗した回数)
@@ -45,17 +45,19 @@ class SendEmailService
 
         $emails = Email::orderBy('id', 'ASC')
                             ->where('is_locked', false) // 排他ロックされていない
-                            ->whereNull('is_sent')   // かつ，未送信
+                            ->whereNull('sent_at')   // かつ，未送信
                             ->where('count_failed', '<', self::NUM_RETRY_PER_EMAIL_ADDRESS) // かつ，リトライ上限に達していないレコード
                             ->take(self::NUMBERS_PER_EXECUTE)
                             ->get();           // 最新 self::NUMBERS_PER_EXECUTE 件を取得
         foreach ($emails as $email) {
+            $sent_at = now();
+
             // ロック処理
             $email->is_locked = true;
             $email->save();
 
             try {
-                $this->sendEmail(
+                self::sendEmail(
                     $email->subject,
                     $email->body,
                     $email->email_to,
@@ -63,7 +65,7 @@ class SendEmailService
                 );
 
                 // 送信済みフラグセット
-                $email->is_sent = true;
+                $email->sent_at = $sent_at;
                 $email->save();
             } catch (Exception $e) {
                 // 送信失敗したので失敗カウントを1つ追加
@@ -89,7 +91,7 @@ class SendEmailService
             }
 
             // 強制終了するか否か
-            if (now() - $start_time > self::SEC_PER_JOB) {
+            if (time() - $start_time > self::SEC_PER_JOB) {
                 break;
             }
 
@@ -98,7 +100,7 @@ class SendEmailService
         }
     }
 
-    private function sendEmail(string $subject, string $body, string $email_to, string $email_to_name)
+    private static function sendEmail(string $subject, string $body, string $email_to, string $email_to_name)
     {
         $recipient = new \stdClass();
         $recipient->email = $email_to;
