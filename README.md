@@ -19,7 +19,7 @@
 - inaka-portal として公開するにあたり、ある程度のリファクタリングなどを施した。が、まだ途中。
 
 ## 開発環境セットアップ方法
-Git、Composer、Node.js、Yarn、Docker がセットアップ済みである必要があります。
+Git、PHP、Composer、Node.js、Yarn、Docker がセットアップ済みである必要があります。
 
 ```bash
 $ git clone git@github.com:SofPyon/inaka-portal.git
@@ -27,6 +27,7 @@ $ cd inaka-portal/
 
 # 設定ファイルを作成
 $ cp .env.example .env
+$ php artisan key:generate
 
 # 必要パッケージをインストール
 $ composer install
@@ -113,9 +114,9 @@ inaka-portal では、Issue や Pull Request を歓迎します。
 このプロジェクトは、まだプログラミングスキルが浅かった時に開発されたものを、最近になって多くのリファクタリングを施したものです。今でもあまり良いコードとは言えないかもしれませんが、これでもだいぶマシになったほうです(パスワードがハードコードされていたりした)。
 
 ## SQL
-inaka-portal を動作させるために必要な SQL は `docker_dev/db/sql/init.sql` に格納されています。
+inaka-portal を動作させるために必要な DB テーブルは、`composer migrate` コマンドによって作成されるほか、 `docker_dev/db/sql/init.sql` に格納されている SQL によって作成されます。
 
-この SQL ファイルは、Docker 初回起動時、自動的に実行されるようになっています。
+`init.sql` は、Docker 初回起動時、自動的に実行されるようになっています。
 
 # ライセンス
 
