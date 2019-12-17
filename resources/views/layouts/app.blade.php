@@ -128,7 +128,7 @@
 
 @auth
     @if (Gate::forUser(Auth::user())->allows('use-all-features'))
-        <div class="spnav-space"></div>
+        <div class="spnav-space d-block d-lg-none"></div>
         <nav class="spnav d-block d-lg-none">
             <ul class="spnav-list">
                 @yield('global_nav')
