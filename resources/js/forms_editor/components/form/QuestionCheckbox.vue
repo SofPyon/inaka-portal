@@ -13,6 +13,7 @@
         :question="question"
         :label_number_min="false"
         :label_number_max="false"
+        :show_options="true"
       />
     </template>
   </form-item>
