@@ -2,10 +2,16 @@
   <form-item :item_id="question_id" type_label="単一選択(ドロップダウン)">
     <template v-slot:content>
       <div class="form-group mb-0">
-        <div class="text-muted text-center">
-          <p class="lead">申請フォームエディターでの編集に未対応</p>
-          <p>この設問は、まだエディターで編集できません。</p>
-        </div>
+        <p class="mb-2">
+          {{ name }}
+          <span class="badge badge-danger" v-if="is_required">必須</span>
+        </p>
+        <p class="form-text text-muted mb-2">
+          {{ description }}
+        </p>
+        <select class="form-control" tabindex="-1">
+          <option>単一選択(ドロップダウン)</option>
+        </select>
       </div>
     </template>
     <template v-slot:edit-panel>
@@ -46,6 +52,14 @@ export default {
     },
     description() {
       return this.question.description
+    },
+    options() {
+      return this.question.options
+        ? this.question.options.split(/\r\n|\n/)
+        : ['(選択肢なし)']
+    },
+    is_required() {
+      return this.question.is_required
     }
   }
 }
