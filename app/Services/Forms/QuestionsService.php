@@ -66,6 +66,16 @@ class QuestionsService
         if (empty($question['is_required'])) {
             $question['is_required'] = false;
         }
+
+        // CodeIgniter 側の in_list バリデーションルールを使いたいが、
+        // CodeIgniter ではバリデーションルールを単なる文字列で表す。
+        // そのため、CodeIgniter のバリデーションの邪魔になる文字列は
+        // 削除する
+        // TODO: CodeIgniter を廃止したら、以下の処理は削除する
+        $question['options'] = !empty($question['options'])
+            ? str_replace([',', '[', ']', ' ', "\t"], '', $question['options'])
+            : null;
+
         $eloquent->fill($question);
         $eloquent->save();
     }

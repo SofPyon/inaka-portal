@@ -371,12 +371,11 @@ class Home_staff extends MY_Controller
                     $question->type === "select") {
                     // 多肢選択式
                     $string_to_export .= "\t";
-                    foreach ($question->options as $option) {
-                        if (is_array($answer->answers[$question->id]) &&
-                            in_array($option->id, $answer->answers[$question->id], true)) {
-                            $string_to_export .= $option->value . "/";
-                        } elseif ($option->id === $answer->answers[$question->id]) {
-                            $string_to_export .= $option->value;
+                    if (isset($answer->answers[$question->id])) {
+                        if (is_array($answer->answers[$question->id])) {
+                            $string_to_export .= implode('/', $answer->answers[$question->id]);
+                        } else {
+                            $string_to_export .= $answer->answers[$question->id];
                         }
                     }
                 } else {
@@ -509,41 +508,6 @@ class Home_staff extends MY_Controller
         $vars += (array)$this->grocery_crud->render();
 
         $this->_render('home_staff/crud', $vars);
-    }
-
-    /**
-     * ユーザー登録チェッカー
-     */
-    public function users_checker()
-    {
-
-        $vars = [];
-        $vars["page_title"] = "ユーザー登録チェッカー";
-        $vars["main_page_type"] = "users_checker";
-
-        $this->load->database();
-
-        if (!empty($this->input->post("student_id"))) {
-            // 学籍番号入力時
-            $student_id = $this->input->post("student_id");
-            $user_check = $this->db->where("student_id", $student_id)->get("users")->result();
-            if (!empty($user_check)) {
-                $vars["user_check"] = $user_check[0];
-                $vars["user_check"]->is_completed_register = true;
-            } else {
-                $user_check = $this->db->where("student_id", $student_id)->get("users_pre")->result();
-                if (!empty($user_check)) {
-                    $vars["user_check"] = $user_check[0];
-                    $vars["user_check"]->is_completed_register = false;
-                } else {
-                    $vars["user_check"] = null;
-                }
-            }
-        } else {
-            $vars["user_check"] = null;
-        }
-
-        $this->_render('home_staff/users_checker', $vars);
     }
 
     /**
@@ -1264,7 +1228,7 @@ class Home_staff extends MY_Controller
                 "users_checker" => [
                     "icon" => "address-book-o",
                     "name" => "ユーザー登録チェッカー",
-                    "url" => "home_staff/users_checker",
+                    "url" => "staff/users/check",
                 ],
                 "circles" => [
                     "icon" => "users",
