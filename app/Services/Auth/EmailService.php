@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Auth;
 
 use App\Eloquents\User;
+use App\Mail\Auth\EditEmailVerificationMailable;
 use App\Mail\Auth\EmailVerificationMailable;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
@@ -18,10 +19,10 @@ class EmailService
      *
      * @param  User  $user
      */
-    public function sendAll(User $user)
+    public function sendAll(User $user, $type = 'register')
     {
-        $this->sendToUnivemail($user);
-        $this->sendToEmail($user);
+        $this->sendToUnivemail($user, $type);
+        $this->sendToEmail($user, $type);
     }
 
     /**
@@ -29,14 +30,14 @@ class EmailService
      *
      * @param  User  $user
      */
-    public function sendToEmail(User $user)
+    public function sendToEmail(User $user, $type = 'register')
     {
         if ($user->hasVerifiedEmail()) {
             return;
         }
 
         $verifyUrl = $this->generateSignedUrl($user, 'email');
-        $this->send($user->email, $user->name, $verifyUrl);
+        $this->send($user->email, $user->name, $verifyUrl, $type);
     }
 
     /**
@@ -44,14 +45,14 @@ class EmailService
      *
      * @param  User  $user
      */
-    public function sendToUnivemail(User $user)
+    public function sendToUnivemail(User $user, $type = 'register')
     {
         if ($user->hasVerifiedUnivemail()) {
             return;
         }
 
         $verifyUrl = $this->generateSignedUrl($user, 'univemail');
-        $this->send($user->univemail, $user->name, $verifyUrl);
+        $this->send($user->univemail, $user->name, $verifyUrl, $type);
     }
 
     /**
@@ -61,13 +62,20 @@ class EmailService
      * @param  string  $name
      * @param  string  $verifyUrl
      */
-    private function send(string $email, string $name, string $verifyUrl)
+    private function send(string $email, string $name, string $verifyUrl, $type)
     {
         $recipient = new \stdClass();
         $recipient->email = $email;
         $recipient->name = $name;
+
+        if ($type === 'edit') {
+            Mail::to($recipient)
+            ->send(new EditEmailVerificationMailable($verifyUrl, $name));
+            return true;
+        }
+
         Mail::to($recipient)
-            ->send(new EmailVerificationMailable($verifyUrl, $name));
+        ->send(new EmailVerificationMailable($verifyUrl, $name));
     }
 
     /**
