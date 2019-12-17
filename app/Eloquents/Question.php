@@ -43,6 +43,7 @@ class Question extends Model
         'number_min',
         'number_max',
         'allowed_types',
+        'options',
         'priority',
     ];
 

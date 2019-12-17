@@ -58,7 +58,7 @@ export default {
     },
     options() {
       return this.question.options
-        ? this.question.options.split(/\r\n|\n/)
+        ? this.question.options.trim().split(/\r\n|\n/)
         : ['(選択肢なし)']
     },
     is_required() {

@@ -9,9 +9,18 @@
         <p class="form-text text-muted mb-2">
           {{ description }}
         </p>
-        <select class="form-control" tabindex="-1">
+        <select class="custom-select" tabindex="-1">
           <option>単一選択(ドロップダウン)</option>
         </select>
+        <ul class="list-group">
+          <li
+            class="list-group-item py-1"
+            v-for="option in options"
+            :key="option"
+          >
+            {{ option }}
+          </li>
+        </ul>
       </div>
     </template>
     <template v-slot:edit-panel>
@@ -55,7 +64,7 @@ export default {
     },
     options() {
       return this.question.options
-        ? this.question.options.split(/\r\n|\n/)
+        ? this.question.options.trim().split(/\r\n|\n/)
         : ['(選択肢なし)']
     },
     is_required() {
@@ -64,3 +73,17 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.custom-select {
+  appearance: none;
+  border-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.list-group-item {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+</style>
