@@ -15,30 +15,39 @@
   {% endif %}
 
   {% if flashdata_danger is not empty %}
-    <div class="alert danger">
+    <div class="alert alert-danger">
       {{ flashdata_danger }}
     </div>
   {% endif %}
 
+  {% if circle_info is empty %}
+    <div class="alert alert-info">
+      <p>
+        <i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i>
+        <strong>団体参加登録が未完了</strong>
+      </p>
+      <p>団体参加登録がお済みでない場合、申請機能など、{{ constant("APP_NAME") }} の一部機能がご利用になれません</p>
+      <p><small>(参加登録を行ってからこの表示が消えるのに時間がかかることがあります)</small></p>
+    </div>
+  {% endif %}
+
+  {% if next_event.name is not empty %}
   <section class="panel panel-primary main-section__next-event">
     <div class="panel-heading">
       <h2 class="panel-title">次の予定</h2>
     </div>
     <div class="panel-body">
-      {% if next_event.name is not empty %}
-        <h3 class="main-section__next-event__title">
-          <date>{{ next_event.start_at_string }}</date>
-        </h3>
-        <p class="lead main-section__next-event__place">{{ next_event.name }} ・ {{ next_event.place }}</p>
-        <div class="markdown-body">{{ next_event.description_html | raw }}</div>
-      {% else %}
-        <h3 class="text-muted text-center">予定はありません</h3>
-      {% endif %}
+      <h3 class="main-section__next-event__title">
+        <date>{{ next_event.start_at_string }}</date>
+      </h3>
+      <p class="lead main-section__next-event__place">{{ next_event.name }} ・ {{ next_event.place }}</p>
+      <div class="markdown-body">{{ next_event.description_html | raw }}</div>
     </div>
     <div class="panel-footer">
       <a href="{{ base_url('home/schedules') }}" class="btn btn-primary">他の予定をみる</a>
     </div>
   </section>
+  {% endif %}
 
   <div class="row">
     <div class="col-lg-4">
@@ -115,6 +124,39 @@
       </section>
     </div>
     <div class="col-lg-4">
+      <section class="panel panel-info main-section__applications">
+        <div class="panel-heading">
+          <h2 class="panel-title">申請</h2>
+        </div>
+        {% if circle_info is not empty %}
+          <div class="list-group">
+
+            {% for form in forms %}
+            <a href="{{ base_url("forms/#{form.id}/answers/create") }}" class="list-group-item">
+              <h3 class="list-group-item-heading h5">
+                <b>
+                  {{ form.name }}
+                </b>
+              </h3>
+              <p class="list-group-item-text">
+                {{ form.close_at_string }} まで受付
+              </p>
+            </a>
+            {% endfor %}
+
+          </div>
+          <div class="panel-footer">
+            <a href="{{ base_url('home/applications') }}" class="btn btn-primary">全ての申請をみる</a>
+          </div>
+        {% else %}
+          <div class="panel-body text-center muted">
+            <h3>団体参加登録が未完了</h3>
+            <p>申請機能は、団体参加登録をされた方のみご利用になれます。</p>
+          </div>
+        {% endif %}
+      </section>
+    </div>
+    <div class="col-lg-12">
       {{ form_open("home/contacts") | raw }}
         <section class="panel panel-info main-section__applications">
           <div class="panel-heading">
