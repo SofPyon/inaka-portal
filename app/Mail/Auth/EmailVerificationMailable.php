@@ -18,6 +18,8 @@ class EmailVerificationMailable extends Mailable
 
     public $userName;
 
+    public $is_edit;
+
     /**
      * Create a new message instance.
      *
@@ -39,10 +41,6 @@ class EmailVerificationMailable extends Mailable
      */
     public function build()
     {
-        if ($this->is_edit) {
-            return $this->markdown('emails.auth.editverify')
-                ->subject('【重要】メール認証のお願い');
-        }
         return $this->markdown('emails.auth.verify')
             ->subject('【重要】メール認証のお願い');
     }
