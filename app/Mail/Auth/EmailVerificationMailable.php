@@ -25,10 +25,11 @@ class EmailVerificationMailable extends Mailable
      * @param  string  $userName  宛先ユーザーのフルネーム
      * @return void
      */
-    public function __construct(string $verifyUrl, string $userName)
+    public function __construct(string $verifyUrl, string $userName, bool $is_edit)
     {
         $this->verifyUrl = $verifyUrl;
         $this->userName = $userName;
+        $this->is_edit = $is_edit;
     }
 
     /**
@@ -38,6 +39,10 @@ class EmailVerificationMailable extends Mailable
      */
     public function build()
     {
+        if ($this->is_edit) {
+            return $this->markdown('emails.auth.editverify')
+                ->subject('【重要】メール認証のお願い');
+        }
         return $this->markdown('emails.auth.verify')
             ->subject('【重要】メール認証のお願い');
     }
