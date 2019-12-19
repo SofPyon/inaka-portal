@@ -18,4 +18,5 @@
             </form>
         </div>
     </div>
+    {{ dd(Auth::user())}}
 @endsection

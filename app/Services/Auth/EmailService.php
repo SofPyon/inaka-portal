@@ -18,10 +18,10 @@ class EmailService
      *
      * @param  User  $user
      */
-    public function sendAll(User $user, bool $is_edit = false)
+    public function sendAll(User $user)
     {
-        $this->sendToUnivemail($user, $is_edit);
-        $this->sendToEmail($user, $is_edit);
+        $this->sendToUnivemail($user);
+        $this->sendToEmail($user);
     }
 
     /**
@@ -29,14 +29,14 @@ class EmailService
      *
      * @param  User  $user
      */
-    public function sendToEmail(User $user, bool $is_edit = false)
+    public function sendToEmail(User $user)
     {
         if ($user->hasVerifiedEmail()) {
             return;
         }
 
         $verifyUrl = $this->generateSignedUrl($user, 'email');
-        $this->send($user->email, $user->name, $verifyUrl, $is_edit);
+        $this->send($user->email, $user->name, $verifyUrl, $user->is_verified);
     }
 
     /**
@@ -44,14 +44,14 @@ class EmailService
      *
      * @param  User  $user
      */
-    public function sendToUnivemail(User $user, bool $is_edit = false)
+    public function sendToUnivemail(User $user)
     {
         if ($user->hasVerifiedUnivemail()) {
             return;
         }
 
         $verifyUrl = $this->generateSignedUrl($user, 'univemail');
-        $this->send($user->univemail, $user->name, $verifyUrl, $is_edit);
+        $this->send($user->univemail, $user->name, $verifyUrl, $user->is_verified);
     }
 
     /**
