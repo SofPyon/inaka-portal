@@ -65,6 +65,7 @@ class User extends Authenticatable
 
     protected $casts = [
         'is_staff' => 'bool',
+        'is_verified' => 'bool',
     ];
 
     public function circles()
@@ -240,5 +241,16 @@ class User extends Authenticatable
         return $this->forceFill([
             'univemail_verified_at' => $this->freshTimestamp(),
         ])->save();
+    }
+
+    /**
+     * 新規登録（メール認証）を完了した際に is_verified をセット
+     */
+    public function setVerified()
+    {
+        if ($this->areBothEmailsVerified()) {
+            $this->is_verified = true;
+            $this->save();
+        }
     }
 }
