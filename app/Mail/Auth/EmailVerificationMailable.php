@@ -18,7 +18,7 @@ class EmailVerificationMailable extends Mailable
 
     public $userName;
 
-    public $is_edit;
+    public $isEdit;
 
     /**
      * Create a new message instance.
@@ -27,11 +27,11 @@ class EmailVerificationMailable extends Mailable
      * @param  string  $userName  宛先ユーザーのフルネーム
      * @return void
      */
-    public function __construct(string $verifyUrl, string $userName, bool $is_edit)
+    public function __construct(string $verifyUrl, string $userName, bool $isEdit)
     {
         $this->verifyUrl = $verifyUrl;
         $this->userName = $userName;
-        $this->is_edit = $is_edit;
+        $this->isEdit = $isEdit;
     }
 
     /**

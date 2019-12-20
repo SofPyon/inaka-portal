@@ -61,14 +61,14 @@ class EmailService
      * @param  string  $name
      * @param  string  $verifyUrl
      */
-    private function send(string $email, string $name, string $verifyUrl, bool $is_edit)
+    private function send(string $email, string $name, string $verifyUrl, bool $isEdit)
     {
         $recipient = new \stdClass();
         $recipient->email = $email;
         $recipient->name = $name;
 
         Mail::to($recipient)
-        ->send(new EmailVerificationMailable($verifyUrl, $name, $is_edit));
+        ->send(new EmailVerificationMailable($verifyUrl, $name, $isEdit));
     }
 
     /**
