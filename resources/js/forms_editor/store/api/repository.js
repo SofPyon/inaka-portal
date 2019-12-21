@@ -9,8 +9,7 @@ const baseURL = JSON.parse(
 const axios = Axios.create({
   baseURL,
   headers: {
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-Test-Header': 'THIS-IS-TEST-HEADER'
+    'X-Requested-With': 'XMLHttpRequest'
   }
 })
 
