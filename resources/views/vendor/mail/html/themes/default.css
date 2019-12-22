@@ -9,7 +9,7 @@ body *:not(html):not(style):not(br):not(tr):not(code) {
 
 body {
     background-color: #f8fafc;
-    color: #74787e;
+    color: #304554;
     height: 100%;
     hyphens: auto;
     line-height: 1.4;
@@ -42,7 +42,7 @@ a img {
 /* Typography */
 
 h1 {
-    color: #3d4852;
+    color: #304554;
     font-size: 19px;
     font-weight: bold;
     margin-top: 0;
@@ -50,7 +50,7 @@ h1 {
 }
 
 h2 {
-    color: #3d4852;
+    color: #304554;
     font-size: 16px;
     font-weight: bold;
     margin-top: 0;
@@ -58,7 +58,7 @@ h2 {
 }
 
 h3 {
-    color: #3d4852;
+    color: #304554;
     font-size: 14px;
     font-weight: bold;
     margin-top: 0;
@@ -66,7 +66,7 @@ h3 {
 }
 
 p {
-    color: #3d4852;
+    color: #304554;
     font-size: 16px;
     line-height: 1.5em;
     margin-top: 0;
@@ -110,7 +110,7 @@ img {
 }
 
 .header a {
-    color: #bbbfc3;
+    color: #304554;
     font-size: 19px;
     font-weight: bold;
     text-decoration: none;
@@ -166,7 +166,7 @@ img {
 }
 
 .footer p {
-    color: #aeaeae;
+    color: #304554;
     font-size: 12px;
     text-align: center;
 }
@@ -188,7 +188,7 @@ img {
 }
 
 .table td {
-    color: #74787e;
+    color: #304554;
     font-size: 15px;
     line-height: 18px;
     padding: 10px 0;
