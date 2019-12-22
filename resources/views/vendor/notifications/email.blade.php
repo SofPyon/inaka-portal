@@ -4,9 +4,9 @@
 # {{ $greeting }}
 @else
 @if ($level === 'error')
-# @lang('Whoops!')
+# エラー
 @else
-# @lang('Hello!')
+# こんにちは
 @endif
 @endif
 
@@ -39,25 +39,18 @@
 
 @endforeach
 
-{{-- Salutation --}}
-@if (! empty($salutation))
-{{ $salutation }}
-@else
-@lang('Regards'),<br>
-{{ config('app.name') }}
-@endif
-
 {{-- Subcopy --}}
 @isset($actionText)
 @slot('subcopy')
 @lang(
-    "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\n".
-    'into your web browser: [:actionURL](:actionURL)',
+    "もし上記の[:actionText]ボタンをクリックできない場合は、以下のURLをコピーし、お使いのブラウザーで直接開いてください。\n\n".
+    '[:actionURL](:actionURL)',
     [
         'actionText' => $actionText,
         'actionURL' => $actionUrl,
     ]
 )
+
 @endslot
 @endisset
 @endcomponent
