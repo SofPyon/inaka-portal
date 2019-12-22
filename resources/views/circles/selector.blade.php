@@ -5,7 +5,7 @@
 <div class="card">
     <div class="card-header">操作する団体を選択してください。</div>
     <div class="card-body">
-        次に進むにはどの団体として操作するのか決定してください。
+        次に進むにはどの団体として操作するのか選択してください。
     </div>
     <div class="list-group list-group-flush">
         @foreach ($circles as $circle)
