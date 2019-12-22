@@ -11,6 +11,7 @@
         @else
          <form class="form-content" method="post" action="{{ route('contacts.post') }}">
         @endif
+        @csrf
         <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex">
                 名前
