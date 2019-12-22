@@ -21,7 +21,9 @@
     {{-- Footer --}}
     @slot('footer')
         @component('mail::footer')
-            © {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')
+            **{{ config('portal.admin_name') }}** <br />
+            {{ config('portal.contact_email') }}<br /><br />
+            [{{ config('app.name') }}]({{ config('app.url') }})
         @endcomponent
     @endslot
 @endcomponent
