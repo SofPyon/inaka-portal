@@ -6,7 +6,7 @@
 <div class="card">
     <p class="card-header">お問い合わせ</p>
     <div class="card-body">
-        <form class="form-content" method="post" action="{{ isset($circle) ? route('contacts.post') : route('contacts.post', ['circle' => $circle]) }}">
+        <form class="form-content" method="post" action="{{ isset($circle) ? route('contacts.post', ['circle' => $circle]) : route('contacts.post') }}">
             @csrf
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex">
@@ -41,6 +41,7 @@
                     </div>
                 </li>
             </ul>
+            <small class="form-text text-muted">確認のためお問い合わせ内容をメールで送信いたします。</small>
             <div class="d-flex mt-2">
                 <button type="submit" class="btn btn-primary">送信</button>
                 <a href="{{ route('home') }}" class="btn btn-light ml-2" role="button">キャンセル</a>
