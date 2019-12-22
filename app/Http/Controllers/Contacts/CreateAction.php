@@ -25,15 +25,29 @@ class CreateAction extends Controller
         $circles = $user->circles->all();
 
         if (empty($circles)) { // 団体に所属していない場合
+            if (!empty(session('error_message'))) {
+                return view('contacts.form')
+                    ->with('error_message', session('error_message'));
+            }
             return view('contacts.form');
         }
 
         if (count($circles) == 1) { // １団体のみに所属している場合
+            if (!empty(session('error_message'))) {
+                return view('contacts.form')
+                    ->with('circle', $circles[0])
+                    ->with('error_message', session('error_message'));
+            }
             return view('contacts.form')
                 ->with('circle', $circles[0]);
         }
 
         if (count($circles) > 1) { // ２団体以上に所属している場合
+            if (!empty(session('error_message'))) {
+                return redirect()
+                    ->route('circles.selector.show', ['redirect' => 'contacts'])
+                    ->with('error_message', session('error_message'));
+            }
             return redirect()
                 ->route('circles.selector.show', ['redirect' => 'contacts']);
         }

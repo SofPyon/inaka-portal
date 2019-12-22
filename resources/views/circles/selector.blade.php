@@ -1,5 +1,7 @@
 @extends('layouts.single_column')
 
+@section('title', '団体を選択してください - '. config('app.name'))
+
 @section('main')
 
 <div class="card">
