@@ -51,6 +51,8 @@
         // Users
         '/change_password',
         '/user',
+        '/contacts',
+        '/selector',
         // Staff
         '/staff',
         // Debugbar
