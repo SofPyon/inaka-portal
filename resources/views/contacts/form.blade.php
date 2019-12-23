@@ -56,10 +56,10 @@
                                 @endforeach
                             </div>
                         @endif
+                        <small class="form-text text-muted">確認のため、お問い合わせ内容をメールで送信いたします。</small>
                     </div>
                 </li>
             </ul>
-            <small class="form-text text-muted">確認のため、お問い合わせ内容をメールで送信いたします。</small>
             <div class="d-flex mt-2">
                 <button type="submit" class="btn btn-primary">送信</button>
                 <a href="{{ route('home') }}" class="btn btn-light ml-2" role="button">キャンセル</a>
