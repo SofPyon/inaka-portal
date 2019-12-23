@@ -6,7 +6,7 @@
 <div class="card">
     <p class="card-header">お問い合わせ</p>
     <div class="card-body">
-        <form class="form-content" method="post" action="{{ isset($circle) ? route('contacts.post', ['circle' => $circle]) : route('contacts.post') }}">
+        <form class="form-content" method="post" action="{{ route('contacts.post') }}">
             @csrf
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex">
@@ -21,10 +21,24 @@
                     メールアドレス
                     <span class="ml-auto">{{ Auth::user()->email }}</span>
                 </li>
-                @if (isset($circle))
-                    <li class="list-group-item d-flex">
-                        団体名
-                        <span class="ml-auto">{{ $circle->name }}</span>
+
+                @if (empty($circles))
+                    <li class="list-group-item">残念</li>
+                @elseif (count($circles) == 1)
+                    <li class="list-group-item">
+                        <label>団体名</label>
+                        <input type="hidden" name="circle_id" value="{{ $circles[0]->id }}">
+                        <input type="text" class="form-control" value="{{ $circles[0]->name }}" disabled>
+                    </li>
+                @else
+                    <li class="list-group-item">
+                        <label>団体名</label>
+                        <select name="circle_id" class="form-control">
+                            @foreach ($circles as $circle)
+                                <option value="{{ $circle->id }}">{{ $circle->name }}</option>
+                            @endforeach
+                        </select>
+                        <small class="form-text text-muted">どの団体として申請するのか選択してください。</small>
                     </li>
                 @endif
                 <li class="list-group-item">
