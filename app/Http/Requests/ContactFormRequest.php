@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Eloquents\Circle;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Request;
 
 class ContactFormRequest extends FormRequest
 {
@@ -38,10 +41,10 @@ class ContactFormRequest extends FormRequest
 
     public function withValidator($validator)
     {
-        // $validator->after(function ($validator) {
-        //     if ($this->somethingElseIsInvalid()) {
-        //         $validator->errors()->add('field', 'Something is wrong with this field!');
-        //     }
-        // });
+        if (! Gate::allows('belongsTo', Circle::find($this->circle_id))) {
+            return redirect()
+                ->route('home')
+                ->with('error_message', 'エラーが発生しました');
+        }
     }
 }

@@ -7,11 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactFormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 class PostAction extends Controller
 {
-    public function __invoke(Circle $circle = null, ContactFormRequest $request)
+    public function __invoke(ContactFormRequest $request)
     {
         $user = Auth::user();
 
