@@ -223,6 +223,7 @@
                             ・ ブース
                         {% endif %}
                     </th>
+                    <th>更新日時</th>
                     {% for question in form.questions if question.type is not same as("heading") %}
                         <th>
                             {{ question.name }}
@@ -256,6 +257,7 @@
                                 </a>
                             {% endif %}
                         </th>
+                        <td>{{ answer.updated_at }}</td>
                         {% for question in form.questions if question.type is not same as("heading") %}
                             <td class="applications-read-answer-td">
                                 <div class="applications-read-answer-td__inner">
