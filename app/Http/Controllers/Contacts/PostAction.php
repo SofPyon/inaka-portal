@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Contacts;
 
 use App\Eloquents\Circle;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactFormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -15,13 +14,13 @@ class PostAction extends Controller
     public function __invoke(ContactFormRequest $request)
     {
         $user = Auth::user();
+        $circle = Circle::find($request->circle_id);
 
-        $validated = $request->validated();
-
-        if ($validated->fails()) {
+        if (! Gate::allows('belongsTo', $circle)) {
             return redirect()
                 ->route('contacts')
-                ->withErrors($validated)
+                ->with('error_message', 'エラーが発生しました')
+                ->withErrors($request->validated)
                 ->withInput();
         }
 

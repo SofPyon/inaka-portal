@@ -38,13 +38,4 @@ class ContactFormRequest extends FormRequest
             'contact-body.required' => 'お問い合わせ内容は必ず入力してください',
         ];
     }
-
-    public function withValidator($validator)
-    {
-        if (! Gate::allows('belongsTo', Circle::find($this->circle_id))) {
-            return redirect()
-                ->route('home')
-                ->with('error_message', 'エラーが発生しました');
-        }
-    }
 }
