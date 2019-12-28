@@ -27,7 +27,7 @@ class PostAction extends Controller
         // ここにメール送信のための処理を記述する
 
         return redirect()
-            ->route('home')
+            ->route('contacts')
             ->with('success_message', 'お問い合わせを受け付けました。');
     }
 }
