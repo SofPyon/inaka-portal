@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Policies;
+namespace App\Policies\Circle;
 
 use App\Eloquents\Circle;
 use App\Eloquents\User;
