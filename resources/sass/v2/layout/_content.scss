@@ -1,0 +1,8 @@
+.content {
+  margin-left: $drawer-width;
+  padding-top: $navbar-height;
+
+  @media screen and (max-width: $breakpoint-drawer-hide) {
+    margin-left: 0;
+  }
+}

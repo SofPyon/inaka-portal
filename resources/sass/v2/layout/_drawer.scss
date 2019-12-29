@@ -1,0 +1,53 @@
+.drawer {
+  background: $color-bg-white;
+  box-shadow: 1px 0 3px rgba($color-text, 0.16);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  transition: #{$transition-base} transform;
+  width: $drawer-width;
+  z-index: $z-index-drawer;
+
+  @media screen and (max-width: $breakpoint-drawer-hide) {
+    transform: translateX(-100%);
+    &.is-open {
+      transform: translateX(0);
+    }
+  }
+}
+
+.drawer-toggle {
+  appearance: none;
+  background: 0;
+  border: 0;
+  display: none;
+  height: 100%;
+  // ↓ナビバーがもつpaddingを打ち消すネガティブマージン
+  margin-left: -$spacing;
+  padding: 0;
+  padding: $spacing;
+
+  @media screen and (max-width: $breakpoint-drawer-hide) {
+    display: block;
+  }
+}
+
+.drawer-backdrop {
+  background: rgba($color-text, 0.5);
+  height: 100vh;
+  left: 0;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  transition: #{$transition-base} opacity, #{$transition-base} visibility;
+  visibility: hidden;
+  width: 100vw;
+  z-index: $z-index-drawer-backdrop;
+
+  @media screen and (max-width: $breakpoint-drawer-hide) {
+    &.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
