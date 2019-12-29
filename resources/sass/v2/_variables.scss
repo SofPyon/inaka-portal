@@ -5,7 +5,7 @@ $font-size-listview-title: 1rem; // = 16px
 
 // Color
 $color-success: #36B34E;
-$color-primary: #1F97CC;
+$color-primary: #007bff;
 $color-warning: #EF3F2F;
 $color-text: #22292F;
 $color-muted: #737A80;
@@ -14,10 +14,12 @@ $color-bg-gray: #F8FAFC;
 $color-bg-white: #FFF;
 
 // Spacing
+$spacing-xl: 4rem;
 $spacing-lg: 2.5rem;
 $spacing: 1.5rem;
 $spacing-sm: 1rem;
-$spacing-xs: 0.25rem;
+$spacing-xs: 0.5rem;
+$spacing-xxs: 0.25rem;
 
 // Parameters
 $drawer-width: 320px;
@@ -25,6 +27,7 @@ $navbar-height: 4rem;
 $content-width: calc(100vw - #{$drawer-width});
 $transition-base: 0.3s ease;
 $border-radius: 0.25rem;
+$jumbotron-max-width: 600px;
 
 // Media Breakpoints
 $breakpoint-drawer-hide: 1240px;
