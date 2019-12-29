@@ -44,7 +44,20 @@ class LoginController extends Controller
     }
 
     /**
+     * ログインページに GET リクエストされた場合
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm()
+    {
+        // return view('auth.login');
+        return view('v2.home');
+    }
+
+    /**
      * ログアウトページに GET リクエストされた場合
+     *
+     * @return \Illuminate\Http\Response
      */
     public function showLogout()
     {

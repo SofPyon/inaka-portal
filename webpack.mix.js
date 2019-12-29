@@ -15,6 +15,7 @@ mix
   .js('resources/js/app.js', 'public/js') // メインスクリプト
   .sass('resources/sass/app.scss', 'public/css') // メインスタイル
   .sass('resources/sass/v2/app.scss', 'public/css/v2') // メインスタイル(v2)
+  .js('resources/js/v2/app.js', 'public/js/v2') // メインスクリプト(v2)
   .js('resources/js/users_checker.js', 'public/js') // ユーザー登録チェッカー
   .js('resources/js/forms_editor/index.js', 'public/js/forms_editor') // フォームエディタJS
   .sass('resources/sass/forms_editor.scss', 'public/css') // フォームエディタCSS

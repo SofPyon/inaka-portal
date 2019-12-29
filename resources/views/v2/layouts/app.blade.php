@@ -17,7 +17,7 @@
 
     <!-- Scripts -->
     @prepend('js')
-        {{-- <script src="{{ mix('js/app.js') }}" defer></script> --}}
+        <script src="{{ mix('js/v2/app.js') }}" defer></script>
     @endprepend
     @stack('js')
 
@@ -26,7 +26,29 @@
 </head>
 <body ontouchstart="">
 
-@yield('content')
+<div class="app" id="v2-app">
+    <div
+        class="drawer-backdrop"
+        v-bind:class="{'is-open': isDrawerOpen}"
+        v-on:click="toggleDrawer"
+    ></div>
+    <div class="navbar">
+        <button
+            v-on:click="toggleDrawer"
+        >
+            Toggle
+        </button>
+    </div>
+    <div
+        class="drawer"
+        v-bind:class="{'is-open': isDrawerOpen}"
+    >
+
+    </div>
+    <div class="content">
+        @yield('content')
+    </div>
+</div>
 
 </body>
 </html>
