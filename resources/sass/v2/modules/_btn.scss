@@ -11,12 +11,15 @@
   padding: $spacing-sm 0;
   text-align: center;
   text-decoration: none;
-  transition: #{$transition-base} opacity;
+  transition: #{$transition-base} opacity, #{$transition-base} box-shadow;
   white-space: nowrap;
   width: 100%;
-  &:hover,
+  &:hover {
+    text-decoration: none;
+  }
   &:focus {
-    opacity: 0.7;
+    box-shadow: 0 0 0 3px rgba($color-primary, 0.5);
+    outline: none;
     text-decoration: none;
   }
   &.is-primary {
