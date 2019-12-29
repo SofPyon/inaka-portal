@@ -27,17 +27,24 @@
 <body ontouchstart="">
 
 <div class="app" id="v2-app">
+    <global-events
+        v-on:keyup.esc="closeDrawer"
+    ></global-events>
     <div
         class="drawer-backdrop"
         v-bind:class="{'is-open': isDrawerOpen}"
-        v-on:click="toggleDrawer"
+        v-on:click="closeDrawer"
     ></div>
     <div class="navbar">
         <button
+            class="drawer-toggle"
             v-on:click="toggleDrawer"
         >
-            Toggle
+            <img src="{{ url('img/drawerToggle.svg') }}" alt="ドロワーを開閉">
         </button>
+        <div class="navbar__title">
+            ホーム
+        </div>
     </div>
     <div
         class="drawer"
