@@ -16,14 +16,6 @@ class PostAction extends Controller
         $user = Auth::user();
         $circle = Circle::find($request->circle_id);
 
-        if (! Gate::allows('belongsTo', $circle)) {
-            return redirect()
-                ->route('contacts')
-                ->with('error_message', 'エラーが発生しました')
-                ->withErrors($request->validated)
-                ->withInput();
-        }
-
         // ここにメール送信のための処理を記述する
 
         return redirect()

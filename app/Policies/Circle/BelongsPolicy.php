@@ -24,9 +24,6 @@ class BelongsPolicy
     {
         $result = $circle->users->where('id', $user->id)->first();
         
-        if (empty($result)) {
-            return false;
-        }
-        return true;
+        return !empty($result);
     }
 }

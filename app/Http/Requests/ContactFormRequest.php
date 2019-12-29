@@ -16,6 +16,9 @@ class ContactFormRequest extends FormRequest
      */
     public function authorize()
     {
+        if ($this->has('circle_id')) {
+            return !empty($this->circle_id) && Gate::allows('circle.belongsTo', Circle::find($this->circle_id));
+        }
         return true;
     }
 

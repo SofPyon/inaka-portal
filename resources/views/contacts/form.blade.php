@@ -24,25 +24,21 @@
 
                 @if (empty($circles))
 
-                @elseif (count($circles) == 1)
-                    <li class="list-group-item">
-                        <label>団体名</label>
-                        <input type="hidden" name="circle_id" value="{{ $circles[0]->id }}">
-                        <input type="text" class="form-control" value="{{ $circles[0]->name }}" disabled>
-                    </li>
                 @else
                     <li class="list-group-item">
                         <label>団体名</label>
                         <select name="circle_id" class="form-control">
                             @foreach ($circles as $circle)
-                                @if (!empty(old('circle_id')) && old('circle_id') == $circle->id)
+                                @if (!empty(old('circle_id')) && old('circle_id') === $circle->id)
                                     <option value="{{ $circle->id }}" selected>{{ $circle->name }}</option>
                                 @else
                                     <option value="{{ $circle->id }}">{{ $circle->name }}</option>
                                 @endif
                             @endforeach
                         </select>
-                        <small class="form-text text-muted">どの団体として申請するのか選択してください。</small>
+                        @if (count($circles) > 1)
+                            <small class="form-text text-muted">どの団体としてお問い合わせするのか選択してください。</small>
+                        @endif
                     </li>
                 @endif
                 <li class="list-group-item">
