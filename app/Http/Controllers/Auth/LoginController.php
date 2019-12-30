@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\Controller;
+use App\Eloquents\Page;
+use App\Eloquents\Schedule;
 
 class LoginController extends Controller
 {
@@ -51,7 +53,9 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         // return view('auth.login');
-        return view('v2.home');
+        return view('v2.home')
+            ->with('pages', Page::take(5)->get())
+            ->with('next_schedule', Schedule::startOrder()->notStarted()->first());
     }
 
     /**

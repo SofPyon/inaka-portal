@@ -3,7 +3,7 @@
 @section('content')
 @guest
 <header class="jumbotron">
-    <div class="jumbotron__content">
+    <div class="container is-narrow">
         <h1 class="jumbotron__title">
             {{ config('app.name') }}
         </h1>
@@ -38,22 +38,22 @@
                     <label class="form-check-label" for="remember">
                         ログインしたままにする
                     </label>
-
-                    —
-
-                    <a href="{{ route('password.request') }}">
-                        パスワードをお忘れの場合はこちら
-                    </a>
                 </div>
             </div>
 
+            <p>
+                <a href="{{ route('password.request') }}">
+                    パスワードをお忘れの場合はこちら
+                </a>
+            </p>
+
             <div class="form-group">
-                <button type="submit" class="btn is-primary">
+                <button type="submit" class="btn is-primary is-block">
                     ログイン
                 </button>
             </div>
             <p>
-                <a class="btn is-secondary" href="{{ route('register') }}">
+                <a class="btn is-secondary is-block" href="{{ route('register') }}">
                     はじめての方は新規ユーザー登録
                 </a>
             </p>
@@ -61,23 +61,44 @@
     </div>
 </header>
 @endguest
+@isset($next_schedule)
+<div class="listview">
+    <div class="listview-header">
+        次の予定
+    </div>
+    <div class="listview-item">
+        <p class="listview-item__date">
+            {{ $next_schedule->start_at }}
+        </p>
+        <p class="listview-item__title">
+            {{ $next_schedule->name }}
+        </p>
+        <p class="listview-item__summary">
+            {{ $next_schedule->place }}
+        </p>
+    </div>
+</div>
+@endisset
 <div class="listview">
     <div class="listview-header">
         お知らせ
     </div>
-    <div class="listview-item" v-for="i in 11">
-        <p class="listview-item__title">食品衛生講習会について</p>
-        <p class="listview-item__summary">これはテストです。これはテストです。これはテストです。</p>
+    @foreach ($pages as $page)
+    <div class="listview-item">
+        <p class="listview-item__date">
+            {{ $page->updated_at }}
+        </p>
+        <p class="listview-item__title">
+            {{ $page->title }}
+        </p>
     </div>
+    @endforeach
 </div>
 <div class="listview">
     <div class="listview-header">
         最近の配布資料 — 第1回 理大祭参加説明書い最近の配布資料 — 第1回 理大祭参加説明書い最近の配布資料 — 第1回 理大祭参加説明書い最近の配布資料 — 第1回 理大祭参加説明書い
     </div>
     <div class="listview-item" v-for="i in 11">
-        <p class="listview-item__date">
-            2019/11/21
-        </p>
         <p class="listview-item__title">食品衛生講習会について</p>
         <p class="listview-item__summary">これはテストです。これはテストです。これはテストです。</p>
     </div>

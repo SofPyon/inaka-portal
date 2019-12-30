@@ -13,7 +13,7 @@ $color-border: #CED4DA;
 $color-bg-gray: #F8FAFC;
 $color-bg-white: #FFF;
 
-// Spacing
+// Spacing (WIP)
 $spacing-xl: 4rem;
 $spacing-lg: 2.5rem;
 $spacing: 1.5rem;
@@ -27,7 +27,11 @@ $navbar-height: 4rem;
 $content-width: calc(100vw - #{$drawer-width});
 $transition-base: 0.3s ease;
 $border-radius: 0.25rem;
-$jumbotron-max-width: 600px;
+
+// Container Width
+$container-width-wide: 1200px;
+$container-width: 1024px;
+$container-width-narrow: 400px;
 
 // Media Breakpoints
 $breakpoint-drawer-hide: 1240px;

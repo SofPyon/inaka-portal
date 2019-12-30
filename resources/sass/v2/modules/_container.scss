@@ -1,0 +1,11 @@
+.container {
+  margin: 0 auto;
+  max-width: $container-width;
+  width: 100%;
+  &.is-wide {
+    width: $container-width-wide;
+  }
+  &.is-narrow {
+    width: $container-width-narrow;
+  }
+}
