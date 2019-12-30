@@ -7,6 +7,7 @@
     border: 1px solid $color-border;
     border-radius: $border-radius;
     padding: 0.75rem $spacing-sm;
+    transition: #{$transition-base} background-color, #{$transition-base} box-shadow;
     width: 100%;
     &:focus {
       border-color: $color-primary;
