@@ -45,6 +45,7 @@
         <button
             class="navbar-toggle"
             v-on:click="toggleDrawer"
+            ref="toggle"
         >
             <img src="{{ url('img/drawerToggle.svg') }}" alt="ドロワーを開閉">
         </button>
@@ -56,6 +57,8 @@
     <div
         class="drawer"
         v-bind:class="{'is-open': isDrawerOpen}"
+        tabindex="0"
+        ref="drawer"
     >
         <div class="drawer__content">
         @section('drawer')

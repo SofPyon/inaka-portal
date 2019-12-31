@@ -18,5 +18,15 @@ export default new Vue({
     closeDrawer() {
       this.isDrawerOpen = false
     }
+  },
+  watch: {
+    isDrawerOpen(newVal) {
+      // アクセシビリティのため、適切な位置にフォーカスする
+      if (newVal) {
+        this.$refs.drawer.focus()
+      } else {
+        this.$refs.toggle.focus()
+      }
+    }
   }
 })
