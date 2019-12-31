@@ -16,7 +16,7 @@
             {{ $page->title }}
         </h1>
         <p class="header__date">
-            {{ $page->updated_at }}
+            @datetime($page->updated_at) 更新
         </p>
     </div>
 </header>

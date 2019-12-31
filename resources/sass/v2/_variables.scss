@@ -10,11 +10,12 @@ $color-warning: #EF3F2F;
 $color-text: #22292F;
 $color-muted: #737A80;
 $color-border: #CED4DA;
-$color-bg-gray: #F8FAFC;
+$color-bg-grey: #F8FAFC;
+$color-bg-light: rgba($color-primary, 0.05);
 $color-bg-white: #FFF;
 
 // Spacing (WIP)
-$spacing-xl: 4rem;
+$spacing-xl: 6rem;
 $spacing-lg: 2.5rem;
 $spacing: 1.5rem;
 $spacing-md: 1rem;
