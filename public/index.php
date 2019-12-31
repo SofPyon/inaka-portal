@@ -45,6 +45,7 @@
         // Home
         '/home__THISIS_V2',
         '/pages',
+        '/documents',
         // Auth
         '/login',
         '/logout',

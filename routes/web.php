@@ -22,7 +22,15 @@ Route::get('/home__THISIS_V2', 'HomeAction')->name('home');
 Route::prefix('/pages')
     ->name('pages.')
     ->group(function () {
+        Route::get('/', 'Pages\IndexAction')->name('index');
         Route::get('/{page}', 'Pages\ShowAction')->name('show');
+    });
+
+// 配布資料
+Route::prefix('/documents')
+    ->name('documents.')
+    ->group(function () {
+        Route::get('/', 'Documents\IndexAction')->name('index');
     });
 
 // 認証系

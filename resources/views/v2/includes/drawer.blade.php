@@ -4,20 +4,22 @@
 <nav class="drawer-nav">
     <ul class="drawer-nav__list">
         <li class="drawer-nav__item">
-            <a href="" class="drawer-nav__link{{ Request::is('') ? ' is-active' : '' }}">
+            {{-- TODO: Request::is の引数は将来的に '' (空文字) にしたい --}}
+            <a href="{{ url('/') }}" class="drawer-nav__link{{ Request::is('login') || Request::is('home*') ? ' is-active' : '' }}">
                 ホーム
             </a>
         </li>
         <li class="drawer-nav__item">
-            <a href="" class="drawer-nav__link{{ Request::is('pages*') ? ' is-active' : '' }}">
+            <a href="{{ route('pages.index') }}" class="drawer-nav__link{{ Request::is('pages*') ? ' is-active' : '' }}">
                 お知らせ
             </a>
         </li>
         <li class="drawer-nav__item">
-            <a href="" class="drawer-nav__link">
+            <a href="{{ route('documents.index') }}" class="drawer-nav__link{{ Request::is('documents*') ? ' is-active' : '' }}">
                 配布資料
             </a>
         </li>
+        @auth
         <li class="drawer-nav__item">
             <a href="" class="drawer-nav__link">
                 申請
@@ -34,10 +36,11 @@
             </a>
         </li>
         <li class="drawer-nav__item">
-            <a href="" class="drawer-nav__link">
+            <a href="{{ route('user.edit') }}" class="drawer-nav__link">
                 ユーザー設定
             </a>
         </li>
+        @endauth
     </ul>
 </nav>
 <div class="drawer-user">

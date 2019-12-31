@@ -3,9 +3,9 @@
 @section('title', $page->title)
 
 @section('navbar')
-<a href="/" class="navbar-back">
+<a href="{{ route('pages.index') }}" class="navbar-back">
     <i class="fas fa-chevron-left navbar-back__icon"></i>
-    戻る
+    お知らせ
 </a>
 @endsection
 
