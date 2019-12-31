@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\Controller;
 use App\Eloquents\Page;
 use App\Eloquents\Schedule;
+use App\Eloquents\Document;
 
 class LoginController extends Controller
 {
@@ -55,7 +56,8 @@ class LoginController extends Controller
         // return view('auth.login');
         return view('v2.home')
             ->with('pages', Page::take(5)->get())
-            ->with('next_schedule', Schedule::startOrder()->notStarted()->first());
+            ->with('next_schedule', Schedule::startOrder()->notStarted()->first())
+            ->with('documents', Document::public()->get());
     }
 
     /**

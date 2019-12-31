@@ -106,13 +106,20 @@
 </div>
 <div class="listview">
     <div class="listview-header">
-        最近の配布資料 — Blade直書きイベント名
+        最近の配布資料
     </div>
-    <div class="listview-item" v-for="i in 11">
+    @foreach ($documents as $document)
+    <a
+        href="{{ url("uploads/documents/{$document->id}") }}"
+        class="listview-item"
+        target="_blank"
+        rel="noopener"
+    >
         <div class="listview-item__body">
-            <p class="listview-item__title">食品衛生講習会について</p>
-            <p class="listview-item__summary">これはテストです。これはテストです。これはテストです。</p>
+            <p class="listview-item__title">{{ $document->name }}</p>
+            <p class="listview-item__summary">{{ $document->description }}</p>
         </div>
-    </div>
+    </a>
+    @endforeach
 </div>
 @endsection
