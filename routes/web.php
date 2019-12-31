@@ -16,7 +16,7 @@ Route::get('/', 'IndexController');
 
 // トップページ
 // TODO: URL は /home に変更する
-Route::get('/home__THISIS_V2', 'HomeAction')->name('home');
+Route::get('/home__v2', 'HomeAction')->name('home');
 
 // お知らせ
 Route::prefix('/pages')

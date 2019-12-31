@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Request as FacadeRequest;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\Controller;
@@ -53,11 +54,14 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        // return view('auth.login');
-        return view('v2.home')
-            ->with('pages', Page::take(5)->get())
-            ->with('next_schedule', Schedule::startOrder()->notStarted()->first())
-            ->with('documents', Document::public()->get());
+        if ((int)FacadeRequest::input('new') === 1) {
+            // GETパラメータで ?new=1 が渡されたら、新しいログイン画面をオプトインする
+            return view('v2.home')
+                ->with('pages', Page::take(5)->get())
+                ->with('next_schedule', Schedule::startOrder()->notStarted()->first())
+                ->with('documents', Document::public()->get());
+        }
+        return view('auth.login');
     }
 
     /**
