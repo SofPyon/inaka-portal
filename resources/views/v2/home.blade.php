@@ -68,7 +68,7 @@
     </div>
     <div class="listview-item">
         <p class="listview-item__date">
-            {{ $next_schedule->start_at }}
+            @datetime($next_schedule->start_at)
         </p>
         <p class="listview-item__title">
             {{ $next_schedule->name }}
@@ -86,13 +86,13 @@
     @foreach ($pages as $page)
     <a class="listview-item" href="{{ route('pages.show', $page) }}">
         <p class="listview-item__date">
-            {{ $page->updated_at }}
+            @datetime($page->updated_at)
         </p>
         <p class="listview-item__title">
             {{ $page->title }}
         </p>
         <p class="listview-item__summary">
-            @description($page->body)
+            @summary($page->body)
         </p>
     </a>
     @endforeach

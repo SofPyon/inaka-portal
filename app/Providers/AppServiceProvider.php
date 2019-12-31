@@ -39,8 +39,13 @@ class AppServiceProvider extends ServiceProvider
 
         // 渡された引数の文字列を先頭100文字のみのこし、
         // 残りを「...」で省略する
-        Blade::directive('description', function ($expression) {
-            return "<?php echo e(App\Services\Utils\TrimmedDescriptionService::generate($expression)); ?>";
+        Blade::directive('summary', function ($expression) {
+            return "<?php echo e(App\Services\Utils\FormatTextService::summary($expression)); ?>";
+        });
+
+        // 渡された引数の日付文字列をY年n月d日(曜日) H:i 形式の日付文字列にする
+        Blade::directive('datetime', function ($expression) {
+            return "<?php echo e(App\Services\Utils\FormatTextService::datetime($expression)); ?>";
         });
     }
 }

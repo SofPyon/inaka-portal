@@ -43,7 +43,7 @@
     <div class="navbar">
         @section('navbar')
         <button
-            class="drawer-toggle"
+            class="navbar-toggle"
             v-on:click="toggleDrawer"
         >
             <img src="{{ url('img/drawerToggle.svg') }}" alt="ドロワーを開閉">
