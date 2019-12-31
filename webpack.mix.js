@@ -11,6 +11,14 @@ const mix = require('laravel-mix')
  |
  */
 
+const path = require('path')
+
+mix.webpackConfig({
+  resolve: {
+    modules: [path.resolve('./node_modules')]
+  }
+})
+
 mix
   .js('resources/js/app.js', 'public/js') // メインスクリプト
   .sass('resources/sass/app.scss', 'public/css') // メインスタイル

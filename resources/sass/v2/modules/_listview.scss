@@ -26,9 +26,17 @@
     background: $color-bg-white;
     border-radius: $border-radius;
     box-shadow: 0 1px 2px rgba($color-text, 0.16);
+    color: $color-text;
     margin-bottom: $spacing;
     padding: $spacing-md $spacing;
     width: $listview-item-width;
+    &:hover,
+    &:active,
+    &:focus {
+      background: $color-bg-gray;
+      color: $color-text;
+      text-decoration: none;
+    }
     &__date {
       color: $color-muted;
       font-size: 0.75rem;

@@ -41,6 +41,7 @@
         v-on:click="closeDrawer"
     ></div>
     <div class="navbar">
+        @section('navbar')
         <button
             class="drawer-toggle"
             v-on:click="toggleDrawer"
@@ -50,6 +51,7 @@
         <div class="navbar__title">
             @yield('title', config('app.name'))
         </div>
+        @show
     </div>
     <div
         class="drawer"

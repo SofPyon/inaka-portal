@@ -23,7 +23,7 @@
   padding: 0.75rem $spacing-md;
   text-align: center;
   text-decoration: none;
-  transition: #{$transition-base} background-color, #{$transition-base} box-shadow;
+  transition: #{$transition-base-fast} background-color, #{$transition-base-fast} box-shadow;
   white-space: nowrap;
   &:hover {
     text-decoration: none;

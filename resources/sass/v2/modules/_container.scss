@@ -1,11 +1,12 @@
 .container {
   margin: 0 auto;
   max-width: $container-width;
+  padding: 0 $spacing;
   width: 100%;
   &.is-wide {
-    width: $container-width-wide;
+    max-width: $container-width-wide;
   }
   &.is-narrow {
-    width: $container-width-narrow;
+    max-width: $container-width-narrow;
   }
 }

@@ -30,5 +30,11 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('staffpage', function () {
             return strpos(request()->path(), 'staff') !== 0;
         });
+
+        // 渡された引数の文字列をMarkdownとして解釈し、
+        // HTMLに変換した文字列を表示する
+        Blade::directive('markdown', function ($expression) {
+            return "<?php echo App\Services\Markdown\ParseMarkdownService::render($expression); ?>";
+        });
     }
 }

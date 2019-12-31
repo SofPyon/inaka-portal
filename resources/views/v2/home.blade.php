@@ -84,14 +84,14 @@
         お知らせ
     </div>
     @foreach ($pages as $page)
-    <div class="listview-item">
+    <a class="listview-item" href="{{ route('pages.show', $page) }}">
         <p class="listview-item__date">
             {{ $page->updated_at }}
         </p>
         <p class="listview-item__title">
             {{ $page->title }}
         </p>
-    </div>
+    </a>
     @endforeach
 </div>
 <div class="listview">
