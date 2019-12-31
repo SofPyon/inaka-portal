@@ -47,5 +47,10 @@ class BladeServiceProvider extends ServiceProvider
         Blade::directive('datetime', function ($expression) {
             return "<?php echo e(App\Services\Utils\FormatTextService::datetime($expression)); ?>";
         });
+
+        // 渡された引数の曜日番号を曜日文字列にする
+        Blade::directive('dayByDayId', function ($expression) {
+            return "<?php echo e(App\Services\Utils\FormatTextService::getDayByDayId((int)($expression), true)); ?>";
+        });
     }
 }

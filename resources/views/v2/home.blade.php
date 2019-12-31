@@ -66,16 +66,21 @@
     <div class="listview-header">
         次の予定
     </div>
-    <div class="listview-item">
-        <p class="listview-item__date">
-            @datetime($next_schedule->start_at)
-        </p>
-        <p class="listview-item__title">
-            {{ $next_schedule->name }}
-        </p>
-        <p class="listview-item__summary">
-            {{ $next_schedule->place }}
-        </p>
+    <div class="listview-item is-fluid">
+        <div class="listview-item__day_calendar">
+            @include('v2.includes.day_calendar', ['date' => $next_schedule->start_at])
+        </div>
+        <div class="listview-item__body">
+            <p class="listview-item__title">
+                {{ $next_schedule->name }}
+            </p>
+            <p class="listview-item__summary">
+                @datetime($next_schedule->start_at) • {{ $next_schedule->place }}
+            </p>
+            <div class="listview-item__sumarry markdown">
+                @markdown($next_schedule->description)
+            </div>
+        </div>
     </div>
 </div>
 @endisset
@@ -85,25 +90,29 @@
     </div>
     @foreach ($pages as $page)
     <a class="listview-item" href="{{ route('pages.show', $page) }}">
-        <p class="listview-item__date">
-            @datetime($page->updated_at)
-        </p>
-        <p class="listview-item__title">
-            {{ $page->title }}
-        </p>
-        <p class="listview-item__summary">
-            @summary($page->body)
-        </p>
+        <div class="listview-item__body">
+            <p class="listview-item__date">
+                @datetime($page->updated_at)
+            </p>
+            <p class="listview-item__title">
+                {{ $page->title }}
+            </p>
+            <p class="listview-item__summary">
+                @summary($page->body)
+            </p>
+        </div>
     </a>
     @endforeach
 </div>
 <div class="listview">
     <div class="listview-header">
-        最近の配布資料 — 第1回 理大祭参加説明書い最近の配布資料 — 第1回 理大祭参加説明書い最近の配布資料 — 第1回 理大祭参加説明書い最近の配布資料 — 第1回 理大祭参加説明書い
+        最近の配布資料 — Blade直書きイベント名
     </div>
     <div class="listview-item" v-for="i in 11">
-        <p class="listview-item__title">食品衛生講習会について</p>
-        <p class="listview-item__summary">これはテストです。これはテストです。これはテストです。</p>
+        <div class="listview-item__body">
+            <p class="listview-item__title">食品衛生講習会について</p>
+            <p class="listview-item__summary">これはテストです。これはテストです。これはテストです。</p>
+        </div>
     </div>
 </div>
 @endsection
