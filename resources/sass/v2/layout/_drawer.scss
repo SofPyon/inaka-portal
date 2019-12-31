@@ -25,9 +25,17 @@
   }
   &-header {
     background: $color-bg-light;
+    color: $color-text;
+    display: block;
     font-weight: bold;
     padding: $spacing;
     padding-top: #{$navbar-height + $spacing};
+    &:hover,
+    &:focus,
+    &:active {
+      color: $color-text;
+      text-decoration: none;
+    }
   }
   &-nav {
     padding: $spacing;

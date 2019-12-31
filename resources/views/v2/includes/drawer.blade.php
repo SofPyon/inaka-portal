@@ -1,15 +1,15 @@
-<div class="drawer-header">
+<a class="drawer-header" href="{{ url('/') }}">
     {{ config('app.name') }}
-</div>
+</a>
 <nav class="drawer-nav">
     <ul class="drawer-nav__list">
         <li class="drawer-nav__item">
-            <a href="" class="drawer-nav__link is-active">
+            <a href="" class="drawer-nav__link{{ Request::is('') ? ' is-active' : '' }}">
                 ホーム
             </a>
         </li>
         <li class="drawer-nav__item">
-            <a href="" class="drawer-nav__link">
+            <a href="" class="drawer-nav__link{{ Request::is('pages*') ? ' is-active' : '' }}">
                 お知らせ
             </a>
         </li>
