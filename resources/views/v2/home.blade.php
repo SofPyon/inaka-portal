@@ -91,6 +91,9 @@
         <p class="listview-item__title">
             {{ $page->title }}
         </p>
+        <p class="listview-item__summary">
+            @description($page->body)
+        </p>
     </a>
     @endforeach
 </div>

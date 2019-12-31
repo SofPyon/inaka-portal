@@ -34,7 +34,13 @@ class AppServiceProvider extends ServiceProvider
         // 渡された引数の文字列をMarkdownとして解釈し、
         // HTMLに変換した文字列を表示する
         Blade::directive('markdown', function ($expression) {
-            return "<?php echo App\Services\Markdown\ParseMarkdownService::render($expression); ?>";
+            return "<?php echo App\Services\Utils\ParseMarkdownService::render($expression); ?>";
+        });
+
+        // 渡された引数の文字列を先頭100文字のみのこし、
+        // 残りを「...」で省略する
+        Blade::directive('description', function ($expression) {
+            return "<?php echo e(App\Services\Utils\TrimmedDescriptionService::generate($expression)); ?>";
         });
     }
 }
