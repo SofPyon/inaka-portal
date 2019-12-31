@@ -57,7 +57,9 @@
         class="drawer"
         v-bind:class="{'is-open': isDrawerOpen}"
     >
-
+        @section('drawer')
+        @include('v2.includes.drawer')
+        @show
     </div>
     <div class="content">
         @yield('content')
