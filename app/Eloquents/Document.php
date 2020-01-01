@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
+    protected $casts = [
+        'is_public' => 'bool',
+        'is_important' => 'bool',
+    ];
+
     /**
      * 公開されている配布資料に限定するクエリスコープ
      *

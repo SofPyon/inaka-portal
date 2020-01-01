@@ -120,8 +120,12 @@
         rel="noopener"
     >
         <div class="listview-item__body">
-            <p class="listview-item__title">
+            <p class="listview-item__title{{ $document->is_important ? ' text-danger' : '' }}">
+                @if ($document->is_important)
+                <i class="fas fa-exclamation-circle"></i>
+                @else
                 <i class="far fa-file-alt fa-fw"></i>
+                @endif
                 {{ $document->name }}
             </p>
             <p class="listview-item__summary">{{ $document->description }}</p>
