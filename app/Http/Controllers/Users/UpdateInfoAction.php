@@ -58,11 +58,11 @@ class UpdateInfoAction extends Controller
         }
 
         if ($changed_email) {
-            $this->emailService->sendToEmail($user, $user->is_verified);
+            $this->emailService->sendToEmail($user, $user->is_signed_up);
         }
 
         if ($changed_univemail) {
-            $this->emailService->sendToUnivemail($user, $user->is_verified);
+            $this->emailService->sendToUnivemail($user, $user->is_signed_up);
         }
 
         if ($changed_univemail || $changed_email) {

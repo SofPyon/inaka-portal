@@ -36,7 +36,7 @@ class EmailService
         }
 
         $verifyUrl = $this->generateSignedUrl($user, 'email');
-        $this->send($user->email, $user->name, $verifyUrl, $user->is_verified);
+        $this->send($user->email, $user->name, $verifyUrl, $user->is_signed_up);
     }
 
     /**
@@ -51,7 +51,7 @@ class EmailService
         }
 
         $verifyUrl = $this->generateSignedUrl($user, 'univemail');
-        $this->send($user->univemail, $user->name, $verifyUrl, $user->is_verified);
+        $this->send($user->univemail, $user->name, $verifyUrl, $user->is_signed_up);
     }
 
     /**
@@ -61,7 +61,7 @@ class EmailService
      * @param  string  $name
      * @param  string  $verifyUrl
      */
-    private function send(string $email, string $name, string $verifyUrl, bool $isEdit)
+    private function send(string $email, string $name, string $verifyUrl, bool $isEdit = false)
     {
         $recipient = new \stdClass();
         $recipient->email = $email;

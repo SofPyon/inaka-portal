@@ -65,7 +65,7 @@ class User extends Authenticatable
 
     protected $casts = [
         'is_staff' => 'bool',
-        'is_verified' => 'bool',
+        'is_signed_up' => 'bool',
     ];
 
     public function circles()
