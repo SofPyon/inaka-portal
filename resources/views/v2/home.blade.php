@@ -120,7 +120,10 @@
         rel="noopener"
     >
         <div class="listview-item__body">
-            <p class="listview-item__title">{{ $document->name }}</p>
+            <p class="listview-item__title">
+                <i class="far fa-file-alt fa-fw"></i>
+                {{ $document->name }}
+            </p>
             <p class="listview-item__summary">{{ $document->description }}</p>
         </div>
     </a>

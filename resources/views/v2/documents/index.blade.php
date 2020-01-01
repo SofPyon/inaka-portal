@@ -16,6 +16,7 @@
                 @datetime($document->updated_at) 更新
             </p>
             <p class="listview-item__title">
+                <i class="far fa-file-alt fa-fw"></i>
                 {{ $document->name }}
             </p>
             <p class="listview-item__summary">
