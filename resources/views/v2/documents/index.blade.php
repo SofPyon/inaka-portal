@@ -5,7 +5,12 @@
 @section('content')
 <div class="listview">
     @foreach ($documents as $document)
-    <a class="listview-item" href="{{ url("uploads/documents/{$document->id}") }}">
+    <a
+        class="listview-item"
+        href="{{ url("uploads/documents/{$document->id}") }}"
+        target="_blank"
+        rel="noopener"
+    >
         <div class="listview-item__body">
             <p class="listview-item__date">
                 @datetime($document->updated_at) 更新

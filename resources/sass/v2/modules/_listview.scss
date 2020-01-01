@@ -12,7 +12,7 @@
   &-header {
     font-size: $font-size-lg;
     font-weight: bold;
-    padding: 0 0 $spacing;
+    padding: 0 0 $spacing-md;
     width: 100%;
     @media screen and (max-width: $breakpoint-listview-single-col) {
       background: $color-muted;

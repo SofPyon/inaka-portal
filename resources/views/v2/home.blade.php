@@ -1,6 +1,10 @@
 @extends('v2.layouts.app')
 
 @section('content')
+<div class="top_alert is-primary">
+    <h2 class="top_alert__title">「{{ config('app.name') }}」はリニューアルしました</h2>
+    <p class="top_alert__body">より使いやすくなった「{{ config('app.name') }}」を、ぜひご活用ください — Powered by inaka-portal</p>
+</div>
 @guest
 <header class="jumbotron">
     <div class="container is-narrow">
