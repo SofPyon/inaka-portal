@@ -244,13 +244,11 @@ class User extends Authenticatable
     }
 
     /**
-     * 新規登録（メール認証）を完了した際に is_verified をセット
+     * is_signed_up を true にセット
      */
-    public function setVerified()
+    public function setSignedUp()
     {
-        if ($this->areBothEmailsVerified()) {
-            $this->is_verified = true;
-            $this->save();
-        }
+        $this->is_signed_up = true;
+        $this->save();
     }
 }
