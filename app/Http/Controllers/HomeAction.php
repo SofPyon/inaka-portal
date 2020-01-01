@@ -14,6 +14,6 @@ class HomeAction extends Controller
         return view('v2.home')
             ->with('pages', Page::take(5)->get())
             ->with('next_schedule', Schedule::startOrder()->notStarted()->first())
-            ->with('documents', Document::public()->get());
+            ->with('documents', Document::public()->with('schedule')->get());
     }
 }
