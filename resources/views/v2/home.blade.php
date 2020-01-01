@@ -1,10 +1,21 @@
 @extends('v2.layouts.app')
 
 @section('content')
+
+@auth
+@if (count($my_circles) < 1)
 <div class="top_alert is-primary">
-    <h2 class="top_alert__title">「{{ config('app.name') }}」はリニューアルしました</h2>
-    <p class="top_alert__body">より使いやすくなった「{{ config('app.name') }}」を、ぜひご活用ください — Powered by inaka-portal</p>
+    <h2 class="top_alert__title">
+        <i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i>
+        団体参加登録が未完了
+    </h2>
+    <p class="top_alert__body">
+        団体参加登録がお済みでない場合、申請機能など、{{ config('app.name') }} の一部機能がご利用になれません
+    </p>
 </div>
+@endif
+@endauth
+
 @guest
 <header class="jumbotron">
     <div class="container is-narrow">
