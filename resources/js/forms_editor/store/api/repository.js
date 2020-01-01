@@ -5,13 +5,13 @@ import { SET_SAVING, SET_SAVED, ENQUEUED, DEQUEUED, SET_ERROR } from '../status'
 const baseURL = JSON.parse(
   document.querySelector('#forms-editor-config').dataset.apiBaseUrl
 )
+const token = document.head.querySelector('meta[name="csrf-token"]').content
 
 const axios = Axios.create({
   baseURL,
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-  withCredentials: true,
   headers: {
-    'X-Requested-With': 'XMLHttpRequest'
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-TOKEN': token
   }
 })
 

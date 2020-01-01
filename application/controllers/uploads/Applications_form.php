@@ -8,11 +8,15 @@ class Applications_form extends Uploads_base_controller
 {
     public function index($filename = null)
     {
-      // basename: ディレクトリ・トラバーサル脆弱性対策
+        if (empty($this->_get_login_user())) {
+            $this->_uploads_forbidden();
+        }
+
+        // basename: ディレクトリ・トラバーサル脆弱性対策
         if (empty($filename)) {
             $this->_uploads_forbidden();
         }
-        $filepath = RP_UPLOAD_DIR. '/form_file/'. basename($filename);
+        $filepath = PORTAL_UPLOAD_DIR. '/form_file/'. basename($filename);
         $this->_render_file($filepath);
     }
 }

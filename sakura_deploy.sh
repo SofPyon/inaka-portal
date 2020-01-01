@@ -42,7 +42,7 @@ echo "【デプロイスクリプト Start】"
 rm -rf dist/
 
 # 全ファイルを dist へ移動させる
-rsync -av --update --delete --stats ./ ./dist/ --exclude='dist/' --exclude='docker_dev/' --exclude='.git/' --exclude='vendor/' --exclude='node_modules/' >& /dev/null
+rsync -av --update --delete --stats ./ ./dist/ --exclude='dist/' --exclude='docker_dev/' --exclude='.git/' --exclude='/vendor/' --exclude='node_modules/' >& /dev/null
 
 cd dist/; composer install --optimize-autoloader --no-dev; yarn install; cd ../
 
@@ -96,7 +96,7 @@ rsync -avz --update -e "ssh -o StrictHostKeyChecking=no" ./dist/ "${SSH_USERNAME
 
 rsync -avz --update -e "ssh -o StrictHostKeyChecking=no" ./dist/public/ "${SSH_USERNAME}@${SSH_HOST}:/home/${SSH_USERNAME}/www/${DEPLOY_DIRECTORY}/" >& /dev/null
 
-ssh ${SSH_USERNAME}@${SSH_HOST} -o StrictHostKeyChecking=no "cd /home/${SSH_USERNAME}/${DEPLOY_DIRECTORY}/; php artisan config:cache; php artisan route:cache; php artisan migrate --force" >& /dev/null
+ssh ${SSH_USERNAME}@${SSH_HOST} -o StrictHostKeyChecking=no "cd /home/${SSH_USERNAME}/${DEPLOY_DIRECTORY}/; php artisan config:cache; php artisan route:cache; php artisan view:clear; php artisan migrate --force" >& /dev/null
 echo "デプロイ End"
 
 echo "メンテナンスモード解除"
