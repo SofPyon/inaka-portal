@@ -356,10 +356,6 @@ class Home_staff extends MY_Controller
             $string_to_export .= $answer->id;
             // 団体名
             $string_to_export .= "\t" . $answer->circle->name;
-            // 作成日時
-            $string_to_export .= "\t" . $answer->created_at;
-            // 更新日時
-            $string_to_export .= "\t" . $answer->updated_at;
             // ブース名
             if ($vars["form"]->type === "booth") {
                 if (empty($answer->booth->name)) {
@@ -369,6 +365,10 @@ class Home_staff extends MY_Controller
                     $string_to_export .= "(" . $answer->booth->place_name . ")";
                 }
             }
+            // 作成日時
+            $string_to_export .= "\t" . $answer->created_at;
+            // 更新日時
+            $string_to_export .= "\t" . $answer->updated_at;
             // 回答本体
             foreach ($vars["form"]->questions as $question) {
                 if ($question->type === "heading") {
