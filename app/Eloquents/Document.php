@@ -21,4 +21,9 @@ class Document extends Model
     {
         return $query->where('is_public', true);
     }
+
+    public function schedule()
+    {
+        return $this->belongsTo(Schedule::class);
+    }
 }
