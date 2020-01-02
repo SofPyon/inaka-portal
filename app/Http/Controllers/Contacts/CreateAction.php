@@ -11,15 +11,7 @@ class CreateAction extends Controller
 {
     public function __invoke()
     {
-        $user = Auth::user();
-
-        $circles = $user->circles->all();
-
-        if (empty($circles)) {
-            return view('contacts.form');
-        }
-        
-        return view('contacts.form')
-            ->with('circles', $circles);
+        return view('v2.contacts.form')
+            ->with('circles', Auth::user()->circles);
     }
 }

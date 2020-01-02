@@ -1,6 +1,12 @@
 .form {
+  margin: $spacing 0;
   &-group {
-    margin-bottom: $spacing-md;
+    margin: 0 0 $spacing-md;
+  }
+  &-label {
+    display: block;
+    font-weight: bold;
+    margin: 0 0 $spacing-sm;
   }
   &-control {
     appearance: none;
@@ -16,5 +22,9 @@
       box-shadow: 0 0 0 3px rgba($color-primary, 0.25);
       outline: 0;
     }
+  }
+  &-text {
+    display: block;
+    margin: $spacing-xs 0;
   }
 }
