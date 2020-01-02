@@ -21,4 +21,10 @@ class ContactsService
     public function create(?Circle $circle, User $user, string $body)
     {
     }
+
+    private function send()
+    {
+        Mail::to($recipient)
+            ->send(new EmailVerificationMailable($verifyUrl, $name));
+    }
 }

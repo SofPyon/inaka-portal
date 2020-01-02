@@ -19,7 +19,7 @@ class ContactMailable extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(?Circle $circle, User $user, string $body)
     {
         //
     }
@@ -31,6 +31,7 @@ class ContactMailable extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->markdown('view.name')
+            ->subject('お問い合わせを承りました');
     }
 }
