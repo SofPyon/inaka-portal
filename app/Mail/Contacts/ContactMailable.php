@@ -15,13 +15,36 @@ class ContactMailable extends Mailable
     use SerializesModels;
 
     /**
+     * お問い合わせする対象の団体
+     *
+     * @var Circle
+     */
+    public $circle;
+
+    /**
+     * お問い合わせの送信者
+     *
+     * @var User
+     */
+    public $sender;
+
+    /**
+     * お問い合わせの本文
+     *
+     * @var string
+     */
+    public $contactBody;
+
+    /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(?Circle $circle, User $user, string $body)
+    public function __construct(?Circle $circle, User $sender, string $contactBody)
     {
-        //
+        $this->circle = $circle;
+        $this->sender = $sender;
+        $this->contactBody = $contactBody;
     }
 
     /**
@@ -31,7 +54,6 @@ class ContactMailable extends Mailable
      */
     public function build()
     {
-        return $this->markdown('view.name')
-            ->subject('お問い合わせを承りました');
+        return $this->markdown('emails.contacts.contact');
     }
 }

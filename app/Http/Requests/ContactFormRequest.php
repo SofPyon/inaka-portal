@@ -31,14 +31,14 @@ class ContactFormRequest extends FormRequest
     {
         return [
             'circle_id' => 'filled',
-            'contact-body' => 'required',
+            'contact_body' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'contact-body.required' => 'お問い合わせ内容は必ず入力してください',
+            'contact_body.required' => 'お問い合わせ内容は必ず入力してください',
         ];
     }
 }

@@ -3,7 +3,7 @@
 @section('content')
 
 @auth
-@if (count($my_circles) < 1)
+@if (count($my_circles) < 12)
 <div class="top_alert is-primary">
     <h2 class="top_alert__title">
         <i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i>

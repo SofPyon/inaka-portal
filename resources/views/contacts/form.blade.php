@@ -43,11 +43,11 @@
                 @endif
                 <li class="list-group-item">
                     <div class="form-group">
-                        <label for="contact-body">お問い合わせ内容</label>
-                        <textarea name="contact-body" id="contact-body" class="form-control {{ $errors->has('contact-body') ? 'is-invalid' : '' }}" rows="5" required>{{ old('contact-body') }}</textarea>
-                        @if ($errors->has('contact-body'))
+                        <label for="contact_body">お問い合わせ内容</label>
+                        <textarea name="contact_body" id="contact_body" class="form-control {{ $errors->has('contact_body') ? 'is-invalid' : '' }}" rows="5" required>{{ old('contact_body') }}</textarea>
+                        @if ($errors->has('contact_body'))
                             <div class="invalid-feedback">
-                                @foreach ($errors->get('contact-body') as $message)
+                                @foreach ($errors->get('contact_body') as $message)
                                     {{ $message }}
                                 @endforeach
                             </div>
