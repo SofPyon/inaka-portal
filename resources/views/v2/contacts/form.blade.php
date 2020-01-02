@@ -2,6 +2,22 @@
 
 @section('title', 'お問い合わせ')
 
+{{-- TODO: 完全にLaravel化したら、以下のdrawerセクションは完全削除する --}}
+@section('drawer')
+<a class="drawer-header" href="{{ url('/') }}">
+    {{ config('app.name') }}
+</a>
+<nav class="drawer-nav">
+    <ul class="drawer-nav__list">
+        <li class="drawer-nav__item">
+            <a href="{{ url('/') }}" class="drawer-nav__link">
+                ホームに戻る
+            </a>
+        </li>
+    </ul>
+</nav>
+@endsection
+
 @section('content')
 <main class="container">
     <form class="form" method="post" action="{{ route('contacts.post') }}">
