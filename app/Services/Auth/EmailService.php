@@ -36,7 +36,7 @@ class EmailService
         }
 
         $verifyUrl = $this->generateSignedUrl($user, 'email');
-        $this->send($user->email, $user->name, $verifyUrl, $user->is_signed_up);
+        $this->send($user->email, $user->name, $verifyUrl, (bool) $user->is_signed_up);
     }
 
     /**
@@ -51,7 +51,7 @@ class EmailService
         }
 
         $verifyUrl = $this->generateSignedUrl($user, 'univemail');
-        $this->send($user->univemail, $user->name, $verifyUrl, $user->is_signed_up);
+        $this->send($user->univemail, $user->name, $verifyUrl, (bool) $user->is_signed_up);
     }
 
     /**

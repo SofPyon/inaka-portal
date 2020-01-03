@@ -27,7 +27,7 @@ class EmailVerificationMailable extends Mailable
      * @param  string  $userName  宛先ユーザーのフルネーム
      * @return void
      */
-    public function __construct(string $verifyUrl, string $userName, bool $isEdit)
+    public function __construct(string $verifyUrl, string $userName, bool $isEdit = false)
     {
         $this->verifyUrl = $verifyUrl;
         $this->userName = $userName;
