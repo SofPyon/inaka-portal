@@ -66,8 +66,7 @@ class UpdateInfoAction extends Controller
         }
 
         if ($changed_univemail || $changed_email) {
-            return redirect()
-            ->route('home')
+            return redirect('/')
             ->with('success_message', '確認メールを送信しました');
         }
 
@@ -77,8 +76,7 @@ class UpdateInfoAction extends Controller
             ->with('success_message', 'ユーザー情報を更新しました');
         }
 
-        return redirect()
-            ->route('home')
+        return redirect('/')
             ->with('success_message', 'ユーザー情報を更新しました');
     }
 }
