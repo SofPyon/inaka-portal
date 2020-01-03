@@ -47,7 +47,7 @@
     // Laravel にルーティングされる
     $LARAVEL_PATHS = [
         // Home
-        '/home__THISIS_V2',
+        '/home__v2',
         '/pages',
         '/documents',
         // Auth
@@ -59,6 +59,8 @@
         // Users
         '/change_password',
         '/user',
+        '/contacts',
+        '/selector',
         // Staff
         '/staff',
         // Debugbar

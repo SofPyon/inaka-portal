@@ -13,7 +13,7 @@
                 <strong>{{ Auth::user()->is_signed_up ? 'ユーザー情報の変更が完了しました！' : 'ユーザー登録完了しました！' }}</strong>
             </p>
             <p class="text-center mb-0">
-                <a href="{{ route('home') }}" class="btn btn-primary">
+                <a href="{{ url('/') }}" class="btn btn-primary">
                     ダッシュボードにアクセス
                 </a>
             </p>

@@ -1,6 +1,21 @@
 @extends('v2.layouts.app')
 
 @section('content')
+
+@auth
+@if (count($my_circles) < 1)
+<div class="top_alert is-primary">
+    <h2 class="top_alert__title">
+        <i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i>
+        団体参加登録が未完了
+    </h2>
+    <p class="top_alert__body">
+        団体参加登録がお済みでない場合、申請機能など、{{ config('app.name') }} の一部機能がご利用になれません
+    </p>
+</div>
+@endif
+@endauth
+
 @guest
 <header class="jumbotron">
     <div class="container is-narrow">
@@ -82,6 +97,9 @@
             </div>
         </div>
     </div>
+    <a class="listview-item is-fluid is-more-btn" href="{{ url('home/schedules') }}">
+        他の予定を見る
+    </a>
 </div>
 @endisset
 <div class="listview">
@@ -91,11 +109,11 @@
     @foreach ($pages as $page)
     <a class="listview-item" href="{{ route('pages.show', $page) }}">
         <div class="listview-item__body">
-            <p class="listview-item__date">
-                @datetime($page->updated_at)
-            </p>
             <p class="listview-item__title">
                 {{ $page->title }}
+            </p>
+            <p class="listview-item__meta">
+                @datetime($page->updated_at)
             </p>
             <p class="listview-item__summary">
                 @summary($page->body)
@@ -103,6 +121,11 @@
         </div>
     </a>
     @endforeach
+    @if ($remaining_pages_count > 0)
+    <a class="listview-item is-more-btn" href="{{ route('pages.index') }}">
+        残り {{ $remaining_pages_count }} 件のお知らせを見る
+    </a>
+    @endif
 </div>
 <div class="listview">
     <div class="listview-header">
@@ -116,10 +139,29 @@
         rel="noopener"
     >
         <div class="listview-item__body">
-            <p class="listview-item__title">{{ $document->name }}</p>
+            <p class="listview-item__title{{ $document->is_important ? ' text-danger' : '' }}">
+                @if ($document->is_important)
+                <i class="fas fa-exclamation-circle"></i>
+                @else
+                <i class="far fa-file-alt fa-fw"></i>
+                @endif
+                {{ $document->name }}
+            </p>
+            <p class="listview-item__meta">
+                @datetime($document->updated_at) 更新
+                @isset($document->schedule)
+                •
+                {{ $document->schedule->name }}で配布
+                @endisset
+            </p>
             <p class="listview-item__summary">{{ $document->description }}</p>
         </div>
     </a>
     @endforeach
+    @if ($remaining_documents_count > 0)
+    <a class="listview-item is-more-btn" href="{{ route('documents.index') }}">
+        残り {{ $remaining_documents_count }} 件の配布資料を見る
+    </a>
+    @endif
 </div>
 @endsection

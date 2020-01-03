@@ -58,8 +58,10 @@ class LoginController extends Controller
             // GETパラメータで ?new=1 が渡されたら、新しいログイン画面をオプトインする
             return view('v2.home')
                 ->with('pages', Page::take(5)->get())
+                ->with('remaining_pages_count', max(Page::count() - 5, 0))
                 ->with('next_schedule', Schedule::startOrder()->notStarted()->first())
-                ->with('documents', Document::public()->get());
+                ->with('documents', Document::take(5)->public()->with('schedule')->get())
+                ->with('remaining_documents_count', max(Document::public()->count() - 5, 0));
         }
         return view('auth.login');
     }
