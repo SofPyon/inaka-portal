@@ -26,7 +26,7 @@
             </a>
         </li>
         <li class="drawer-nav__item">
-            <a href="{{ url('home/schedules') }}" class="drawer-nav__link">
+            <a href="{{ route('schedules.index') }}" class="drawer-nav__link{{ Request::is('schedules*') ? ' is-active' : '' }}">
                 スケジュール
             </a>
         </li>
