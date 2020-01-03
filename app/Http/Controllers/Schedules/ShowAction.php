@@ -10,6 +10,8 @@ class ShowAction extends Controller
 {
     public function __invoke(Schedule $schedule)
     {
+        $schedule->load('documents');
+
         return view('v2.schedules.show')
             ->with('schedule', $schedule);
     }

@@ -31,5 +31,11 @@
         </div>
     </a>
     @endforeach
+    @empty ($documents)
+    <div class="listview-empty">
+        <i class="far fa-file-alt listview-empty__icon"></i>
+        <p class="listview-empty__text">配布資料はまだありません</p>
+    </div>
+    @endempty
 </div>
 @endsection
