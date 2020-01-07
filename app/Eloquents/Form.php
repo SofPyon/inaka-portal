@@ -3,6 +3,7 @@
 namespace App\Eloquents;
 
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -40,6 +41,40 @@ class Form extends Model
         'max_answers' => 'int',
         'is_public' => 'bool',
     ];
+
+    /**
+     * 公開中のものを取得
+     */
+    public function scopeIsPublic($query)
+    {
+        return $query->where('is_public', true);
+    }
+
+    /**
+     * 受付開始時刻で並び替え
+     */
+    public function scopeOpenOrder($query, $direction = 'asc')
+    {
+        return $query->orderBy('open_at', $direction);
+    }
+
+    /**
+     * 現時点で受付中のもの
+     */
+    public function scopeNowOpend($query)
+    {
+        $now = new CarbonImmutable();
+        return $query->where('open_at', '<=', $now)->where('close_at', '>=', $now);
+    }
+
+    /**
+     * 現時点で受付終了しているもの
+     */
+    public function scopeNowClosed($query)
+    {
+        $now = new CarbonImmutable();
+        return $query->where('close_at', '<', $now);
+    }
 
     public function questions()
     {

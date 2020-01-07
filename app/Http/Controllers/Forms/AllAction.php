@@ -8,5 +8,11 @@ use App\Http\Controllers\Controller;
 
 class AllAction extends Controller
 {
-
+    public function __invoke()
+    {
+        $forms = Form::IsPublic()->OpenOrder()->get();
+        
+        return view('v2.forms.list')
+            ->with('forms', $forms);
+    }
 }

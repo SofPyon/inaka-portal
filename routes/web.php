@@ -48,7 +48,7 @@ Route::prefix('/forms')
     ->group(function() {
         Route::get('/', 'Forms\IndexAction')->name('index');
         Route::get('/closed', 'Forms\ClosedAction')->name('closed');
-        Route::get('/all', 'Forms\AllAction')->name('closed');
+        Route::get('/all', 'Forms\AllAction')->name('all');
     });
 
 // 認証系
