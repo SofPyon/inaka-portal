@@ -51,11 +51,11 @@ class Form extends Model
     }
 
     /**
-     * 受付開始時刻で並び替え
+     * 受付終了時刻で並び替え
      */
-    public function scopeOpenOrder($query, $direction = 'asc')
+    public function scopeCloseOrder($query, $direction = 'asc')
     {
-        return $query->orderBy('open_at', $direction);
+        return $query->orderBy('close_at', $direction);
     }
 
     /**
@@ -79,5 +79,11 @@ class Form extends Model
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    public function answered(Circle $circle)
+    {
+        $answer = Answer::where('form_id', $this->id)->where('circle_id', $circle->id)->first();
+        return !empty($answer);
     }
 }

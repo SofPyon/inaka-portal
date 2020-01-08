@@ -30,7 +30,12 @@
         <div class="listview-item__body">
             <p class="listview-item__title">
                 {{ $form->name }}
-                <small><span class="badge is-success">提出済</span></small>
+                @if($form->answered($circle))
+                    <small><span class="badge is-success">提出済</span></small>
+                @endif
+                @if($form->open_at > $now)
+                    <small><span class="badge is-muted">受付開始前</span></small>
+                @endif
             </p>
             <p class="listview-item__meta">
                 @datetime($form->close_at) まで受付
@@ -41,10 +46,5 @@
         </div>
     </a>
     @endforeach
-    
-    <p><span class="badge is-primary">primary</span></p>
-    <p><span class="badge is-success">success</span></p>
-    <p><span class="badge is-danger">danger</span></p>
-    <p><span class="badge is-muted">muted</span></p>
 </div>
 @endsection
