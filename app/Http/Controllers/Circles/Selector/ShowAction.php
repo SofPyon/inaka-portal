@@ -14,12 +14,12 @@ class ShowAction extends Controller
         $this->router = $router;
     }
 
-    public function __invoke(Request $request)
+    public function __invoke()
     {
-        $redirect = (string) $request->redirect;
+        $redirect = request('redirect');
         if (isset($redirect) && $this->router->has($redirect)) {
             $user = Auth::user();
-            $circles = $user->circles->all();
+            $circles = $user->circles()->get();
 
             if (count($circles) <= 1) {
                 return redirect()
@@ -38,7 +38,6 @@ class ShowAction extends Controller
                 ->with('circles', $circles);
         }
         
-        return redirect()
-            ->route('home');
+        return redirect('/');
     }
 }

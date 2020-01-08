@@ -21,7 +21,7 @@
         </li>
         @auth
         <li class="drawer-nav__item">
-            <a href="{{ url('home/applications') }}" class="drawer-nav__link">
+            <a href="{{ route('forms.index') }}" class="drawer-nav__link">
                 申請
             </a>
         </li>

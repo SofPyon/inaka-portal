@@ -5,19 +5,19 @@
 @section('content')
 <div class="tab_strip">
     <a
-        href="{{ route('forms.index') }}"
+        href="{{ route('forms.index', ['circle' => $circle]) }}"
         class="tab_strip-tab{{ Route::currentRouteName() === 'forms.index' ? ' is-active' : '' }}"
     >
         受付中
     </a>
     <a
-        href="{{ route('forms.closed') }}"
+        href="{{ route('forms.closed', ['circle' => $circle]) }}"
         class="tab_strip-tab{{ Route::currentRouteName() === 'forms.closed' ? ' is-active' : '' }}"
     >
         受付終了
     </a>
     <a
-        href="{{ route('forms.all') }}"
+        href="{{ route('forms.all', ['circle' => $circle]) }}"
         class="tab_strip-tab{{ Route::currentRouteName() === 'forms.all' ? ' is-active' : '' }}"
     >
         全て

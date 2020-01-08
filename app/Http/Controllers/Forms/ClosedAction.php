@@ -2,24 +2,30 @@
 
 namespace App\Http\Controllers\Forms;
 
+use App\Eloquents\Circle;
 use App\Eloquents\Form;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ClosedAction extends Controller
 {
     public function __invoke()
     {
         $forms = Form::IsPublic()->NowClosed()->CloseOrder()->get();
-        $circle = Auth::user()->circles()->get();
+        $circle = Circle::find(request('circle'));
+        if (isset($circle) && Gate::allows('circle.belongsTo', $circle)) {
+        } else {
+            $circles = Auth::user()->circles()->get();
 
-        if (count($circle) === 1) {
-            $circle = $circle[0];
-        } elseif (count($circle) > 1) {
-            return redirect()
-                ->route('circles.selector.show', ['redirect' => 'forms.closed']);
+            if (count($circles) === 1) {
+                $circle = $circles[0];
+            } elseif (count($circles) > 1) {
+                return redirect()
+                    ->route('circles.selector.show', ['redirect' => 'forms.closed']);
+            }
         }
 
         return view('v2.forms.list')

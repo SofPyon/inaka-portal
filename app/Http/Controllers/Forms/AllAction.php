@@ -2,26 +2,31 @@
 
 namespace App\Http\Controllers\Forms;
 
+use App\Eloquents\Circle;
 use App\Eloquents\Form;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class AllAction extends Controller
 {
     public function __invoke()
     {
         $forms = Form::IsPublic()->CloseOrder()->get();
-        $circle = Auth::user()->circles()->get();
+        $circle = Circle::find(request('circle'));
+        if (isset($circle) && Gate::allows('circle.belongsTo', $circle)) {
+        } else {
+            $circles = Auth::user()->circles()->get();
 
-        if (count($circle) === 1) {
-            $circle = $circle[0];
-        } elseif (count($circle) > 1) {
-            return redirect()
-                ->route('circles.selector.show', ['redirect' => 'forms.all']);
+            if (count($circles) === 1) {
+                $circle = $circles[0];
+            } elseif (count($circles) > 1) {
+                return redirect()
+                    ->route('circles.selector.show', ['redirect' => 'forms.all']);
+            }
         }
-        
         return view('v2.forms.list')
             ->with('forms', $forms)
             ->with('circle', $circle)

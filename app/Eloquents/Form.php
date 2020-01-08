@@ -51,7 +51,7 @@ class Form extends Model
     }
 
     /**
-     * 受付終了時刻で並び替え
+     * 受付終了時刻の早い順で並び替え
      */
     public function scopeCloseOrder($query, $direction = 'asc')
     {
