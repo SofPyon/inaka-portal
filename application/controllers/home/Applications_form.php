@@ -193,6 +193,7 @@ class Applications_form extends Home_base_controller
     private function _post_index($vars, $answers_on_db, $type, $formId, $boothId, $circleId, $answer_id, &$answers)
     {
         $answers = [];
+        $uploads = [];
 
         // 申請完了メール用配列
         //  キーを設問の name とし，値を，ユーザーの回答(日本語)とする
@@ -277,7 +278,7 @@ class Applications_form extends Home_base_controller
                     // メール送信用
                     // ( 申請にエラーがなかった場合にのみメールが送信されるため，アップロードが成功した前提の文言となっている )
                     if (!empty($_FILES["answers"]["name"][$question->id])) {
-                        $answers_for_email[$question->name] = "(アップロードしました)";
+                        $uploads[] = $question->id;
                     } else {
                         $answers_for_email[$question->name] = "(未アップロード)";
                     }
@@ -295,7 +296,12 @@ class Applications_form extends Home_base_controller
                         $answers[$question->id] = $answers_on_db[$question->id] ?? null;
 
                         // メール送信用
-                        $answers_for_email[$question->name] = "";
+                        if (!empty($answers[$question->id]))
+                        {
+                            $uploads[] = $question->id;
+                        } else {
+                            $answers_for_email[$question->name] = "";
+                        }
                     }
                 }
             }
@@ -356,6 +362,11 @@ class Applications_form extends Home_base_controller
                     // update 失敗
                     $this->_error("申請フォームエラー", $error_msg);
                 }
+            }
+
+            // Upload 用のメール本文設定
+            foreach ($uploads as $upload) {
+                $answers_for_email[$vars["form"]->questions[$upload]->name] = base_url("uploads/applications_form/" . $answers[$upload]) . "\n「" . constant('APP_NAME') . " にログインした上でこの URL にアクセスしてください」";
             }
 
             // リダイレクト先のURL
