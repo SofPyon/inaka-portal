@@ -24,7 +24,16 @@
     </div>
     <div class="editor-header__actions">
       <a class="btn btn-link" :href="preview_url" target="_blank">プレビュー</a>
-      <button class="btn btn-primary" :disabled="is_saving">公開する</button>
+      <span v-if="is_public">
+        <span class="badge badge-primary mr-2">公開</span>
+        <button class="btn btn-primary" :disabled="is_saving">
+          非公開にする
+        </button>
+      </span>
+      <span v-else>
+        <span class="badge badge-danger mr-2">非公開</span>
+        <button class="btn btn-primary" :disabled="is_saving">公開する</button>
+      </span>
     </div>
   </header>
 </template>
@@ -52,6 +61,9 @@ export default {
     preview_url() {
       const form_id = this.$store.state.editor.form.id
       return `/home_staff/applications/preview/${form_id}`
+    },
+    is_public() {
+      return this.$store.state.editor.form.is_public
     }
   }
 }
