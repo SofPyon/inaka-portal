@@ -366,7 +366,7 @@ class Applications_form extends Home_base_controller
 
             // Upload 用のメール本文設定
             foreach ($uploads as $upload) {
-                $answers_for_email[$vars["form"]->questions[$upload]->name] = base_url("uploads/applications_form/" . $answers[$upload]) . "\n「" . constant('APP_NAME') . " にログインした上でこの URL にアクセスしてください」";
+                $answers_for_email[$vars["form"]->questions[$upload]->name] = base_url("uploads/applications_form/" . $answers[$upload]) . "\n" . constant('APP_NAME') . " にログインした上でこの URL にアクセスしてください";
             }
 
             // リダイレクト先のURL
