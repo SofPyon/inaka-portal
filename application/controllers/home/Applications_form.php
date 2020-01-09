@@ -406,13 +406,15 @@ class Applications_form extends Home_base_controller
 
             // フォーム管理者に送信するメール
             $manager = $this->users->get_user_by_user_id($vars["form"]->created_by);
-            $vars_email["name_to"] = $manager->name_family . " " . $manager->name_given;
-            $this->_send_email(
-                $manager->email,
-                "[スタッフ用控え]申請「" . $vars_email["form_name"] . "」を承りました",
-                "email/applications_form_sent",
-                $vars_email
-            );
+            if (! empty($manager)) {
+                $vars_email["name_to"] = $manager->name_family . " " . $manager->name_given;
+                $this->_send_email(
+                    $manager->email,
+                    "[スタッフ用控え]申請「" . $vars_email["form_name"] . "」を承りました",
+                    "email/applications_form_sent",
+                    $vars_email
+                );
+            }
 
             // リダイレクト
             $this->session->set_flashdata("post_result", true);
