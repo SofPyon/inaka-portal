@@ -18,7 +18,11 @@ body {
     align-items: center;
     display: flex;
     height: 100%;
+    margin: 0 auto;
+    max-width: $bottom-tabs-container-width;
+    padding: 0 $spacing;
     padding: 0 0 env(safe-area-inset-bottom);
+    width: 100%;
   }
   &-tab {
     $selector-tab: &;

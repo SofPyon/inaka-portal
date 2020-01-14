@@ -3,9 +3,6 @@
   max-width: $container-width;
   padding: 0 $spacing;
   width: 100%;
-  &.is-medium {
-    max-width: $container-width-medium;
-  }
   &.is-narrow {
     max-width: $container-width-narrow;
   }
