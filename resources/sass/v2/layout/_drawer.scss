@@ -65,7 +65,7 @@
     &__link {
       color: $color-text;
       display: block;
-      margin: $spacing-md 0;
+      margin: $spacing 0;
       padding: $spacing-sm $spacing;
       &:hover,
       &:focus,
@@ -91,6 +91,11 @@
           width: $bar-width;
         }
       }
+    }
+    &__icon {
+      font-size: 1.2rem;
+      margin-right: $spacing-sm;
+      opacity: 0.5;
     }
   }
   &-user {
