@@ -53,7 +53,7 @@
     <a
         href="{{ route('logout') }}"
         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-        class="btn is-secondary is-block is-no-border"
+        class="btn is-secondary is-block"
     >
         ログアウト
     </a>
@@ -61,7 +61,7 @@
     <p class="drawer-user__info">
         ログインしていません
     </p>
-    <a href="{{ url('/') }}" class="btn is-secondary is-block is-no-border">
+    <a href="{{ url('/') }}" class="btn is-primary is-block">
         <strong>ログイン</strong>
     </a>
     @endauth

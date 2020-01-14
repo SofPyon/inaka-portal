@@ -16,7 +16,7 @@ $color-text: #22292F;
 $color-muted: #737A80;
 $color-border: #CED4DA;
 $color-bg-grey: #F8FAFC;
-$color-bg-light: rgba($color-primary, 0.05);
+$color-bg-light: lighten($color-primary, 52);
 $color-bg-white: #FFF;
 
 // Spacing (WIP)
@@ -44,7 +44,7 @@ $container-width-narrow: 400px;
 
 // Media Breakpoints
 $breakpoint-drawer-hide: 1240px;
-$breakpoint-listview-single-col: 860px;
+$breakpoint-listview-sm: 860px;
 $breakpoint-bottom-tabs: $breakpoint-drawer-hide;
 
 // Z indexes
