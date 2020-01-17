@@ -24,7 +24,7 @@
         </li>
         @auth
         <li class="drawer-nav__item">
-            <a href="{{ url('home/applications') }}" class="drawer-nav__link">
+            <a href="{{ route('forms.index') }}" class="drawer-nav__link">
                 <i class="far fa-edit drawer-nav__icon fa-fw"></i>
                 申請
             </a>
