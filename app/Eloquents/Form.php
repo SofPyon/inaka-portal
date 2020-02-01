@@ -3,7 +3,6 @@
 namespace App\Eloquents;
 
 use Carbon\Carbon;
-use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -45,7 +44,7 @@ class Form extends Model
     /**
      * 公開中のものを取得
      */
-    public function scopeIsPublic($query)
+    public function scopePublic($query)
     {
         return $query->where('is_public', true);
     }
@@ -61,19 +60,17 @@ class Form extends Model
     /**
      * 現時点で受付中のもの
      */
-    public function scopeNowOpend($query)
+    public function scopeOpen($query)
     {
-        $now = new CarbonImmutable();
-        return $query->where('open_at', '<=', $now)->where('close_at', '>=', $now);
+        return $query->where('open_at', '<=', now())->where('close_at', '>=', now());
     }
 
     /**
      * 現時点で受付終了しているもの
      */
-    public function scopeNowClosed($query)
+    public function scopeClosed($query)
     {
-        $now = new CarbonImmutable();
-        return $query->where('close_at', '<', $now);
+        return $query->where('close_at', '<', now());
     }
 
     public function questions()

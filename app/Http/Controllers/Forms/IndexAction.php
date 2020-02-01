@@ -6,7 +6,6 @@ use App\Eloquents\Circle;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Eloquents\Form;
-use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,7 +13,7 @@ class IndexAction extends Controller
 {
     public function __invoke()
     {
-        $forms = Form::IsPublic()->NowOpend()->CloseOrder()->get();
+        $forms = Form::public()->open()->CloseOrder()->get();
         $circle = Circle::find(request('circle'));
         if (isset($circle) && Gate::allows('circle.belongsTo', $circle)) {
         } else {
@@ -31,6 +30,6 @@ class IndexAction extends Controller
         return view('v2.forms.list')
             ->with('forms', $forms)
             ->with('circle', $circle)
-            ->with('now', new CarbonImmutable());
+            ->with('now', now());
     }
 }
