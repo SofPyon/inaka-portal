@@ -14,9 +14,9 @@ class ShowAction extends Controller
         $this->router = $router;
     }
 
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        $redirect = request('redirect');
+        $redirect = $request->redirect;
         if (isset($redirect) && $this->router->has($redirect)) {
             $user = Auth::user();
             $circles = $user->circles()->get();

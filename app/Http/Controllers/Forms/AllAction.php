@@ -11,12 +11,11 @@ use Illuminate\Support\Facades\Gate;
 
 class AllAction extends Controller
 {
-    public function __invoke()
+    public function __invoke(Request $request)
     {
         $forms = Form::public()->closeOrder()->get();
-        $circle = Circle::find(request('circle'));
-        if (isset($circle) && Gate::allows('circle.belongsTo', $circle)) {
-        } else {
+        $circle = Circle::find($request->circle);
+        if (empty($circle) || Gate::denies('circle.belongsTo', $circle)) {
             $circles = Auth::user()->circles()->get();
 
             if (count($circles) === 1) {

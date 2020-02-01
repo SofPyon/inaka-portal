@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Gate;
 
 class IndexAction extends Controller
 {
-    public function __invoke()
+    public function __invoke(Request $request)
     {
         $forms = Form::public()->open()->closeOrder()->get();
-        $circle = Circle::find(request('circle'));
+        $circle = Circle::find($request->circle);
         if (isset($circle) && Gate::allows('circle.belongsTo', $circle)) {
         } else {
             $circles = Auth::user()->circles()->get();
