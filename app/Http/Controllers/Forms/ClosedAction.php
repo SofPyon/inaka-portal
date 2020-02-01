@@ -13,7 +13,7 @@ class ClosedAction extends Controller
 {
     public function __invoke()
     {
-        $forms = Form::public()->closed()->CloseOrder()->get();
+        $forms = Form::public()->closed()->closeOrder()->get();
         $circle = Circle::find(request('circle'));
         if (isset($circle) && Gate::allows('circle.belongsTo', $circle)) {
         } else {

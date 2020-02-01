@@ -13,7 +13,7 @@ class IndexAction extends Controller
 {
     public function __invoke()
     {
-        $forms = Form::public()->open()->CloseOrder()->get();
+        $forms = Form::public()->open()->closeOrder()->get();
         $circle = Circle::find(request('circle'));
         if (isset($circle) && Gate::allows('circle.belongsTo', $circle)) {
         } else {
