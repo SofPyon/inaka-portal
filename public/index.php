@@ -51,6 +51,7 @@
         '/^\/pages/',
         '/^\/documents/',
         '/^\/schedules/',
+        '/^\/forms(\/|\/closed|\/all)?(\?circle=.*)?$/',
         // Auth
         '/^\/login/',
         '/^\/logout/',
