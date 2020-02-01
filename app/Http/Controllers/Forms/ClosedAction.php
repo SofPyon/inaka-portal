@@ -15,8 +15,7 @@ class ClosedAction extends Controller
     {
         $forms = Form::public()->closed()->closeOrder()->get();
         $circle = Circle::find($request->circle);
-        if (isset($circle) && Gate::allows('circle.belongsTo', $circle)) {
-        } else {
+        if (empty($circle) || Gate::denies('circle.belongsTo', $circle)) {
             $circles = Auth::user()->circles()->get();
 
             if (count($circles) === 1) {
