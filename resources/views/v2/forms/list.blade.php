@@ -41,7 +41,7 @@
 
     <div class="listview">
         @foreach ($forms as $form)
-        <a class="listview-item" href="applications/{{ $form->id }}/answers/create?circle_id={{ $circle->id }}">
+        <a class="listview-item" href="/applications/{{ $form->id }}/answers/create?circle_id={{ $circle->id }}">
             <div class="listview-item__body">
                 <p class="listview-item__title">
                     {{ $form->name }}
