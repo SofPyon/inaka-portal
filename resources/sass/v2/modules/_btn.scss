@@ -38,6 +38,9 @@
   &.is-primary {
     @include btn(#fff, $color-primary, lighten($color-primary, 5%), $color-primary, $color-primary);
   }
+  &.is-primary-inverse {
+    @include btn($color-primary, #fff, lighten($color-primary, 50%), #fff, $color-muted);
+  }
   &.is-secondary {
     @include btn($color-text, #fff, $color-bg-grey, $color-border);
   }

@@ -92,7 +92,7 @@
                     <template v-slot:cta>
                         <form action="{{ route('verification.resend') }}" method="post">
                             @csrf
-                            <button class="btn is-secondary is-no-border is-wide">
+                            <button class="btn is-primary-inverse is-no-border is-wide">
                                 <strong>確認メールを再送</strong>
                             </button>
                         </form>
