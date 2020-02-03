@@ -6,7 +6,7 @@
 @if (Auth::user()->areBothEmailsVerified() && count($my_circles) < 1)
 <div class="top_alert is-primary">
     <h2 class="top_alert__title">
-        <i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i>
+        <i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>
         参加登録をしましょう！
     </h2>
     <p class="top_alert__body">
