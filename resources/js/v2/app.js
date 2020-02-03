@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import GlobalEvents from 'vue-global-events'
 
+import TopAlert from './components/TopAlert.vue'
+
 export default new Vue({
   el: '#v2-app',
   components: {
-    GlobalEvents
+    GlobalEvents,
+    TopAlert
   },
   data() {
     return {
