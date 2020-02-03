@@ -13,13 +13,15 @@ const mix = require('laravel-mix')
 
 const path = require('path')
 
-mix.webpackConfig({
-  resolve: {
-    modules: [path.resolve('./node_modules')]
-  }
-})
-
 mix
+  .webpackConfig({
+    resolve: {
+      modules: [path.resolve('./node_modules')]
+    }
+  })
+  .options({
+    globalVueStyles: 'resources/sass/v2/_variables.scss'
+  })
   .js('resources/js/app.js', 'public/js') // メインスクリプト
   .sass('resources/sass/app.scss', 'public/css') // メインスタイル
   .sass('resources/sass/v2/app.scss', 'public/css/v2') // メインスタイル(v2)
