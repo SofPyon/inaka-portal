@@ -4,20 +4,19 @@
 
 @auth
 @if (Auth::user()->areBothEmailsVerified() && count($my_circles) < 1)
-<div class="top_alert is-primary">
-    <h2 class="top_alert__title">
+<top-alert type="primary">
+    <template v-slot:title>
         <i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>
         参加登録をしましょう！
-    </h2>
-    <p class="top_alert__body">
-        まだ参加登録がお済みでないようですね。まずは参加登録からはじめましょう！
-    </p>
-    <p class="top_alert__body pt-spacing-sm">
-        <a href="#" class="btn is-secondary is-no-border is-wide">
+    </template>
+
+    まだ参加登録がお済みでないようですね。まずは参加登録からはじめましょう！
+    <template v-slot:cta>
+        <a href="#" class="btn is-primary-inverse is-no-border is-wide">
             <strong>参加登録をはじめる</strong>
         </a>
-    </p>
-</div>
+    </template>
+</top-alert>
 @endif
 @endauth
 

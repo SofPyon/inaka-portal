@@ -101,12 +101,15 @@
             @endunless
         @endauth
         @if (Session::has('topAlert.title'))
-            <div class="top_alert is-primary">
-                <h2 class="top_alert__title">{{ session('topAlert.title') }}</h2>
+            <top-alert type="primary">
+                <template v-slot:title>
+                    {{ session('topAlert.title') }}
+                </template>
+
                 @if (Session::has('topAlert.body'))
-                    <p class="top_alert__body">{{ session('topAlert.body') }}</p>
+                    {{ session('topAlert.body') }}
                 @endif
-            </div>
+            </top-alert>
         @endif
         @yield('content')
     </div>
