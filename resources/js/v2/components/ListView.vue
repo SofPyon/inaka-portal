@@ -92,17 +92,18 @@ export default {
       }
     }
     &__title {
-      font-size: $font-size-listview-title;
+      font-size: 1.1rem;
       font-weight: bold;
       margin: 0;
     }
     &__meta {
-      color: $color-muted;
-      font-size: 0.9rem;
+      font-size: 1rem;
       margin: 0;
     }
     &__summary {
-      margin: $spacing-sm 0 0;
+      color: $color-muted;
+      font-size: 1rem;
+      margin: $spacing-xs 0 0;
     }
   }
   &-empty {
