@@ -22,8 +22,6 @@ export default {
 
 <style lang="scss" scoped>
 .listview {
-  $listview-item-width: calc((100% - #{$spacing * 2}) / 3);
-
   padding: $spacing $spacing $spacing-md;
   @media screen and (max-width: $breakpoint-listview-sm) {
     padding: 0;

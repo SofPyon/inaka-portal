@@ -82,10 +82,13 @@
 @endguest
 @isset($next_schedule)
 <list-view header-title="次の予定">
-    <list-view-item
-        title="{{ $next_schedule->name }}"
-        meta="@datetime($next_schedule->start_at)〜 • {{ $next_schedule->place }}"
-    >
+    <list-view-item>
+        <template v-slot:title>
+            {{ $next_schedule->name }}
+        </template>
+        <template v-slot:meta>
+            @datetime($next_schedule->start_at)〜 • {{ $next_schedule->place }}
+        </template>
         @isset ($next_schedule->description)
         <div class="markdown">
             <hr>
@@ -100,11 +103,13 @@
 @endisset
 <list-view header-title="お知らせ">
     @foreach ($pages as $page)
-    <list-view-item
-        title="{{ $page->title }}"
-        meta="@datetime($page->updated_at)"
-        href="{{ route('pages.show', $page) }}"
-    >
+    <list-view-item href="{{ route('pages.show', $page) }}">
+        <template v-slot:title>
+            {{ $page->title }}
+        </template>
+        <template v-slot:meta>
+            @datetime($page->updated_at)
+        </template>
         @summary($page->body)
     </list-view-item>
     @endforeach
@@ -124,40 +129,31 @@
 <list-view header-title="最近の配布資料">
     @foreach ($documents as $document)
     <list-view-item
-        title="{{ $page->title }}"
-        meta="@datetime($page->updated_at)"
         href="{{ url("uploads/documents/{$document->id}") }}"
         newtab
     >
-        @summary($page->body)
+        <template v-slot:title>
+            @if ($document->is_important)
+            <i class="fas fa-exclamation-circle fa-fw text-danger"></i>
+            @else
+            <i class="far fa-file-alt fa-fw"></i>
+            @endif
+            {{ $document->name }}
+        </template>
+        <template v-slot:meta>
+            @datetime($document->updated_at) 更新
+            @isset($document->schedule)
+            •
+            {{ $document->schedule->name }}で配布
+            @endisset
+        </template>
+        @summary($document->description)
     </list-view-item>
-    <a
-
-    >
-        <div class="listview-item__body">
-            <p class="listview-item__title{{ $document->is_important ? ' text-danger' : '' }}">
-                @if ($document->is_important)
-                <i class="fas fa-exclamation-circle"></i>
-                @else
-                <i class="far fa-file-alt fa-fw"></i>
-                @endif
-                {{ $document->name }}
-            </p>
-            <p class="listview-item__meta">
-                @datetime($document->updated_at) 更新
-                @isset($document->schedule)
-                •
-                {{ $document->schedule->name }}で配布
-                @endisset
-            </p>
-            <p class="listview-item__summary">{{ $document->description }}</p>
-        </div>
-    </a>
     @endforeach
     @if ($remaining_documents_count > 0)
-    <a class="listview-item is-action-btn" href="{{ route('documents.index') }}">
+    <list-view-action-btn href="{{ route('documents.index') }} ">
         残り {{ $remaining_documents_count }} 件の配布資料を見る
-    </a>
+    </list-view-action-btn>
     @endif
     @empty ($documents)
     <div class="listview-empty">

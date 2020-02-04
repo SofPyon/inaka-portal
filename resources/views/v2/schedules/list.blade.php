@@ -20,11 +20,13 @@
 @foreach ($schedules as $month => $group)
 <list-view header-title="{{ $month }}">
     @foreach ($group as $schedule)
-    <list-view-item
-        href="{{ route('schedules.show', $schedule) }}"
-        title="{{ $schedule->name }}"
-        meta="@datetime($schedule->start_at)〜 • {{ $schedule->place }}"
-    >
+    <list-view-item href="{{ route('schedules.show', $schedule) }}">
+        <template v-slot:title>
+            {{ $schedule->name }}
+        </template>
+        <template v-slot:meta>
+            @datetime($schedule->start_at)〜 • {{ $schedule->place }}
+        </template>
         @summary($schedule->description)
     </list-view-item>
     @endforeach

@@ -6,13 +6,13 @@
     :target="newtab ? '_blank' : undefined"
     :rel="newtab ? 'noopener' : undefined"
   >
-    <p class="listview-item__title" v-if="title">
-      {{ title }}
+    <p class="listview-item__title" v-if="$slots.title">
+      <slot name="title" />
     </p>
-    <p class="listview-item__meta" v-if="meta">
-      {{ meta }}
+    <p class="listview-item__meta" v-if="$slots.meta">
+      <slot name="meta" />
     </p>
-    <p class="listview-item__summary" v-if="title && meta">
+    <p class="listview-item__summary" v-if="$slots.title || $slots.meta">
       <slot />
     </p>
     <template v-else>
@@ -26,17 +26,6 @@
 export default {
   props: {
     href: {
-      type: String,
-      default: null
-    },
-    // title や meta に HTML が入る想定ができていなかった…
-    // （配布資料の重要アイコン、など）
-    // title や meta は slot にする
-    title: {
-      type: String,
-      default: null
-    },
-    meta: {
       type: String,
       default: null
     },
