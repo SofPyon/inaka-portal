@@ -82,47 +82,36 @@
 @endguest
 @isset($next_schedule)
 <list-view header-title="次の予定">
-    <div class="listview-item">
-        <div class="listview-item__day_calendar">
-            @include('v2.includes.day_calendar', ['date' => $next_schedule->start_at])
+    <list-view-item
+        title="{{ $next_schedule->name }}"
+        meta="@datetime($next_schedule->start_at)〜 • {{ $next_schedule->place }}"
+    >
+        @isset ($next_schedule->description)
+        <div class="markdown">
+            <hr>
+            @markdown($next_schedule->description)
         </div>
-        <div class="listview-item__body">
-            <p class="listview-item__title">
-                {{ $next_schedule->name }}
-            </p>
-            <p class="listview-item__meta">
-                @datetime($next_schedule->start_at)〜 • {{ $next_schedule->place }}
-            </p>
-            <div class="listview-item__summary markdown">
-                @markdown($next_schedule->description)
-            </div>
-        </div>
-    </div>
-    <a class="listview-item is-action-btn" href="{{ route('schedules.index') }}">
+        @endisset
+    </list-view-item>
+    <list-view-action-btn href="{{ route('schedules.index') }}">
         他の予定を見る
-    </a>
+    </list-view-action-btn>
 </list-view>
 @endisset
 <list-view header-title="お知らせ">
     @foreach ($pages as $page)
-    <a class="listview-item" href="{{ route('pages.show', $page) }}">
-        <div class="listview-item__body">
-            <p class="listview-item__title">
-                {{ $page->title }}
-            </p>
-            <p class="listview-item__meta">
-                @datetime($page->updated_at)
-            </p>
-            <p class="listview-item__summary">
-                @summary($page->body)
-            </p>
-        </div>
-    </a>
+    <list-view-item
+        title="{{ $page->title }}"
+        meta="@datetime($page->updated_at)"
+        href="{{ route('pages.show', $page) }}"
+    >
+        @summary($page->body)
+    </list-view-item>
     @endforeach
     @if ($remaining_pages_count > 0)
-    <a class="listview-item is-action-btn" href="{{ route('pages.index') }}">
+    <list-view-action-btn href="{{ route('pages.index') }} ">
         残り {{ $remaining_pages_count }} 件のお知らせを見る
-    </a>
+    </list-view-action-btn>
     @endif
     @empty ($pages)
     <div class="listview-empty">
@@ -134,11 +123,16 @@
 
 <list-view header-title="最近の配布資料">
     @foreach ($documents as $document)
-    <a
+    <list-view-item
+        title="{{ $page->title }}"
+        meta="@datetime($page->updated_at)"
         href="{{ url("uploads/documents/{$document->id}") }}"
-        class="listview-item"
-        target="_blank"
-        rel="noopener"
+        newtab
+    >
+        @summary($page->body)
+    </list-view-item>
+    <a
+
     >
         <div class="listview-item__body">
             <p class="listview-item__title{{ $document->is_important ? ' text-danger' : '' }}">

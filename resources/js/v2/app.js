@@ -3,13 +3,17 @@ import GlobalEvents from 'vue-global-events'
 
 import TopAlert from './components/TopAlert.vue'
 import ListView from './components/ListView.vue'
+import ListViewItem from './components/ListViewItem.vue'
+import ListViewActionBtn from './components/ListViewActionBtn.vue'
 
 export default new Vue({
   el: '#v2-app',
   components: {
     GlobalEvents,
     TopAlert,
-    ListView
+    ListView,
+    ListViewItem,
+    ListViewActionBtn
   },
   data() {
     return {

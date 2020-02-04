@@ -1,0 +1,110 @@
+<template>
+  <component
+    :is="href ? 'a' : 'div'"
+    class="listview-item"
+    v-bind="href ? { href } : {}"
+    :target="newtab ? '_blank' : undefined"
+    :rel="newtab ? 'noopener' : undefined"
+  >
+    <p class="listview-item__title" v-if="title">
+      {{ title }}
+    </p>
+    <p class="listview-item__meta" v-if="meta">
+      {{ meta }}
+    </p>
+    <p class="listview-item__summary" v-if="title && meta">
+      <slot />
+    </p>
+    <template v-else>
+      <!-- ListViewActionBtn 用 -->
+      <slot />
+    </template>
+  </component>
+</template>
+
+<script>
+export default {
+  props: {
+    href: {
+      type: String,
+      default: null
+    },
+    // title や meta に HTML が入る想定ができていなかった…
+    // （配布資料の重要アイコン、など）
+    // title や meta は slot にする
+    title: {
+      type: String,
+      default: null
+    },
+    meta: {
+      type: String,
+      default: null
+    },
+    newtab: {
+      type: Boolean,
+      default: false
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.listview-item {
+  background: $color-bg-white;
+  border-bottom: 1px solid $color-border;
+  box-shadow: 0 0.5rem 0.5rem rgba($color-text, 0.05);
+  color: $color-text;
+  display: block;
+  margin: 0;
+  padding: $spacing-md $spacing;
+  position: relative;
+  width: 100%;
+  @media screen and (max-width: $breakpoint-listview-sm) {
+    box-shadow: none;
+    &:first-child {
+      border-top: 1px solid $color-border;
+    }
+  }
+  @media screen and (min-width: $breakpoint-listview-sm) {
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+  &:hover,
+  &:active,
+  &:focus {
+    background: $color-bg-light;
+    color: $color-text;
+    text-decoration: none;
+  }
+  &:not(a):hover,
+  &:not(a):active,
+  &:not(a):focus {
+    background: $color-bg-white;
+  }
+  &.is-action-btn {
+    align-items: center;
+    color: $color-primary;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    justify-content: center;
+    padding-bottom: $spacing;
+    padding-top: $spacing;
+  }
+  &__title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  &__meta {
+    font-size: 1rem;
+    margin: 0;
+  }
+  &__summary {
+    color: $color-muted;
+    font-size: 1rem;
+    margin: $spacing-xs 0 0;
+  }
+}
+</style>
