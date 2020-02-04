@@ -81,10 +81,7 @@
 </header>
 @endguest
 @isset($next_schedule)
-<div class="listview container">
-    <div class="listview-header">
-        次の予定
-    </div>
+<list-view header-title="次の予定">
     <div class="listview-item">
         <div class="listview-item__day_calendar">
             @include('v2.includes.day_calendar', ['date' => $next_schedule->start_at])
@@ -104,12 +101,9 @@
     <a class="listview-item is-action-btn" href="{{ route('schedules.index') }}">
         他の予定を見る
     </a>
-</div>
+</list-view>
 @endisset
-<div class="listview container">
-    <div class="listview-header">
-        お知らせ
-    </div>
+<list-view header-title="お知らせ">
     @foreach ($pages as $page)
     <a class="listview-item" href="{{ route('pages.show', $page) }}">
         <div class="listview-item__body">
@@ -136,11 +130,9 @@
         <p class="listview-empty__text">お知らせはまだありません</p>
     </div>
     @endempty
-</div>
-<div class="listview container">
-    <div class="listview-header">
-        最近の配布資料
-    </div>
+</list-view>
+
+<list-view header-title="最近の配布資料">
     @foreach ($documents as $document)
     <a
         href="{{ url("uploads/documents/{$document->id}") }}"
@@ -179,5 +171,5 @@
         <p class="listview-empty__text">配布資料はまだありません</p>
     </div>
     @endempty
-</div>
+</list-view>
 @endsection

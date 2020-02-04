@@ -18,10 +18,7 @@
     </a>
 </div>
 @foreach ($schedules as $month => $group)
-<div class="listview container">
-    <div class="listview-header">
-        {{ $month }}
-    </div>
+<list-view header-title="{{ $month }}">
     @foreach ($group as $schedule)
     <a class="listview-item" href="{{ route('schedules.show', $schedule) }}">
         <div class="listview-item__day_calendar">
@@ -40,14 +37,14 @@
         </div>
     </a>
     @endforeach
-</div>
+</list-view>
 @endforeach
 @empty ($schedules)
-<div class="listview">
+<list-view>
     <div class="listview-empty">
         <i class="far fa-calendar-alt listview-empty__icon"></i>
         <p class="listview-empty__text">予定はありません</p>
     </div>
-</div>
+</list-view>
 @endempty
 @endsection

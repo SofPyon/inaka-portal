@@ -26,10 +26,7 @@
     </div>
 </main>
 @if (count($schedule->documents) > 0)
-<div class="listview container">
-    <div class="listview-header">
-        配布資料
-    </div>
+<list-view header-title="配布資料">
     @foreach ($schedule->documents as $document)
     <a
         class="listview-item"
@@ -57,6 +54,6 @@
         </div>
     </a>
     @endforeach
-</div>
+</list-view>
 @endif
 @endsection

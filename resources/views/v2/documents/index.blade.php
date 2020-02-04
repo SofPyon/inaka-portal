@@ -3,7 +3,7 @@
 @section('title', '配布資料')
 
 @section('content')
-<div class="listview container">
+<list-view>
     @foreach ($documents as $document)
     <a
         class="listview-item"
@@ -37,5 +37,5 @@
         <p class="listview-empty__text">配布資料はまだありません</p>
     </div>
     @endempty
-</div>
+</list-view>
 @endsection

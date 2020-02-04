@@ -2,12 +2,14 @@ import Vue from 'vue'
 import GlobalEvents from 'vue-global-events'
 
 import TopAlert from './components/TopAlert.vue'
+import ListView from './components/ListView.vue'
 
 export default new Vue({
   el: '#v2-app',
   components: {
     GlobalEvents,
-    TopAlert
+    TopAlert,
+    ListView
   },
   data() {
     return {

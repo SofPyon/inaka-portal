@@ -1,12 +1,31 @@
+<template>
+  <div class="listview container">
+    <div class="listview-header" v-if="headerTitle">
+      {{ headerTitle }}
+    </div>
+    <div class="listview-body">
+      <slot />
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    headerTitle: {
+      type: String,
+      default: null
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
 .listview {
   $listview-item-width: calc((100% - #{$spacing * 2}) / 3);
 
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
   padding: $spacing $spacing $spacing-md;
   @media screen and (max-width: $breakpoint-listview-sm) {
-    flex-direction: column;
     padding: 0;
   }
   &-header {
@@ -15,13 +34,7 @@
     padding: 0 0 $spacing-md;
     width: 100%;
     @media screen and (max-width: $breakpoint-listview-sm) {
-      background: $color-muted;
-      color: $color-bg-white;
-      font-size: $font-size;
-      overflow: hidden;
-      padding: $spacing-xs $spacing;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      padding: $spacing $spacing $spacing-xs;
     }
   }
   &-item {
@@ -36,9 +49,14 @@
     width: 100%;
     @media screen and (max-width: $breakpoint-listview-sm) {
       box-shadow: none;
+      &:first-child {
+        border-top: 1px solid $color-border;
+      }
     }
-    &:last-child {
-      border: 0;
+    @media screen and (min-width: $breakpoint-listview-sm) {
+      &:last-child {
+        border-bottom: 0;
+      }
     }
     &:hover,
     &:active,
@@ -103,8 +121,9 @@
   }
   &::after {
     // 最後の行の配置がおかしくなる問題を解消
-    content: "";
+    content: '';
     height: 0;
     width: $listview-item-width;
   }
 }
+</style>
