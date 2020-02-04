@@ -20,7 +20,8 @@ mix
     }
   })
   .options({
-    globalVueStyles: 'resources/sass/v2/_variables.scss'
+    globalVueStyles: 'resources/sass/v2/_variables.scss',
+    purifyCss: true
   })
   .js('resources/js/app.js', 'public/js') // メインスクリプト
   .sass('resources/sass/app.scss', 'public/css') // メインスタイル
