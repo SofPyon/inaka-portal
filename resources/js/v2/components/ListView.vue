@@ -119,11 +119,5 @@ export default {
       margin: 0;
     }
   }
-  &::after {
-    // 最後の行の配置がおかしくなる問題を解消
-    content: '';
-    height: 0;
-    width: $listview-item-width;
-  }
 }
 </style>
