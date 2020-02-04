@@ -5,6 +5,7 @@ import TopAlert from './components/TopAlert.vue'
 import ListView from './components/ListView.vue'
 import ListViewItem from './components/ListViewItem.vue'
 import ListViewActionBtn from './components/ListViewActionBtn.vue'
+import ListViewEmpty from './components/ListViewEmpty.vue'
 
 export default new Vue({
   el: '#v2-app',
@@ -13,7 +14,8 @@ export default new Vue({
     TopAlert,
     ListView,
     ListViewItem,
-    ListViewActionBtn
+    ListViewActionBtn,
+    ListViewEmpty
   },
   data() {
     return {

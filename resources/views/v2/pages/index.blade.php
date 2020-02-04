@@ -16,10 +16,10 @@
     </list-view-item>
     @endforeach
     @empty ($pages)
-    <div class="listview-empty">
-        <i class="fas fa-bullhorn listview-empty__icon"></i>
-        <p class="listview-empty__text">お知らせはまだありません</p>
-    </div>
+    <list-view-empty
+        icon-class="fas fa-bullhorn"
+        text="お知らせはまだありません"
+    />
     @endempty
 </list-view>
 @endsection

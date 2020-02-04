@@ -35,19 +35,5 @@ export default {
       padding: $spacing $spacing $spacing-xs;
     }
   }
-  &-empty {
-    color: $color-muted;
-    padding: $spacing-lg 0;
-    text-align: center;
-    width: 100%;
-    &__icon {
-      font-size: 2.5rem;
-      margin: 0 0 $spacing-md;
-    }
-    &__text {
-      font-weight: bold;
-      margin: 0;
-    }
-  }
 }
 </style>

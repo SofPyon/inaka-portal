@@ -119,10 +119,10 @@
     </list-view-action-btn>
     @endif
     @empty ($pages)
-    <div class="listview-empty">
-        <i class="fas fa-bullhorn listview-empty__icon"></i>
-        <p class="listview-empty__text">お知らせはまだありません</p>
-    </div>
+    <list-view-empty
+        icon-class="fas fa-bullhorn"
+        text="お知らせはまだありません"
+    />
     @endempty
 </list-view>
 
@@ -156,10 +156,10 @@
     </list-view-action-btn>
     @endif
     @empty ($documents)
-    <div class="listview-empty">
-        <i class="far fa-file-alt listview-empty__icon"></i>
-        <p class="listview-empty__text">配布資料はまだありません</p>
-    </div>
+    <list-view-empty
+        icon-class="far fa-file-alt"
+        text="配布資料はまだありません"
+    />
     @endempty
 </list-view>
 @endsection
