@@ -12,9 +12,9 @@
     <p class="listview-item__meta" v-if="$slots.meta">
       <slot name="meta" />
     </p>
-    <p class="listview-item__summary" v-if="$slots.title || $slots.meta">
+    <div class="listview-item__body" v-if="$slots.title || $slots.meta">
       <slot />
-    </p>
+    </div>
     <template v-else>
       <!-- ListViewActionBtn 用 -->
       <slot />
@@ -90,7 +90,7 @@ export default {
     font-size: 1rem;
     margin: 0;
   }
-  &__summary {
+  &__body {
     color: $color-muted;
     font-size: 1rem;
     margin: $spacing-xs 0 0;
