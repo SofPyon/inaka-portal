@@ -40,9 +40,11 @@ export default {
 
 <style lang="scss" scoped>
 .form-group {
-  border: none;
   padding-bottom: $spacing-lg;
   padding-top: 0;
+  &:not(:last-child) {
+    border-bottom: 0;
+  }
   &:first-child {
     padding-top: $spacing;
   }
