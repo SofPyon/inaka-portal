@@ -43,8 +43,14 @@ export default {
     }
   }
   @media screen and (min-width: $breakpoint-listview-sm) {
+    &:first-child {
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+    }
     &:last-child {
       border-bottom: 0;
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
     }
   }
   &:hover,
