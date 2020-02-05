@@ -1,29 +1,24 @@
 <template>
-  <component
-    :is="href ? 'a' : 'div'"
-    class="listview-item"
-    v-bind="href ? { href } : {}"
-    :target="newtab ? '_blank' : undefined"
-    :rel="newtab ? 'noopener' : undefined"
-  >
+  <ListViewBaseItem :href="href" :newtab="newtab" class="listview-item">
     <p class="listview-item__title" v-if="$slots.title">
       <slot name="title" />
     </p>
     <p class="listview-item__meta" v-if="$slots.meta">
       <slot name="meta" />
     </p>
-    <div class="listview-item__body" v-if="$slots.title || $slots.meta">
+    <div class="listview-item__body">
       <slot />
     </div>
-    <template v-else>
-      <!-- ListViewActionBtn 用 -->
-      <slot />
-    </template>
-  </component>
+  </ListViewBaseItem>
 </template>
 
 <script>
+import ListViewBaseItem from './ListViewBaseItem.vue'
+
 export default {
+  components: {
+    ListViewBaseItem
+  },
   props: {
     href: {
       type: String,
@@ -39,48 +34,6 @@ export default {
 
 <style lang="scss" scoped>
 .listview-item {
-  background: $color-bg-white;
-  border-bottom: 1px solid $color-border;
-  box-shadow: 0 0.5rem 0.5rem rgba($color-text, 0.05);
-  color: $color-text;
-  display: block;
-  margin: 0;
-  padding: $spacing-md $spacing;
-  position: relative;
-  width: 100%;
-  @media screen and (max-width: $breakpoint-listview-sm) {
-    box-shadow: none;
-    &:first-child {
-      border-top: 1px solid $color-border;
-    }
-  }
-  @media screen and (min-width: $breakpoint-listview-sm) {
-    &:last-child {
-      border-bottom: 0;
-    }
-  }
-  &:hover,
-  &:active,
-  &:focus {
-    background: $color-bg-light;
-    color: $color-text;
-    text-decoration: none;
-  }
-  &:not(a):hover,
-  &:not(a):active,
-  &:not(a):focus {
-    background: $color-bg-white;
-  }
-  &.is-action-btn {
-    align-items: center;
-    color: $color-primary;
-    display: flex;
-    flex-direction: column;
-    font-weight: bold;
-    justify-content: center;
-    padding-bottom: $spacing;
-    padding-top: $spacing;
-  }
   &__title {
     font-size: 1.1rem;
     font-weight: bold;

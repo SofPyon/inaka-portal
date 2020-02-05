@@ -1,7 +1,12 @@
 <template>
   <div class="listview container">
-    <div class="listview-header" v-if="headerTitle">
-      {{ headerTitle }}
+    <div class="listview-header" v-if="headerTitle || headerDescription">
+      <h2 class="listview-header__title" v-if="headerTitle">
+        {{ headerTitle }}
+      </h2>
+      <div class="listview-header__description" v-if="headerDescription">
+        {{ headerDescription }}
+      </div>
     </div>
     <div class="listview-body">
       <slot />
@@ -13,6 +18,10 @@
 export default {
   props: {
     headerTitle: {
+      type: String,
+      default: null
+    },
+    headerDescription: {
       type: String,
       default: null
     }
@@ -27,12 +36,19 @@ export default {
     padding: 0;
   }
   &-header {
-    font-size: $font-size-lg;
-    font-weight: bold;
-    padding: 0 0 $spacing-md;
+    padding: 0 $spacing $spacing-md;
     width: 100%;
     @media screen and (max-width: $breakpoint-listview-sm) {
       padding: $spacing $spacing $spacing-xs;
+    }
+    &__title {
+      font-size: $font-size-lg;
+      font-weight: bold;
+      margin: 0;
+    }
+    &__description {
+      color: $color-muted;
+      margin: $spacing-xs 0 0;
     }
   }
 }

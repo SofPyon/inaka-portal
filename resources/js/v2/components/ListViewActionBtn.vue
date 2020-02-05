@@ -1,15 +1,15 @@
 <template>
-  <list-view-item :href="href" class="action-btn">
+  <ListViewBaseItem :href="href" class="action-btn">
     <slot />
-  </list-view-item>
+  </ListViewBaseItem>
 </template>
 
 <script>
-import ListViewItem from './ListViewItem.vue'
+import ListViewBaseItem from './ListViewBaseItem.vue'
 
 export default {
   components: {
-    ListViewItem
+    ListViewBaseItem
   },
   props: {
     href: {
