@@ -1,22 +1,26 @@
 <template>
   <ListViewBaseItem
-    class="form-group"
+    class="listview-form-group"
     :class="{ 'is-invalid': $slots.invalid }"
   >
     <component
       :is="labelFor ? 'label' : 'div'"
       v-bind="labelFor ? { for: labelFor } : {}"
-      class="form-group__label"
+      class="listview-form-group__label"
     >
       <slot name="label" />
     </component>
-    <p class="form-group__description" v-if="$slots.description">
+    <p class="listview-form-group__description" v-if="$slots.description">
       <slot name="description" />
     </p>
-    <div class="form-group__body">
+    <div class="listview-form-group__body">
       <slot />
     </div>
-    <div class="form-group__invalid-message" role="alert" v-if="$slots.invalid">
+    <div
+      class="listview-form-group__invalid-message"
+      role="alert"
+      v-if="$slots.invalid"
+    >
       <slot name="invalid" />
     </div>
   </ListViewBaseItem>
@@ -39,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form-group {
+.listview-form-group {
   padding-bottom: $spacing-lg;
   padding-top: 0;
   &:not(:last-child) {

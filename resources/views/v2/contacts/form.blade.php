@@ -23,7 +23,7 @@
 @endsection
 
 @section('content')
-<form class="form" method="post" action="{{ route('contacts.post') }}">
+<form method="post" action="{{ route('contacts.post') }}">
     @csrf
 
     <list-view header-title="お問い合わせ">
