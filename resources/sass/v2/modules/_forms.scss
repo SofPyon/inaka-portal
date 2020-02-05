@@ -3,15 +3,15 @@ textarea {
 }
 
 .form {
-  // margin: $spacing 0;
-  // &-group {
-  //   margin: 0 0 $spacing-md;
-  // }
-  // &-label {
-  //   display: block;
-  //   font-weight: bold;
-  //   margin: 0 0 $spacing-xs;
-  // }
+  margin: $spacing 0;
+  &-group {
+    margin: 0 0 $spacing-md;
+  }
+  &-label {
+    display: block;
+    font-weight: bold;
+    margin: 0 0 $spacing-xs;
+  }
   &-control {
     appearance: none;
     background-color: $color-bg-white;
@@ -57,13 +57,13 @@ textarea {
       box-shadow: 0 0 0 3px rgba($color-danger, 0.25);
     }
   }
-  // &-text {
-  //   display: block;
-  //   margin: $spacing-xs 0;
-  // }
-  // &-invalid-feedback {
-  //   color: $color-danger;
-  //   display: block;
-  //   margin: $spacing-xs 0;
-  // }
+  &-text {
+    display: block;
+    margin: $spacing-xs 0;
+  }
+  &-invalid-feedback {
+    color: $color-danger;
+    display: block;
+    margin: $spacing-xs 0;
+  }
 }
