@@ -33,7 +33,7 @@
             <template v-slot:label>学籍番号</template>
             <template v-slot:description>
                 @if (!empty($circles))
-                    <small class="form-text text-muted">団体に所属しているため修正できません</small>
+                    団体に所属しているため修正できません
                 @endif
             </template>
             <input id="student_id" type="text" class="form-control @error('student_id') is-invalid @enderror" name="student_id" value="{{ old('student_id', isset($user) ? $user->student_id : '' ) }}" {{ !empty($circles) ? 'disabled' : '' }} required autocomplete="username">
