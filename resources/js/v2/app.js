@@ -2,7 +2,7 @@ import Turbolinks from 'turbolinks'
 
 import Vue from 'vue'
 import GlobalEvents from 'vue-global-events'
-import TurbolinksAdapter from 'vue-turbolinks'
+import TurbolinksAdapter from './vue-turbolinks'
 
 import AppContainer from './components/AppContainer.vue'
 import ListView from './components/ListView.vue'
