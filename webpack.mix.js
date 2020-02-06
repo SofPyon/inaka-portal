@@ -33,4 +33,5 @@ mix
   .js('resources/js/forms_editor/index.js', 'public/js/forms_editor') // フォームエディタJS
   .sass('resources/sass/forms_editor.scss', 'public/css') // フォームエディタCSS
   .browserSync('localhost')
+  .sourceMaps()
   .version()
