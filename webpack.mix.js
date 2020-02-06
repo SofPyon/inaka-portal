@@ -20,8 +20,10 @@ mix
     }
   })
   .options({
-    globalVueStyles: 'resources/sass/v2/_variables.scss',
-    purifyCss: true
+    globalVueStyles: 'resources/sass/v2/_variables.scss'
+    // ↓申請フォームエディターのレイアウトが崩れてしまうため、
+    // purifyCss: true の指定は、一時的にコメントアウトしています
+    // purifyCss: true
   })
   .js('resources/js/app.js', 'public/js') // メインスクリプト
   .sass('resources/sass/app.scss', 'public/css') // メインスタイル
