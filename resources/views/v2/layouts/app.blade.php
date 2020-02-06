@@ -24,6 +24,19 @@
     @prepend('js')
         <script src="{{ mix('js/v2/app.js') }}" defer></script>
     @endprepend
+    @if (config('app.debug'))
+        @prepend('js')
+            <script defer>
+                if (typeof jQuery === 'undefined') {
+                    window.jQuery = {
+                        noConflict: function () {
+                            console.log('do nothing');
+                        }
+                    };
+                }
+            </script>
+        @endprepend
+    @endif
     @stack('js')
 
     <meta name="format-detection" content="telephone=no">

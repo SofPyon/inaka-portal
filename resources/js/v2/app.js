@@ -1,5 +1,8 @@
+import Turbolinks from 'turbolinks'
+
 import Vue from 'vue'
 import GlobalEvents from 'vue-global-events'
+import TurbolinksAdapter from 'vue-turbolinks'
 
 import AppContainer from './components/AppContainer.vue'
 import ListView from './components/ListView.vue'
@@ -12,39 +15,44 @@ import TopAlert from './components/TopAlert.vue'
 // iOS で CSS の hover を有効にするハック
 document.body.addEventListener('touchstart', () => {}, { passive: true })
 
-export default new Vue({
-  el: '#v2-app',
-  components: {
-    GlobalEvents,
-    AppContainer,
-    ListView,
-    ListViewItem,
-    ListViewActionBtn,
-    ListViewEmpty,
-    ListViewFormGroup,
-    TopAlert
-  },
-  data() {
-    return {
-      isDrawerOpen: false
-    }
-  },
-  methods: {
-    toggleDrawer() {
-      this.isDrawerOpen = !this.isDrawerOpen
+Vue.use(TurbolinksAdapter)
+
+Turbolinks.start()
+
+document.addEventListener('turbolinks:load', () => {
+  new Vue({
+    components: {
+      GlobalEvents,
+      AppContainer,
+      ListView,
+      ListViewItem,
+      ListViewActionBtn,
+      ListViewEmpty,
+      ListViewFormGroup,
+      TopAlert
     },
-    closeDrawer() {
-      this.isDrawerOpen = false
-    }
-  },
-  watch: {
-    isDrawerOpen(newVal) {
-      // アクセシビリティのため、適切な位置にフォーカスする
-      if (newVal) {
-        this.$refs.drawer.focus()
-      } else {
-        this.$refs.toggle.focus()
+    data() {
+      return {
+        isDrawerOpen: false
+      }
+    },
+    methods: {
+      toggleDrawer() {
+        this.isDrawerOpen = !this.isDrawerOpen
+      },
+      closeDrawer() {
+        this.isDrawerOpen = false
+      }
+    },
+    watch: {
+      isDrawerOpen(newVal) {
+        // アクセシビリティのため、適切な位置にフォーカスする
+        if (newVal) {
+          this.$refs.drawer.focus()
+        } else {
+          this.$refs.toggle.focus()
+        }
       }
     }
-  }
+  }).$mount('#v2-app')
 })

@@ -32,6 +32,16 @@ mix
   .js('resources/js/users_checker.js', 'public/js') // ユーザー登録チェッカー
   .js('resources/js/forms_editor/index.js', 'public/js/forms_editor') // フォームエディタJS
   .sass('resources/sass/forms_editor.scss', 'public/css') // フォームエディタCSS
-  .browserSync('localhost')
+  .browserSync({
+    proxy: 'localhost',
+    snippetOptions: {
+      rule: {
+        match: /<\/head>/i,
+        fn(snippet, match) {
+          return snippet + match
+        }
+      }
+    }
+  })
   .sourceMaps()
   .version()
