@@ -29,7 +29,7 @@
     <meta name="format-detection" content="telephone=no">
 </head>
 </head>
-<body ontouchstart="">
+<body>
 
 <div class="app" id="v2-app">
     <global-events

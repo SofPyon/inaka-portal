@@ -9,6 +9,9 @@ import ListViewEmpty from './components/ListViewEmpty.vue'
 import ListViewFormGroup from './components/ListViewFormGroup.vue'
 import TopAlert from './components/TopAlert.vue'
 
+// iOS で CSS の hover を有効にするハック
+document.body.addEventListener('touchstart', () => {}, { passive: true })
+
 export default new Vue({
   el: '#v2-app',
   components: {
