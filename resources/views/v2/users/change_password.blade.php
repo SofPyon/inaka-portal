@@ -49,8 +49,8 @@
         </list-view-form-group>
     </list-view>
 
-    <div class="container text-center pt-spacing-md">
+    <app-container class="text-center pt-spacing-md">
         <button type="submit" class="btn is-primary is-wide">保存</button>
-    </div>
+    </app-container>
 </form>
 @endsection

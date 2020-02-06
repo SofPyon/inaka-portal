@@ -22,7 +22,7 @@
 
 @guest
 <header class="jumbotron">
-    <div class="container is-narrow">
+    <app-container narrow>
         <h1 class="jumbotron__title">
             {{ config('app.name') }}
         </h1>
@@ -77,7 +77,7 @@
                 </a>
             </p>
         </form>
-    </div>
+    </app-container>
 </header>
 @endguest
 @isset($next_schedule)

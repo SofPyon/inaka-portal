@@ -1,23 +1,25 @@
 import Vue from 'vue'
 import GlobalEvents from 'vue-global-events'
 
-import TopAlert from './components/TopAlert.vue'
+import AppContainer from './components/AppContainer.vue'
 import ListView from './components/ListView.vue'
 import ListViewItem from './components/ListViewItem.vue'
 import ListViewActionBtn from './components/ListViewActionBtn.vue'
 import ListViewEmpty from './components/ListViewEmpty.vue'
 import ListViewFormGroup from './components/ListViewFormGroup.vue'
+import TopAlert from './components/TopAlert.vue'
 
 export default new Vue({
   el: '#v2-app',
   components: {
     GlobalEvents,
-    TopAlert,
+    AppContainer,
     ListView,
     ListViewItem,
     ListViewActionBtn,
     ListViewEmpty,
-    ListViewFormGroup
+    ListViewFormGroup,
+    TopAlert
   },
   data() {
     return {

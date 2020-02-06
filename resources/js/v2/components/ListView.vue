@@ -1,5 +1,5 @@
 <template>
-  <div class="listview container">
+  <AppContainer class="listview">
     <div class="listview-header" v-if="headerTitle || headerDescription">
       <h2 class="listview-header__title" v-if="headerTitle">
         {{ headerTitle }}
@@ -11,11 +11,16 @@
     <div class="listview-body">
       <slot />
     </div>
-  </div>
+  </AppContainer>
 </template>
 
 <script>
+import AppContainer from './AppContainer.vue'
+
 export default {
+  components: {
+    AppContainer
+  },
   props: {
     headerTitle: {
       type: String,

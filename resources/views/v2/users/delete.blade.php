@@ -25,13 +25,13 @@
 @section('content')
 @include('v2.includes.user_settings_tab_strip')
 <header class="header">
-    <div class="container">
+    <app-container>
         <h1 class="header__title">
             アカウント削除
         </h1>
-    </div>
+    </app-container>
 </header>
-<div class="container">
+<app-container>
     @if ($belong)
         <p class="card-text">団体に所属しているため、アカウント削除はできません。</p>
         <p class="card-text">詳細については「{{ config('portal.admin_name') }}」までお問い合わせください</p>
@@ -46,5 +46,5 @@
             </button>
         </form>
     @endif
-</div>
+</app-container>
 @endsection

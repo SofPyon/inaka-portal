@@ -11,20 +11,20 @@
 
 @section('content')
 <header class="header">
-    <div class="container">
+    <app-container>
         <h1 class="header__title">
             {{ $schedule->name }}
         </h1>
         <p class="header__date">
             @datetime($schedule->start_at)〜 • {{ $schedule->place }}
         </p>
-    </div>
+    </app-container>
 </header>
-<main class="container pb-spacing-lg">
+<app-container component-is="main" class="pb-spacing-lg">
     <div class="markdown">
         @markdown($schedule->description)
     </div>
-</main>
+</app-container>
 @if (count($schedule->documents) > 0)
 <list-view header-title="配布資料">
     @foreach ($schedule->documents as $document)
