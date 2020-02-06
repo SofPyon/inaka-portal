@@ -44,6 +44,10 @@
 </head>
 <body>
 
+<div class="loading" id="loading">
+    <div class="loading-circle"></div>
+</div>
+
 <div class="app" id="v2-app">
     <global-events
         v-on:keyup.esc="closeDrawer"

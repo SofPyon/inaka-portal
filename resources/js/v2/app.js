@@ -53,6 +53,10 @@ document.addEventListener('turbolinks:load', () => {
           this.$refs.toggle.focus()
         }
       }
+    },
+    mounted() {
+      const loading = document.querySelector('#loading')
+      loading.classList.add('is-done')
     }
   }).$mount('#v2-app')
 })
