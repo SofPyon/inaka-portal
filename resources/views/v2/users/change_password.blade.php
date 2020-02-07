@@ -45,6 +45,7 @@
         </list-view-form-group>
         <list-view-form-group label-for="new_password_confirmation">
             <template v-slot:label>新しいパスワード(確認)</template>
+            <template v-slot:description>確認のため、パスワードをもう一度入力してください</template>
             <input id="new_password_confirmation" type="password" class="form-control @error('new_password') is-invalid @enderror" name="new_password_confirmation" required autocomplete="new-password">
         </list-view-form-group>
     </list-view>

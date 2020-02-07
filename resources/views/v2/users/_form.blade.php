@@ -1,6 +1,4 @@
-@extends('v2.layouts.app')
-
-@section('title', 'ユーザー設定')
+@section('title', isset($user) ? 'ユーザー情報の編集' : 'ユーザー登録')
 
 {{-- TODO: 完全にLaravel化したら、以下のdrawerセクションは完全削除する --}}
 @section('drawer')
@@ -23,12 +21,19 @@
 @endsection
 
 @section('content')
-@include('v2.includes.user_settings_tab_strip')
-<form method="POST" action="{{ route('user.update') }}">
-    @method('patch')
+@isset ($user)
+    @include('v2.includes.user_settings_tab_strip')
+@endisset
+<form method="POST" action="{{ isset($user) ? route('user.update') : route('register') }}">
+    @method(isset($user) ? 'patch' : 'post')
     @csrf
 
-    <list-view header-title="一般設定">
+    <list-view
+        header-title="{{ isset($user) ? '一般設定' : 'ユーザー登録' }}"
+        @empty ($user)
+        header-description="「{{ config('app.name') }}」にユーザー登録します。"
+        @endempty
+    >
         <list-view-form-group label-for="student_id">
             <template v-slot:label>学籍番号</template>
             <template v-slot:description>
@@ -80,27 +85,60 @@
                 <template v-slot:invalid>{{ $message }}</template>
             @enderror
         </list-view-form-group>
+
+        @empty($user)
+            <list-view-form-group label-for="password">
+                <template v-slot:label>パスワード</template>
+                <input
+                    id="password"
+                    type="password"
+                    class="form-control @error('password') is-invalid @enderror"
+                    name="password"
+                    required
+                    autocomplete="new-password"
+                >
+                @error('password')
+                    <template v-slot:invalid>{{ $message }}</template>
+                @enderror
+            </list-view-form-group>
+            <list-view-form-group label-for="password_confirmation">
+                <template v-slot:label>パスワード(確認)</template>
+                <template v-slot:description>確認のため、パスワードをもう一度入力してください</template>
+                <input
+                    id="password_confirmation"
+                    type="password"
+                    class="form-control @error('password') is-invalid @enderror"
+                    name="password_confirmation"
+                    required
+                    autocomplete="new-password"
+                >
+            </list-view-form-group>
+        @endempty
     </list-view>
 
-    <list-view header-description="変更を保存するには、現在のパスワードを入力してください">
-        <list-view-form-group label-for="password">
-            <template v-slot:label>現在のパスワード</template>
-            <input
-                id="password"
-                type="password"
-                class="form-control @error('password') is-invalid @enderror"
-                name="password"
-                required
-                autocomplete="current-password"
-            >
-            @error('password')
-                <template v-slot:invalid>{{ $message }}</template>
-            @enderror
-        </list-view-form-group>
-    </list-view>
+    @isset($user)
+        <list-view header-description="変更を保存するには、現在のパスワードを入力してください">
+            <list-view-form-group label-for="password">
+                <template v-slot:label>現在のパスワード</template>
+                <input
+                    id="password"
+                    type="password"
+                    class="form-control @error('password') is-invalid @enderror"
+                    name="password"
+                    required
+                    autocomplete="current-password"
+                >
+                @error('password')
+                    <template v-slot:invalid>{{ $message }}</template>
+                @enderror
+            </list-view-form-group>
+        </list-view>
+    @endisset
 
     <app-container class="text-center pt-spacing-md">
-        <button type="submit" class="btn is-primary is-wide">保存</button>
+        <button type="submit" class="btn is-primary is-wide">
+            {{ isset($user) ? '保存' : '登録' }}
+        </button>
     </app-container>
 
 </form>
