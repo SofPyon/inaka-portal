@@ -46,7 +46,7 @@
             @if ($form->answered($circle))
                 <small class="badge is-success">提出済</small>
             @endif
-            @if ($form->open_at > $now)
+            @if ($form->yetOpen())
                 <small class="badge is-muted">受付開始前</small>
             @endif
         </template>

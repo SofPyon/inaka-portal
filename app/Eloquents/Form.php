@@ -83,4 +83,9 @@ class Form extends Model
         $answer = Answer::where('form_id', $this->id)->where('circle_id', $circle->id)->first();
         return !empty($answer);
     }
+
+    public function yetOpen()
+    {
+        return $this->open_at > now();
+    }
 }
