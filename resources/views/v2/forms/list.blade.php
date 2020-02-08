@@ -5,18 +5,18 @@
 @section('content')
 @if(empty($circle))
     <header class="header">
-        <div class="container">
+        <app-container>
             <h1 class="header__title">
-                手続きが完了していません
+                団体参加登録が未完了です
             </h1>
-        </div>
+        </app-container>
     </header>
-    <div class="container">
+    <app-container>
         <p>団体参加登録が済んでいないため、申請を行うことができません</p>
         <p>詳細については「{{ config('portal.admin_name') }}」までお問い合わせください</p>
         <p>※ すでに団体参加登録を行った場合でも反映に時間がかかることがあります</p>
         <p><a href="{{ url('/') }}" class="btn is-primary is-block" role="button">ホームに戻る</a></p>
-    </div>
+    </app-container>
 @else
     <div class="tab_strip">
         <a
@@ -38,29 +38,24 @@
             全て
         </a>
     </div>
-
-    <div class="listview">
-        @foreach ($forms as $form)
-        <a class="listview-item" href="/applications/{{ $form->id }}/answers/create?circle_id={{ $circle->id }}">
-            <div class="listview-item__body">
-                <p class="listview-item__title">
-                    {{ $form->name }}
-                    @if($form->answered($circle))
-                        <small class="badge is-success">提出済</small>
-                    @endif
-                    @if($form->open_at > $now)
-                        <small><span class="badge is-muted">受付開始前</span></small>
-                    @endif
-                </p>
-                <p class="listview-item__meta">
-                    @datetime($form->close_at) まで受付
-                </p>
-                <p class="listview-item__summary">
-                    @summary($form->description)
-                </p>
-            </div>
-        </a>
-        @endforeach
-    </div>
+<list-view>
+    @foreach ($forms as $form)
+    <list-view-item href="/applications/{{ $form->id }}/answers/create?circle_id={{ $circle->id }}">
+        <template v-slot:title>
+            {{ $form->name }}
+            @if ($form->answered($circle))
+                <small class="badge is-success">提出済</small>
+            @endif
+            @if ($form->open_at > $now)
+                <small class="badge is-muted">受付開始前</small>
+            @endif
+        </template>
+        <template v-slot:meta>
+            @datetime($form->close_at) まで受付
+        </template>
+         @summary($form->description)
+    </list-view-item>
+    @endforeach
+</list-view>
 @endif
 @endsection
