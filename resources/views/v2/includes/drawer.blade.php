@@ -3,6 +3,8 @@
 </a>
 <nav class="drawer-nav">
     <ul class="drawer-nav__list">
+        @auth
+        {{-- TODO: Request::is の引数は将来的に '' (空文字) にしたい --}}
         <li class="drawer-nav__item">
             {{-- TODO: Request::is の引数は将来的に '' (空文字) にしたい --}}
             <a href="{{ route('home') }}" class="drawer-nav__link{{ Request::is('login') || Request::is('home*') ? ' is-active' : '' }}">
@@ -10,6 +12,16 @@
                 ホーム
             </a>
         </li>
+        @else
+        {{-- TODO: Request::is の引数は将来的に '' (空文字) にしたい --}}
+        <li class="drawer-nav__item">
+            {{-- TODO: Request::is の引数は将来的に '' (空文字) にしたい --}}
+            <a href="{{ route('login') }}?new=1" class="drawer-nav__link{{ Request::is('login') || Request::is('home*') ? ' is-active' : '' }}">
+                <i class="fas fa-home drawer-nav__icon fa-fw"></i>
+                ホーム
+            </a>
+        </li>
+        @endauth
         <li class="drawer-nav__item">
             <a href="{{ route('pages.index') }}" class="drawer-nav__link{{ Request::is('pages*') ? ' is-active' : '' }}">
                 <i class="fas fa-bullhorn drawer-nav__icon fa-fw"></i>
@@ -24,7 +36,8 @@
         </li>
         @auth
         <li class="drawer-nav__item">
-            <a href="{{ route('forms.index') }}" class="drawer-nav__link">
+            {{-- 申請ページが Project v2 になったら、data-turbolinks="false" は削除する --}}
+            <a href="{{ route('forms.index') }}" class="drawer-nav__link" data-turbolinks="false">
                 <i class="far fa-edit drawer-nav__icon fa-fw"></i>
                 申請
             </a>
@@ -67,7 +80,7 @@
     <p class="drawer-user__info">
         ログインしていません
     </p>
-    <a href="{{ url('/') }}" class="btn is-primary is-block">
+    <a href="{{ route('login') }}?new=1" class="btn is-primary is-block">
         <strong>ログイン</strong>
     </a>
     @endauth

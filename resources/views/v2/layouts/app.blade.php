@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="turbolinks-cache-control" content="no-cache">
     <title>
         @hasSection ('title')
             @yield('title') —
@@ -24,12 +25,28 @@
     @prepend('js')
         <script src="{{ mix('js/v2/app.js') }}" defer></script>
     @endprepend
+    @if (config('app.debug'))
+        @prepend('js')
+            <script defer>
+                if (typeof jQuery === 'undefined') {
+                    window.jQuery = {
+                        noConflict: function () {
+                            console.log('do nothing');
+                        }
+                    };
+                }
+            </script>
+        @endprepend
+    @endif
     @stack('js')
 
     <meta name="format-detection" content="telephone=no">
 </head>
-</head>
-<body ontouchstart="">
+<body>
+
+<div class="loading" id="loading">
+    <div class="loading-circle"></div>
+</div>
 
 <div class="app" id="v2-app">
     <global-events
@@ -57,6 +74,7 @@
     <div
         class="drawer"
         v-bind:class="{'is-open': isDrawerOpen}"
+        v-on:click="closeDrawer"
         tabindex="0"
         ref="drawer"
     >
@@ -67,13 +85,49 @@
         </div>
     </div>
     <div class="content">
+        @auth
+            @unless (Auth::user()->areBothEmailsVerified())
+
+                <top-alert type="primary">
+                    <template v-slot:title>
+                        <i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i>
+                        メール認証を行ってください
+                    </template>
+
+                    {{ config('app.name') }}の全機能を利用するには、次のメールアドレス宛に送信された確認メール内のURLにアクセスしてください。
+                    <strong>
+                    @unless (Auth::user()->hasVerifiedUnivemail())
+                        {{ Auth::user()->univemail }}
+                        @unless (Auth::user()->hasVerifiedEmail())
+                            •
+                        @endunless
+                    @endunless
+                    @unless (Auth::user()->hasVerifiedEmail())
+                        {{ Auth::user()->email }}
+                    @endunless
+                    </strong>
+
+                    <template v-slot:cta>
+                        <form action="{{ route('verification.resend') }}" method="post">
+                            @csrf
+                            <button class="btn is-primary-inverse is-no-border is-wide">
+                                <strong>確認メールを再送</strong>
+                            </button>
+                        </form>
+                    </template>
+                </top-alert>
+            @endunless
+        @endauth
         @if (Session::has('topAlert.title'))
-            <div class="top_alert is-primary">
-                <h2 class="top_alert__title">{{ session('topAlert.title') }}</h2>
+            <top-alert type="primary">
+                <template v-slot:title>
+                    {{ session('topAlert.title') }}
+                </template>
+
                 @if (Session::has('topAlert.body'))
-                    <p class="top_alert__body">{{ session('topAlert.body') }}</p>
+                    {{ session('topAlert.body') }}
                 @endif
-            </div>
+            </top-alert>
         @endif
         @yield('content')
     </div>
