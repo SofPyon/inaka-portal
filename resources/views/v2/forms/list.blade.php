@@ -46,7 +46,7 @@
                 <p class="listview-item__title">
                     {{ $form->name }}
                     @if($form->answered($circle))
-                        <small><span class="badge is-success">提出済</span></small>
+                        <small class="badge is-success">提出済</small>
                     @endif
                     @if($form->open_at > $now)
                         <small><span class="badge is-muted">受付開始前</span></small>
