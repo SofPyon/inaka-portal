@@ -17,9 +17,11 @@ class AllAction extends Controller
         $circle = Circle::find($request->circle);
         if (empty($circle) || Gate::denies('circle.belongsTo', $circle)) {
             $circles = Auth::user()->circles()->get();
-
-            if (count($circles) === 1) {
-                $circle = $circles[0];
+            if (count($circles) < 1) {
+                return view('v2.forms.list');
+            } elseif (count($circles) === 1) {
+                return redirect()
+                    ->route('forms.all', ['circle' => $circles[0]]);
             } elseif (count($circles) > 1) {
                 return redirect()
                     ->route('circles.selector.show', ['redirect' => 'forms.all']);
