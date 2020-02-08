@@ -59,7 +59,7 @@
     </div>
     <div class="content is-no-drawer">
         @if (Session::has('topAlert.title'))
-            <top-alert type="primary">
+            <top-alert type="primary" container-medium>
                 <template v-slot:title>
                     {{ session('topAlert.title') }}
                 </template>

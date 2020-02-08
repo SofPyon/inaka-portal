@@ -7,7 +7,11 @@
       'is-danger': type === 'danger'
     }"
   >
-    <AppContainer class="top_alert__container">
+    <AppContainer
+      class="top_alert__container"
+      :narrow="containerNarrow"
+      :medium="containerMedium"
+    >
       <div class="top_alert__body">
         <h2 class="top_alert__title" v-if="$slots.title">
           <slot name="title" />
@@ -34,6 +38,14 @@ export default {
     type: {
       type: String,
       default: 'primary'
+    },
+    containerNarrow: {
+      type: Boolean,
+      default: false
+    },
+    containerMedium: {
+      type: Boolean,
+      default: false
     }
   }
 }

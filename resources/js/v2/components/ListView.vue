@@ -1,32 +1,21 @@
 <template>
-  <AppContainer
-    class="listview"
-    :narrow="containerNarrow"
-    :medium="containerMedium"
-  >
-    <div class="listview-inner">
-      <div class="listview-header" v-if="headerTitle || headerDescription">
-        <h2 class="listview-header__title" v-if="headerTitle">
-          {{ headerTitle }}
-        </h2>
-        <div class="listview-header__description" v-if="headerDescription">
-          {{ headerDescription }}
-        </div>
-      </div>
-      <div class="listview-body">
-        <slot />
+  <div class="listview">
+    <div class="listview-header" v-if="headerTitle || headerDescription">
+      <h2 class="listview-header__title" v-if="headerTitle">
+        {{ headerTitle }}
+      </h2>
+      <div class="listview-header__description" v-if="headerDescription">
+        {{ headerDescription }}
       </div>
     </div>
-  </AppContainer>
+    <div class="listview-body">
+      <slot />
+    </div>
+  </div>
 </template>
 
 <script>
-import AppContainer from './AppContainer.vue'
-
 export default {
-  components: {
-    AppContainer
-  },
   props: {
     headerTitle: {
       type: String,
@@ -35,14 +24,6 @@ export default {
     headerDescription: {
       type: String,
       default: null
-    },
-    containerNarrow: {
-      type: Boolean,
-      default: false
-    },
-    containerMedium: {
-      type: Boolean,
-      default: false
     }
   }
 }
@@ -50,12 +31,11 @@ export default {
 
 <style lang="scss" scoped>
 .listview {
-  padding: 0;
-  &-inner {
-    padding: $spacing 0 $spacing-md;
-    @media screen and (max-width: $breakpoint-listview-sm) {
-      padding: $spacing-md 0;
-    }
+  margin-left: -$container-padding-x;
+  margin-right: -$container-padding-x;
+  padding: $spacing 0 $spacing-md;
+  @media screen and (max-width: $breakpoint-listview-sm) {
+    padding: $spacing-md 0;
   }
   &-header {
     padding: 0 $spacing $spacing-md;
