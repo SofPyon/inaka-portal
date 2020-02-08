@@ -36,12 +36,39 @@ document.addEventListener('turbolinks:load', () => {
         isDrawerOpen: false
       }
     },
+    mounted() {
+      const loading = document.querySelector('#loading')
+      loading.classList.add('is-done')
+
+      // フォーム送信時に送信ボタンを disabled にする
+      this.$nextTick(() => {
+        this.registerSubmitHandler()
+      })
+    },
     methods: {
       toggleDrawer() {
         this.isDrawerOpen = !this.isDrawerOpen
       },
       closeDrawer() {
         this.isDrawerOpen = false
+      },
+      registerSubmitHandler() {
+        const forms = document.querySelectorAll('form')
+        const submits = document.querySelectorAll(
+          'button[type="submit"], input[type="submit"]'
+        )
+        const handler = () => {
+          /* eslint-disable no-restricted-syntax */
+          for (const submit of submits) {
+            submit.disabled = 'disabled'
+          }
+          /* eslint-enable */
+        }
+        /* eslint-disable no-restricted-syntax */
+        for (const form of forms) {
+          form.addEventListener('submit', handler)
+        }
+        /* eslint- enable */
       }
     },
     watch: {
@@ -53,10 +80,6 @@ document.addEventListener('turbolinks:load', () => {
           this.$refs.toggle.focus()
         }
       }
-    },
-    mounted() {
-      const loading = document.querySelector('#loading')
-      loading.classList.add('is-done')
     }
   }).$mount('#v2-app')
 })
