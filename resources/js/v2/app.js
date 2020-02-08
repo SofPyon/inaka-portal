@@ -11,6 +11,7 @@ import ListViewActionBtn from './components/ListViewActionBtn.vue'
 import ListViewEmpty from './components/ListViewEmpty.vue'
 import ListViewFormGroup from './components/ListViewFormGroup.vue'
 import TopAlert from './components/TopAlert.vue'
+import FormWithConfirm from './components/FormWithConfirm.vue'
 
 // iOS で CSS の hover を有効にするハック
 document.body.addEventListener('touchstart', () => {}, { passive: true })
@@ -29,7 +30,8 @@ document.addEventListener('turbolinks:load', () => {
       ListViewActionBtn,
       ListViewEmpty,
       ListViewFormGroup,
-      TopAlert
+      TopAlert,
+      FormWithConfirm
     },
     data() {
       return {
@@ -41,9 +43,9 @@ document.addEventListener('turbolinks:load', () => {
       loading.classList.add('is-done')
 
       // フォーム送信時に送信ボタンを disabled にする
-      this.$nextTick(() => {
-        this.registerSubmitHandler()
-      })
+      // this.$nextTick(() => {
+      //   this.registerSubmitHandler()
+      // })
     },
     methods: {
       toggleDrawer() {
@@ -51,25 +53,25 @@ document.addEventListener('turbolinks:load', () => {
       },
       closeDrawer() {
         this.isDrawerOpen = false
-      },
-      registerSubmitHandler() {
-        const forms = document.querySelectorAll('form')
-        const submits = document.querySelectorAll(
-          'button[type="submit"], input[type="submit"]'
-        )
-        const handler = () => {
-          /* eslint-disable no-restricted-syntax */
-          for (const submit of submits) {
-            submit.disabled = 'disabled'
-          }
-          /* eslint-enable */
-        }
-        /* eslint-disable no-restricted-syntax */
-        for (const form of forms) {
-          form.addEventListener('submit', handler)
-        }
-        /* eslint- enable */
       }
+      // registerSubmitHandler() {
+      //   const forms = document.querySelectorAll('form')
+      //   const submits = document.querySelectorAll(
+      //     'button[type="submit"], input[type="submit"]'
+      //   )
+      //   const handler = () => {
+      //     /* eslint-disable no-restricted-syntax */
+      //     for (const submit of submits) {
+      //       submit.disabled = true
+      //     }
+      //     /* eslint-enable */
+      //   }
+      //   /* eslint-disable no-restricted-syntax */
+      //   for (const form of forms) {
+      //     form.addEventListener('submit', handler)
+      //   }
+      //   /* eslint- enable */
+      // }
     },
     watch: {
       isDrawerOpen(newVal) {
