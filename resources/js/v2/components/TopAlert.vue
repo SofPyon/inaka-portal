@@ -74,7 +74,6 @@ export default {
 
     @media screen and (max-width: $breakpoint-top-alert-col) {
       flex-direction: column;
-      text-align: center;
     }
   }
   &__body {
@@ -92,6 +91,9 @@ export default {
     font-size: 1rem;
     font-weight: bold;
     margin: 0;
+    @media screen and (max-width: $breakpoint-top-alert-col) {
+      text-align: center;
+    }
   }
   &__message {
     font-size: 1rem;
