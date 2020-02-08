@@ -72,8 +72,7 @@
                 </button>
             </div>
             <p>
-                {{-- 完全に Turbolinks 化できたら、以下の data-turbolinks="false" は削除する  --}}
-                <a class="btn is-secondary is-block" href="{{ route('register') }}" data-turbolinks="false">
+                <a class="btn is-secondary is-block" href="{{ route('register') }}">
                     はじめての方は新規ユーザー登録
                 </a>
             </p>

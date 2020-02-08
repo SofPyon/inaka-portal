@@ -1,4 +1,4 @@
-@section('title', isset($user) ? 'ユーザー情報の編集' : 'ユーザー登録')
+@section('title', isset($user) ? 'ユーザー設定' : 'ユーザー登録')
 
 {{-- TODO: 完全にLaravel化したら、以下のdrawerセクションは完全削除する --}}
 @section('drawer')
@@ -32,6 +32,7 @@
         header-title="{{ isset($user) ? '一般設定' : 'ユーザー登録' }}"
         @empty ($user)
         header-description="「{{ config('app.name') }}」にユーザー登録します。"
+        container-medium
         @endempty
     >
         <list-view-form-group label-for="student_id">
