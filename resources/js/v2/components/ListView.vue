@@ -40,9 +40,6 @@ export default {
   &-header {
     padding: 0 $spacing $spacing-md;
     width: 100%;
-    @media screen and (max-width: $breakpoint-listview-sm) {
-      /* padding: $spacing $spacing $spacing-xs; */
-    }
     &__title {
       font-size: $font-size-lg;
       font-weight: bold;
