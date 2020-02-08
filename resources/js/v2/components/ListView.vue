@@ -4,16 +4,18 @@
     :narrow="containerNarrow"
     :medium="containerMedium"
   >
-    <div class="listview-header" v-if="headerTitle || headerDescription">
-      <h2 class="listview-header__title" v-if="headerTitle">
-        {{ headerTitle }}
-      </h2>
-      <div class="listview-header__description" v-if="headerDescription">
-        {{ headerDescription }}
+    <div class="listview-inner">
+      <div class="listview-header" v-if="headerTitle || headerDescription">
+        <h2 class="listview-header__title" v-if="headerTitle">
+          {{ headerTitle }}
+        </h2>
+        <div class="listview-header__description" v-if="headerDescription">
+          {{ headerDescription }}
+        </div>
       </div>
-    </div>
-    <div class="listview-body">
-      <slot />
+      <div class="listview-body">
+        <slot />
+      </div>
     </div>
   </AppContainer>
 </template>
@@ -48,15 +50,18 @@ export default {
 
 <style lang="scss" scoped>
 .listview {
-  padding: $spacing $spacing $spacing-md;
-  @media screen and (max-width: $breakpoint-listview-sm) {
-    padding: 0;
+  padding: 0;
+  &-inner {
+    padding: $spacing 0 $spacing-md;
+    @media screen and (max-width: $breakpoint-listview-sm) {
+      padding: $spacing-md 0;
+    }
   }
   &-header {
     padding: 0 $spacing $spacing-md;
     width: 100%;
     @media screen and (max-width: $breakpoint-listview-sm) {
-      padding: $spacing $spacing $spacing-xs;
+      /* padding: $spacing $spacing $spacing-xs; */
     }
     &__title {
       font-size: $font-size-lg;
