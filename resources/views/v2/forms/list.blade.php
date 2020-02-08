@@ -40,7 +40,11 @@
     </div>
 <list-view>
     @foreach ($forms as $form)
-    <list-view-item href="/applications/{{ $form->id }}/answers/create?circle_id={{ $circle->id }}">
+    {{-- 回答ページが Project v2 になったら data-turbolinks="false" は削除する --}}
+    <list-view-item
+        href="/applications/{{ $form->id }}/answers/create?circle_id={{ $circle->id }}"
+        data-turbolinks="false"
+    >
         <template v-slot:title>
             {{ $form->name }}
             @if ($form->answered($circle))
