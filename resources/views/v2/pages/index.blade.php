@@ -3,27 +3,25 @@
 @section('title', 'お知らせ')
 
 @section('content')
-<div class="listview container">
-    @foreach ($pages as $page)
-    <a class="listview-item" href="{{ route('pages.show', $page) }}">
-        <div class="listview-item__body">
-            <p class="listview-item__title">
+<app-container>
+    <list-view>
+        @foreach ($pages as $page)
+        <list-view-item href="{{ route('pages.show', $page) }}">
+            <template v-slot:title>
                 {{ $page->title }}
-            </p>
-            <p class="listview-item__meta">
+            </template>
+            <template v-slot:meta>
                 @datetime($page->updated_at)
-            </p>
-            <p class="listview-item__summary">
-                @summary($page->body)
-            </p>
-        </div>
-    </a>
-    @endforeach
-    @empty ($pages)
-    <div class="listview-empty">
-        <i class="fas fa-bullhorn listview-empty__icon"></i>
-        <p class="listview-empty__text">お知らせはまだありません</p>
-    </div>
-    @endempty
-</div>
+            </template>
+            @summary($page->body)
+        </list-view-item>
+        @endforeach
+        @empty ($pages)
+        <list-view-empty
+            icon-class="fas fa-bullhorn"
+            text="お知らせはまだありません"
+        />
+        @endempty
+    </list-view>
+</app-container>
 @endsection

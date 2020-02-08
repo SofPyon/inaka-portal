@@ -17,37 +17,29 @@
         過去の予定
     </a>
 </div>
-@foreach ($schedules as $month => $group)
-<div class="listview container">
-    <div class="listview-header">
-        {{ $month }}
-    </div>
-    @foreach ($group as $schedule)
-    <a class="listview-item" href="{{ route('schedules.show', $schedule) }}">
-        <div class="listview-item__day_calendar">
-            @include('v2.includes.day_calendar', ['date' => $schedule->start_at])
-        </div>
-        <div class="listview-item__body">
-            <p class="listview-item__title">
+<app-container>
+    @foreach ($schedules as $month => $group)
+    <list-view header-title="{{ $month }}">
+        @foreach ($group as $schedule)
+        <list-view-item href="{{ route('schedules.show', $schedule) }}">
+            <template v-slot:title>
                 {{ $schedule->name }}
-            </p>
-            <p class="listview-item__meta">
+            </template>
+            <template v-slot:meta>
                 @datetime($schedule->start_at)〜 • {{ $schedule->place }}
-            </p>
-            <p class="listview-item__summary">
-                @summary($schedule->description)
-            </p>
-        </div>
-    </a>
+            </template>
+            @summary($schedule->description)
+        </list-view-item>
+        @endforeach
+    </list-view>
     @endforeach
-</div>
-@endforeach
-@empty ($schedules)
-<div class="listview">
-    <div class="listview-empty">
-        <i class="far fa-calendar-alt listview-empty__icon"></i>
-        <p class="listview-empty__text">予定はありません</p>
-    </div>
-</div>
-@endempty
+    @empty ($schedules)
+    <list-view>
+        <list-view-empty
+            icon-class="far fa-calendar-alt"
+            text="予定はありません"
+        />
+    </list-view>
+    @endempty
+</app-container>
 @endsection
