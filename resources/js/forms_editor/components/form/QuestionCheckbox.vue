@@ -57,9 +57,11 @@ export default {
       return this.question.description
     },
     options() {
-      return this.question.options
-        ? this.question.options.trim().split(/\r\n|\n/)
-        : ['(選択肢なし)']
+      if (this.question.options) {
+        const options = new Set(this.question.options.trim().split(/\r\n|\n/))
+        return Array.from(options)
+      }
+      return ['(選択肢なし)']
     },
     is_required() {
       return this.question.is_required
