@@ -6,6 +6,7 @@
     <app-container>
         <list-view header-title="団体を選択してください">
             @foreach ($circles as $circle)
+                {{-- リンク先が Turbolinks に対応したら data-turbolinks="false" は削除する --}}
                 <list-view-item href="{{ route($redirect, ['circle' => $circle->id]) }}">
                     <template v-slot:title>
                         <i class="fa fa-users mr-2" area-hidden="true"></i>
