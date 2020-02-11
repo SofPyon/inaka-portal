@@ -72,9 +72,20 @@ class QuestionsService
         // そのため、CodeIgniter のバリデーションの邪魔になる文字列は
         // 削除する
         // TODO: CodeIgniter を廃止したら、以下の処理は削除する
-        $question['options'] = !empty($question['options'])
-            ? str_replace([',', '[', ']', ' ', "\t"], '', $question['options'])
-            : null;
+        if (!empty($question['options'])) {
+            $options = array_unique(
+                array_map(
+                    'trim',
+                    explode(
+                        "\n",
+                        str_replace([',', '[', ']', ' ', "\t"], '', $question['options'])
+                    )
+                )
+            );
+            $question['options'] = implode("\n", $options);
+        } else {
+            $question['options'] = null;
+        }
 
         $eloquent->fill($question);
         $eloquent->save();
