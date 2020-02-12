@@ -10,7 +10,9 @@ class IndexAction extends Controller
 {
     public function __invoke()
     {
+        $documents = Document::public()->with('schedule')->get();
+        $documents = count($documents) > 0 ? $documents : [];
         return view('v2.documents.index')
-            ->with('documents', Document::public()->with('schedule')->get());
+            ->with('documents', $documents);
     }
 }
