@@ -4,8 +4,13 @@
 
 @section('content')
 <app-container>
-        @isset ($documents)
-        <list-view>
+    @empty ($documents)
+    <list-view-empty
+        icon-class="far fa-file-alt"
+        text="配布資料はまだありません"
+    />
+    @else
+    <list-view>
         @foreach ($documents as $document)
         <list-view-item
             href="{{ url("uploads/documents/{$document->id}") }}"
@@ -30,12 +35,6 @@
         </list-view-item>
         @endforeach
     </list-view>
-    @endisset
-    @empty ($documents)
-    <list-view-empty
-        icon-class="far fa-file-alt"
-        text="配布資料はまだありません"
-    />
     @endempty
 </app-container>
 @endsection

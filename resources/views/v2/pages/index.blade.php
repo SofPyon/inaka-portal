@@ -4,7 +4,12 @@
 
 @section('content')
 <app-container>
-    @isset ($pages)
+    @empty ($pages)
+    <list-view-empty
+        icon-class="fas fa-bullhorn"
+        text="お知らせはまだありません"
+    />
+    @else
     <list-view>
         @foreach ($pages as $page)
         <list-view-item href="{{ route('pages.show', $page) }}">
@@ -18,12 +23,6 @@
         </list-view-item>
         @endforeach
     </list-view>
-    @endisset
-    @empty ($pages)
-    <list-view-empty
-        icon-class="fas fa-bullhorn"
-        text="お知らせはまだありません"
-    />
     @endempty
 </app-container>
 @endsection
