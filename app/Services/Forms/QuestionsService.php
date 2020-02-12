@@ -71,7 +71,7 @@ class QuestionsService
         // CodeIgniter ではバリデーションルールを単なる文字列で表す。
         // そのため、CodeIgniter のバリデーションの邪魔になる文字列は
         // 削除する
-        // TODO: CodeIgniter を廃止したら、以下の処理は削除する
+        // TODO: CodeIgniter を廃止したら、str_replace をする処理は削除する
         if (!empty($question['options'])) {
             $options = array_unique(
                 array_map(
