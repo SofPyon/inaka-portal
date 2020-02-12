@@ -10,7 +10,7 @@
           {{ description }}
         </p>
         <div class="form-check mb-1" v-for="option in options" :key="option">
-          <input class="form-check-input" type="checkbox" tabindex="-1" />
+          <input class="form-check-input" type="radio" tabindex="-1" />
           <p class="form-check-label">
             {{ option }}
           </p>
