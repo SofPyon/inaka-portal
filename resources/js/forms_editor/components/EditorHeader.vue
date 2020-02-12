@@ -24,7 +24,7 @@
     </div>
     <div class="editor-header__actions">
       <a class="btn btn-link" :href="preview_url" target="_blank">プレビュー</a>
-      <span v-if="is_public">
+      <template v-if="is_public">
         <span class="badge badge-primary mr-2">公開</span>
         <button
           class="btn btn-danger"
@@ -33,8 +33,8 @@
         >
           非公開にする
         </button>
-      </span>
-      <span v-else>
+      </template>
+      <template v-else>
         <span class="badge badge-danger mr-2">非公開</span>
         <button
           class="btn btn-primary"
@@ -43,7 +43,7 @@
         >
           公開する
         </button>
-      </span>
+      </template>
     </div>
   </header>
 </template>
