@@ -44,10 +44,7 @@
         <textarea
           class="form-control"
           v-model="options"
-          @blur="
-            save
-            deleteDuplication()
-          "
+          @blur="onBlur"
           :disabled="is_deleting"
           rows="4"
           placeholder="1行に1つ選択肢を入力"
@@ -180,6 +177,10 @@ export default {
         const options = new Set(this.options.trim().split(/\r\n|\n/))
         this.options = Array.from(options).join('\n')
       }
+    },
+    onBlur() {
+      this.deleteDuplication()
+      this.save()
     }
   },
   // TODO: 変更点がない場合、saveメソッドが実行されないようにする
