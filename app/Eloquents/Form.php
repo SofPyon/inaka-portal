@@ -78,6 +78,11 @@ class Form extends Model
         return $this->hasMany(Question::class);
     }
 
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
     public function answered(Circle $circle)
     {
         $answer = Answer::where('form_id', $this->id)->where('circle_id', $circle->id)->first();
@@ -87,5 +92,10 @@ class Form extends Model
     public function yetOpen()
     {
         return $this->open_at > now();
+    }
+
+    public function isOpen()
+    {
+        return $this->open_at->lte(now()) && $this->close_at->gte(now());
     }
 }
