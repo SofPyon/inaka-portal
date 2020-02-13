@@ -75,10 +75,10 @@
             "cd docker_dev && docker-compose run web php artisan migrate:refresh"
         ],
         "phpcs": [
-            "./vendor/bin/phpcs --standard=phpcs.xml ./"
+            "phpcs --standard=phpcs.xml ./"
         ],
         "phpcbf": [
-            "./vendor/bin/phpcbf --standard=phpcs.xml ./"
+            "phpcbf --standard=phpcs.xml ./"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
