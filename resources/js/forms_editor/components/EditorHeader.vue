@@ -29,7 +29,7 @@
         <button
           class="btn btn-danger"
           :disabled="is_saving"
-          v-on:click="togglePublic()"
+          @click="togglePublic()"
         >
           非公開にする
         </button>
