@@ -86,7 +86,7 @@ export default {
         window.confirm(
           this.$store.state.editor.form.is_public
             ? '非公開にしますか？'
-            : '公開しますか？\n公開しても受付期間まで回答することはできません。'
+            : '公開しますか？\n公開しても受付期間外の場合、団体は回答できません。'
         )
       ) {
         if (this.$store.state.editor.form.is_public) {
