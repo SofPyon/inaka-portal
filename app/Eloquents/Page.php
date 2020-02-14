@@ -20,4 +20,9 @@ class Page extends Model
             $builder->orderBy('updated_at', 'desc');
         });
     }
+
+    public function isEmpty()
+    {
+        return count($this) === 0;
+    }
 }

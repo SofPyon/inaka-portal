@@ -4,7 +4,7 @@
 
 @section('content')
 <app-container>
-    @empty ($pages)
+    @if ($pages->isEmpty())
     <list-view-empty
         icon-class="fas fa-bullhorn"
         text="お知らせはまだありません"
@@ -23,6 +23,6 @@
         </list-view-item>
         @endforeach
     </list-view>
-    @endempty
+    @endif
 </app-container>
 @endsection

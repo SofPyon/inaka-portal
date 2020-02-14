@@ -119,12 +119,12 @@
             残り {{ $remaining_pages_count }} 件のお知らせを見る
         </list-view-action-btn>
         @endif
-        @empty ($pages)
+        @if ($pages->isEmpty())
         <list-view-empty
             icon-class="fas fa-bullhorn"
             text="お知らせはまだありません"
         />
-        @endempty
+        @endif
     </list-view>
 
     <list-view header-title="最近の配布資料">
@@ -156,12 +156,12 @@
             残り {{ $remaining_documents_count }} 件の配布資料を見る
         </list-view-action-btn>
         @endif
-        @empty ($documents)
+        @if ($documents->isEmpty())
         <list-view-empty
             icon-class="far fa-file-alt"
             text="配布資料はまだありません"
         />
-        @endempty
+        @endif
     </list-view>
 </app-container>
 @endsection

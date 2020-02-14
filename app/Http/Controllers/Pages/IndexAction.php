@@ -10,9 +10,7 @@ class IndexAction extends Controller
 {
     public function __invoke()
     {
-        $pages = Page::all();
-        $pages = count($pages) > 0 ? $pages : [];
         return view('v2.pages.index')
-            ->with('pages', $pages);
+            ->with('pages', Page::all());
     }
 }

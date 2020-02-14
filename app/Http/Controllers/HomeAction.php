@@ -23,18 +23,12 @@ class HomeAction extends Controller
 
     public function __invoke()
     {
-        $pages = Page::take(self::TAKE_COUNT)->get();
-        $pages = count($pages) > 0 ? $pages : [];
-
-        $documents = Document::take(self::TAKE_COUNT)->public()->with('schedule')->get();
-        $documents = count($documents) > 0 ? $documents : [];
-
         return view('v2.home')
             ->with('my_circles', Auth::user()->circles)
-            ->with('pages', $pages)
+            ->with('pages', Page::take(self::TAKE_COUNT)->get())
             ->with('remaining_pages_count', max(Page::count() - self::TAKE_COUNT, 0))
             ->with('next_schedule', Schedule::startOrder()->notStarted()->first())
-            ->with('documents', $documents)
+            ->with('documents', Document::take(self::TAKE_COUNT)->public()->with('schedule')->get())
             ->with('remaining_documents_count', max(Document::public()->count() - self::TAKE_COUNT, 0));
     }
 }

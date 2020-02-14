@@ -4,7 +4,7 @@
 
 @section('content')
 <app-container>
-    @empty ($documents)
+    @if ($documents->isEmpty())
     <list-view-empty
         icon-class="far fa-file-alt"
         text="配布資料はまだありません"
@@ -35,6 +35,6 @@
         </list-view-item>
         @endforeach
     </list-view>
-    @endempty
+    @endif
 </app-container>
 @endsection
