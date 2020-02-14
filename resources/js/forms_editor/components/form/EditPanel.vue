@@ -174,7 +174,12 @@ export default {
     },
     deleteDuplication() {
       if (this.options) {
-        const options = new Set(this.options.trim().split(/\r\n|\n/))
+        const options = new Set(
+          this.options
+            .trim()
+            .split(/\r\n|\n/)
+            .map(option => option.trim())
+        )
         this.options = Array.from(options).join('\n')
       }
     },
