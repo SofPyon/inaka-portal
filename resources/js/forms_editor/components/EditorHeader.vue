@@ -29,7 +29,7 @@
         <button
           class="btn btn-danger"
           :disabled="is_saving"
-          @click="togglePublic()"
+          @click="setPrivate()"
         >
           非公開にする
         </button>
@@ -39,7 +39,7 @@
         <button
           class="btn btn-primary"
           :disabled="is_saving"
-          v-on:click="togglePublic()"
+          @click="setPublic()"
         >
           公開する
         </button>
@@ -81,19 +81,19 @@ export default {
     save() {
       this.$store.dispatch(`editor/${SAVE_FORM}`)
     },
-    togglePublic() {
+    setPublic() {
       if (
         window.confirm(
-          this.$store.state.editor.form.is_public
-            ? '非公開にしますか？'
-            : '公開しますか？\n公開しても受付期間外の場合、団体は回答できません。'
+          '公開しますか？\n公開しても受付期間外の場合、団体は回答できません。'
         )
       ) {
-        if (this.$store.state.editor.form.is_public) {
-          this.$store.commit(`editor/${SET_FORM_PRIVATE}`)
-        } else {
-          this.$store.commit(`editor/${SET_FORM_PUBLIC}`)
-        }
+        this.$store.commit(`editor/${SET_FORM_PUBLIC}`)
+        this.save()
+      }
+    },
+    setPrivate() {
+      if (window.confirm('非公開にしますか？')) {
+        this.$store.commit(`editor/${SET_FORM_PRIVATE}`)
         this.save()
       }
     }
