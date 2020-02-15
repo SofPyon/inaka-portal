@@ -19,6 +19,11 @@ class Applications_form extends Home_base_controller
      */
     private $form_upload_data;
 
+    public function uploads_v2($formId, $answerId, $questionId)
+    {
+        codeigniter_redirect(base_url("/forms__v2/{$formId}/answers/{$answerId}/uploads/{$questionId}"));
+    }
+
     /**
      * 申請フォーム表示
      *

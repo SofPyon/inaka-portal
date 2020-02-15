@@ -42,7 +42,7 @@
         <list-view>
             @foreach ($forms as $form)
             <list-view-item
-                href="/forms/{{ $form->id }}/answers/create?circle={{ $circle->id }}"
+                href="{{ route('forms.answers.create', ['form' => $form, 'circle' => $circle]) }}"
             >
                 <template v-slot:title>
                     {{ $form->name }}

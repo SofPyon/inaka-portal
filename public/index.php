@@ -51,7 +51,7 @@
         '/pages',
         '/documents',
         '/schedules',
-        '/forms',
+        '/forms__v2',
         // Auth
         '/login',
         '/logout',

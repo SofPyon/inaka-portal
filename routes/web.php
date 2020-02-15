@@ -94,7 +94,7 @@ Route::middleware(['auth'])->group(function () {
 // ログインされており、メールアドレス認証が済んでいる場合のみアクセス可能なルート
 Route::middleware(['auth', 'verified'])->group(function () {
     // 申請
-    Route::prefix('/forms')
+    Route::prefix('/forms__v2')
         ->name('forms.')
         ->group(function () {
             Route::get('/', 'Forms\IndexAction')->name('index');

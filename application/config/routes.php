@@ -54,10 +54,13 @@ $route['404_override'] = 'Home/error_404';
 $route['translate_uri_dashes'] = false;
 
 // 回答の新規作成（団体単位で回答するフォーム）
-// $route["applications/(:num)/answers/create"] = "home/Applications_form/index/$1/create";
+$route["forms/(:num)/answers/create"] = "home/Applications_form/index/$1/create";
 
 // 回答の編集（団体単位で回答するフォーム）
-// $route["applications/(:num)/answers/(:num)/edit"] = "home/Applications_form/index/$1/$2";
+$route["forms/(:num)/answers/(:num)/edit"] = "home/Applications_form/index/$1/$2";
+
+// Project v2 の申請フォームでアップされたファイルをダウンロードするための URL
+$route["forms/(:num)/answers/(:num)/uploads/(:num)"] = "home/Applications_form/uploads_v2/$1/$2/$3";
 
 // ...団体ID/b:ブースID/forms/フォームID/タイプ => applications_form/フォームID/団体ID/タイプ/ブースID
 // $route["home/applications/(:num)/b:(:num)/forms/(:num)/(:any)"] = "home/Applications_form/index/$3/$1/$4/$2";
