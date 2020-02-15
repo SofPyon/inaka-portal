@@ -35,4 +35,12 @@
 
 @endforeach
 
+<br /><br />
+
+@component('mail::panel')
+フォームの受付期間内であれば、回答を変更することもできます。
+@component('mail::button', ['url' => route('forms.answers.edit', ['form' => $form, 'answer' => $answer]), 'color' => 'primary'])
+回答を変更
+@endcomponent
+@endcomponent
 @endcomponent
