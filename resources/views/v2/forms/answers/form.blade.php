@@ -1,6 +1,20 @@
 @extends('v2.layouts.app')
 
-@section('title', '申請')
+@section('title', $form->name . ' — 申請')
+
+@section('navbar')
+@if (!empty($answer) && count($answers) > 0 && $form->max_answers > 1)
+<a href="{{ route('forms.answers.create', ['form' => $form, 'circle' => $circle]) }}" class="navbar-back">
+    <i class="fas fa-chevron-left navbar-back__icon"></i>
+    回答の新規作成
+</a>
+@else
+<a href="{{ route('forms.index', ['circle' => $circle]) }}" class="navbar-back">
+    <i class="fas fa-chevron-left navbar-back__icon"></i>
+    申請
+</a>
+@endif
+@endsection
 
 @section('content')
 <form
@@ -45,7 +59,7 @@
         </list-view>
 
         {{--
-            $answers ← 団体 $circle が回答した全回答（回答新規作成画面で使用）
+            $answers ← 団体 $circle が回答した全回答（回答新規作成画面で使用。変更画面でも使用可能）
             $answer ← 編集対象の回答（回答変更画面で使用）
         --}}
 
@@ -78,6 +92,7 @@
         @endif
         @isset ($answer)
             header-title="{{ $form->isOpen() ? '回答を編集' : '回答を閲覧' }}"
+            header-description="回答の最終更新日時 : @datetime($form->updated_at)"
         @endisset
         >
             @foreach ($questions as $question)
