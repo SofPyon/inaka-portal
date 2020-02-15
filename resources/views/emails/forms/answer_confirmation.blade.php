@@ -15,10 +15,9 @@
 -----
 
 ## {{ $question->name }}
-{{ $question->description }}
-
+@isset ($question->description){{ $question->description }}@endisset
 @else
-**{{ $question->name }}**
+### {{ $question->name }}
 
 @if (empty($answer_details[$question->id]))
 —{{-- 未回答  --}}
