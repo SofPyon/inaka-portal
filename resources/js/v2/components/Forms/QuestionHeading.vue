@@ -28,7 +28,7 @@ export default {
 <style lang="scss" scoped>
 .question-heading {
   border: 0;
-  padding: $spacing 0;
+  padding: $spacing 0 0;
   &:first-child {
     padding-top: 0;
   }
@@ -42,7 +42,8 @@ export default {
   &__name {
     font-size: 1.5rem;
     line-height: 1.4;
-    margin: 0 0 $spacing-sm;
+    margin: 0;
+    padding: 0 0 $spacing-sm;
   }
 }
 </style>
