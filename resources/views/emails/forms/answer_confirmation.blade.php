@@ -3,7 +3,7 @@
 申請「{{ $form->name }}」を承りました。
 
 @component('mail::panel')
-- 申請名 : {{ $form->name }}
+- 回答ID : {{ $answer->id }}
 - 団体名 : {{ $circle->name }}
 - 回答者 : {{ $applicant->name }}
 - 日時 : @datetime($answer->updated_at)

@@ -72,7 +72,9 @@
             <list-view-item
                 href="{{ route('forms.answers.edit', ['form' => $form, 'answer' => $_]) }}"
             >
-                <template v-slot:title>@datetime($_->created_at) に新規作成した回答</template>
+                <template v-slot:title>
+                    @datetime($_->created_at) に新規作成した回答 — 回答ID : {{ $_->id }}
+                </template>
                 @unless ($_->created_at->eq($_->updated_at))
                 <template v-slot:meta>回答の最終更新日時 : @datetime($_->updated_at)</template>
                 @endunless
@@ -91,7 +93,7 @@
             @endif
         @endif
         @isset ($answer)
-            header-title="{{ $form->isOpen() ? '回答を編集' : '回答を閲覧' }}"
+            header-title="{{ $form->isOpen() ? '回答を編集' : '回答を閲覧' }} — 回答ID : {{ $answer->id }}"
             header-description="回答の最終更新日時 : @datetime($form->updated_at)"
         @endisset
         >
