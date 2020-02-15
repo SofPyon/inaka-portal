@@ -54,7 +54,11 @@
                     @endif
                 </template>
                 <template v-slot:meta>
-                    @datetime($form->close_at) まで受付
+                    @if ($form->yetOpen())
+                        @datetime($form->open_at) から受付開始
+                    @else
+                        @datetime($form->close_at) まで受付
+                    @endif
                     @if ($form->max_answers > 1)
                     • 1団体あたり{{ $form->max_answers }}つ回答可能
                     @endif
