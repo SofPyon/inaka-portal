@@ -6,6 +6,7 @@ use App;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\UploadedFile;
 use App\Services\Forms\ValidationRulesService;
 use App\Eloquents\Circle;
 
@@ -31,8 +32,8 @@ abstract class BaseAnswerRequest extends FormRequest
 
         // 改行(\r\n)が2文字と認識されてしまわないよう、\n に置換する
         $all['answers'] = array_map(function ($item) {
-            if (is_array($item)) {
-                // 配列は処理しない
+            if (is_array($item) || $item instanceof UploadedFile) {
+                // 配列とファイルは処理しない
                 return $item;
             }
             return str_replace("\r\n", "\n", $item);
