@@ -21,6 +21,27 @@ abstract class BaseAnswerRequest extends FormRequest
     abstract public function authorize();
 
     /**
+     * Get data to be validated from the request.
+     *
+     * @return array
+     */
+    protected function validationData()
+    {
+        $all = $this->all();
+
+        // 改行(\r\n)が2文字と認識されてしまわないよう、\n に置換する
+        $all['answers'] = array_map(function ($item) {
+            if (is_array($item)) {
+                // 配列は処理しない
+                return $item;
+            }
+            return str_replace("\r\n", "\n", $item);
+        }, $all['answers']);
+
+        return $all;
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array

@@ -389,8 +389,8 @@ class Home_staff extends MY_Controller
                     // Not多肢選択式
                     $string_to_export .= "\t" .
                         str_replace(
-                            ["\r\n", "\t"],
-                            ["{{改行}}", "{{タブ文字}}"],
+                            ["\r\n", "\n", "\r", "\t"],
+                            ["{{改行}}", "{{改行}}", "{{改行}}", "{{タブ文字}}"],
                             $answer->answers[$question->id] ?? ''
                         );
                 }
