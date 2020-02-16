@@ -86,7 +86,7 @@
                 <tr>
                     <td>{{ answer.id }}</td>
                     <th class="table-sticky">
-                        {{ answer.circle.name }}
+                        {{ answer.circle.name }} (ID : {{ answer.circle.id }})
                         {% if form.type == "booth" %}
                             <br>
                             {% if answer.booth.name is empty %}
