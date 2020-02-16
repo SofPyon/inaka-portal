@@ -31,13 +31,15 @@ abstract class BaseAnswerRequest extends FormRequest
         $all = $this->all();
 
         // 改行(\r\n)が2文字と認識されてしまわないよう、\n に置換する
-        $all['answers'] = array_map(function ($item) {
-            if (is_array($item) || $item instanceof UploadedFile) {
-                // 配列とファイルは処理しない
-                return $item;
-            }
-            return str_replace("\r\n", "\n", $item);
-        }, $all['answers']);
+        if (isset($all['answers'])) {
+            $all['answers'] = array_map(function ($item) {
+                if (is_array($item) || $item instanceof UploadedFile) {
+                    // 配列とファイルは処理しない
+                    return $item;
+                }
+                return str_replace("\r\n", "\n", $item);
+            }, $all['answers']);
+        }
 
         return $all;
     }
