@@ -39,6 +39,9 @@ export default {
   &:first-child &__body {
     border: 0;
   }
+  &:last-child &__body {
+    padding-bottom: $spacing;
+  }
   &__name {
     font-size: 1.5rem;
     line-height: 1.4;
