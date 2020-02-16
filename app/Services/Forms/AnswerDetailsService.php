@@ -67,7 +67,7 @@ class AnswerDetailsService
 
         $data = [];
         foreach ($answer_details as $question_id => $detail) {
-            $question = $answer->form->questions->firstWhere('id', $question_id);
+            $question = $form->questions->firstWhere('id', $question_id);
 
             if (is_array($detail)) {
                 foreach ($detail as $value) {
