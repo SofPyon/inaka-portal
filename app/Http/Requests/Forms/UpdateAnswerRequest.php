@@ -18,6 +18,7 @@ class UpdateAnswerRequest extends BaseAnswerRequest
     {
         $form = $this->route('form');
         $answer = $this->route('answer');
-        return $this->user()->can('update', $answer) && $form->is_public && $form->isOpen();
+        return $this->user()->can('update', $answer) && $form->is_public &&
+            $form->isOpen() && $form->id === $answer->form_id;
     }
 }
