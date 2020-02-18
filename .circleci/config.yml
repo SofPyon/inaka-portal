@@ -13,12 +13,6 @@ jobs:
 
       - image: circleci/php:7.3-apache-node-browsers
       - image: circleci/mysql:5.7
-        environment:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: db_portal_dev
-          MYSQL_USER: default
-          MYSQL_PASSWORD: default
-          TZ: 'Asia/Tokyo'
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
