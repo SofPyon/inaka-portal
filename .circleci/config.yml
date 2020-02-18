@@ -77,6 +77,8 @@ jobs:
 
       - run: yarn install
 
+      - run: yarn dev
+
       - run: yarn eslint-check
 
       - run: yarn stylelint-check
