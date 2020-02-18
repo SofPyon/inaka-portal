@@ -1,7 +1,7 @@
 @extends('v2.layouts.no_drawer')
 
 @section('content')
-<header class="jumbotron">
+<div class="jumbotron">
     <app-container narrow>
         <p>
             <i class="fas fa-info-circle"></i>
@@ -65,5 +65,5 @@
             </p>
         </form>
     </app-container>
-</header>
+</div>
 @endsection
