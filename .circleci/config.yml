@@ -60,6 +60,9 @@ jobs:
 
       - run: sudo docker-php-ext-install pdo_mysql
 
+      # TODO: init.sql を廃止したら、以下の行は削除する
+      - run: mysql -uroot circle_test < ./docker_dev/db/sql/init.sql
+
       - run: ./vendor/bin/phpunit
 
       - save_cache:
