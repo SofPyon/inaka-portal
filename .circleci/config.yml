@@ -33,7 +33,7 @@ jobs:
       - DB_PORT: 3306
       - DB_DATABASE: circle_test
       - DB_USERNAME: root
-      - DB_PASSWORD:
+      - DB_PASSWORD: ''
       - MYSQL_ALLOW_EMPTY_PASSWORD: true
       - PORTAL_ADMIN_NAME: 継続的インテグレーション実行委員会
       - PORTAL_CONTACT_EMAIL: info@example.com
