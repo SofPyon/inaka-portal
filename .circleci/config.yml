@@ -9,7 +9,16 @@ jobs:
 
     docker:
       # Specify the version you desire here
-      - image: circleci/php:7.3-node-browsers
+      # - image: circleci/php:7.3-node-browsers
+
+      - image: circleci/php:7.3-apache-node-browsers
+      - image: circleci/mysql:5.7
+        environment:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: db_portal_dev
+          MYSQL_USER: default
+          MYSQL_PASSWORD: default
+          TZ: 'Asia/Tokyo'
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -19,6 +28,18 @@ jobs:
       # - image: circleci/mysql:5.7-ram
       #
       # - image: redis:2.8.19
+
+    environment:
+      - APP_NAME: 継続的インテグレーション祭
+      - APP_DEBUG: true
+      - APP_ENV: testing
+      - APP_KEY: base64:xWEI4OS7YZ0rIxmMfJaAgbRiMkOkFsf5Bn1QEO+iP4k=
+      - DB_CONNECTION: circle_test
+      - MYSQL_ALLOW_EMPTY_PASSWORD: true
+      - PORTAL_ADMIN_NAME: 継続的インテグレーション実行委員会
+      - PORTAL_CONTACT_EMAIL: info@example.com
+      - PORTAL_UNIVEMAIL_DOMAIN: univemail.example.com
+      - PORTAL_UPLOAD_DIR_CRUD:
 
     steps:
       - checkout
@@ -37,6 +58,10 @@ jobs:
       - run: composer install -n --prefer-dist
 
       - run: composer phpcs
+
+      - run: sudo docker-php-ext-install pdo_mysql
+
+      - run: ./vendor/bin/phpunit
 
       - save_cache:
           key: v1-dependencies-{{ checksum "composer.json" }}
