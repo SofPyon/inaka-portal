@@ -13,7 +13,7 @@ class LoginControllerTest extends TestCase
      */
     public function ログインフォームが表示される()
     {
-        $response = $this->json('get', route('login'));
+        $response = $this->get(route('login'));
 
         $response->assertStatus(200);
         $response->assertViewIs('v2.auth.login');
