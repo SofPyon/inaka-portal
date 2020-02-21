@@ -18,11 +18,13 @@
           </div>
         </template>
         <template v-else>
-          <p class="empty-option">
-            <i class="fa fa-exclamation-triangle mr-1"></i>
-            <b>選択肢がありません。</b>
-          </p>
-          <p class="empty-option">選択肢を1つ以上入力してください。</p>
+          <div class="empty-option">
+            <p class="empty-option-text">
+              <i class="fa fa-exclamation-triangle mr-1"></i>
+              <b>選択肢がありません。</b>
+            </p>
+            <p class="empty-option-text">選択肢を1つ以上入力してください。</p>
+          </div>
         </template>
       </div>
     </template>
