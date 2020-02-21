@@ -24,11 +24,11 @@
           </ul>
         </template>
         <template v-else>
-          <p>
-            <i class="fa fa-exclamation-triangle mr-1"></i
-            ><b>選択肢がありません。</b>
+          <p class="empty-option">
+            <i class="fa fa-exclamation-triangle mr-1"></i>
+            <b>選択肢がありません。</b>
           </p>
-          <p>選択肢を1つ以上入力してください。</p>
+          <p class="empty-option">選択肢を1つ以上入力してください。</p>
         </template>
       </div>
     </template>
