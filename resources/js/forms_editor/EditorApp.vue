@@ -16,6 +16,12 @@
     <editor-content />
     <editor-sidebar />
     <editor-error v-show="is_error" />
+    <editor-error
+      v-show="is_ie"
+      title="Internet Explorer には対応していません"
+      message="別のブラウザからアクセスしてください。"
+      back
+    />
   </div>
 </template>
 
