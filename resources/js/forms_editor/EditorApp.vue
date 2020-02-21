@@ -5,23 +5,11 @@
     >
       申請フォームエディターは、パソコンのみ対応しています。
     </div>
-    <div
-      class="alert alert-danger rounded-0 m-0 d-block fixed-bottom text-center"
-      v-if="is_ie"
-    >
-      申請フォームエディターは、Internet Explorer には対応していません。
-    </div>
     <editor-loading v-show="!loaded" />
     <editor-header />
     <editor-content />
     <editor-sidebar />
     <editor-error v-show="is_error" />
-    <editor-error
-      v-show="is_ie"
-      title="Internet Explorer には対応していません"
-      message="別のブラウザからアクセスしてください。"
-      back
-    />
   </div>
 </template>
 
@@ -57,18 +45,6 @@ export default {
     }
   },
   computed: {
-    is_ie() {
-      const userAgent = window.navigator.userAgent.toLowerCase()
-
-      if (
-        userAgent.indexOf('msie') !== -1 ||
-        userAgent.indexOf('trident') !== -1
-      ) {
-        return true
-      }
-
-      return false
-    },
     loaded() {
       return this.$store.state.editor.loaded
     },
