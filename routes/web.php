@@ -123,7 +123,13 @@ Route::middleware(['auth', 'verified', 'can:staff', 'staffAuthed'])
         Route::prefix('/forms/{form}')
             ->name('forms.')
             ->group(function () {
-                Route::get('/download_zip', 'Staff\Forms\Answers\DownloadZipAction')->name('download_zip');
+                // 回答確認
+                Route::prefix('/answers')
+                    ->name('answers.')
+                    ->group(function () {
+                        Route::get('/uploads', 'Staff\Forms\Answers\Uploads\IndexAction')->name('uploads.index');
+                        Route::get('/uploads/download_zip', 'Staff\Forms\Answers\Uploads\DownloadZipAction')->name('uploads.download_zip');
+                    });
 
                 // 申請フォームエディタ
                 Route::prefix('/editor')

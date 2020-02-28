@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Staff\Forms\Answers;
+namespace App\Http\Controllers\Staff\Forms\Answers\Uploads;
 
 use ZipArchive;
 use Illuminate\Http\Request;
