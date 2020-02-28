@@ -123,16 +123,20 @@ Route::middleware(['auth', 'verified', 'can:staff', 'staffAuthed'])
         Route::prefix('/forms/{form}')
             ->name('forms.')
             ->group(function () {
-                Route::get('/editor', 'Staff\Forms\EditorAction')->name('editor');
-                // ↓「editor.api」のroute定義は resources/views/staff/forms/editor.blade.php で利用しているので、消さないこと
-                Route::get('/editor/api/', 'Staff\Forms\EditorAPIAction')->name('editor.api');
-                Route::get('/editor/api/get_form', 'Staff\Forms\GetFormAction');
-                Route::post('/editor/api/update_form', 'Staff\Forms\UpdateFormAction');
-                Route::get('/editor/api/get_questions', 'Staff\Forms\GetQuestionsAction');
-                Route::post('/editor/api/add_question', 'Staff\Forms\AddQuestionAction');
-                Route::post('/editor/api/update_questions_order', 'Staff\Forms\UpdateQuestionsOrderAction');
-                Route::post('/editor/api/update_question', 'Staff\Forms\UpdateQuestionAction');
-                Route::post('/editor/api/delete_question', 'Staff\Forms\DeleteQuestionAction');
+
+                Route::prefix('/editor')
+                    ->group(function () {
+                        Route::get('/', 'Staff\Forms\Editor\IndexAction')->name('editor');
+                        // ↓「editor.api」のroute定義は resources/views/staff/forms/editor.blade.php で利用しているので、消さないこと
+                        Route::get('/api', 'Staff\Forms\Editor\APIAction')->name('editor.api');
+                        Route::get('/api/get_form', 'Staff\Forms\Editor\GetFormAction');
+                        Route::post('/api/update_form', 'Staff\Forms\Editor\UpdateFormAction');
+                        Route::get('/api/get_questions', 'Staff\Forms\Editor\GetQuestionsAction');
+                        Route::post('/api/add_question', 'Staff\Forms\Editor\AddQuestionAction');
+                        Route::post('/api/update_questions_order', 'Staff\Forms\Editor\UpdateQuestionsOrderAction');
+                        Route::post('/api/update_question', 'Staff\Forms\Editor\UpdateQuestionAction');
+                        Route::post('/api/delete_question', 'Staff\Forms\Editor\DeleteQuestionAction');
+                    });
             });
 
         // メール一斉送信
