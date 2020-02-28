@@ -119,11 +119,13 @@ Route::middleware(['auth', 'verified', 'can:staff', 'staffAuthed'])
     ->prefix('/staff')
     ->name('staff.')
     ->group(function () {
-        // 申請フォームエディタ
+        // 申請
         Route::prefix('/forms/{form}')
             ->name('forms.')
             ->group(function () {
+                Route::get('/download_zip', 'Staff\Forms\Answers\DownloadZipAction')->name('download_zip');
 
+                // 申請フォームエディタ
                 Route::prefix('/editor')
                     ->group(function () {
                         Route::get('/', 'Staff\Forms\Editor\IndexAction')->name('editor');
