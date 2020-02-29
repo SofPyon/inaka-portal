@@ -49,14 +49,19 @@ class DownloadZipAction extends Controller
         }
 
         $tuples = array_map(function ($path) {
-            if (strpos($path, 'answer_details/') === 0 && file_exists($fullpath = Storage::path($path))) {
+            if (
+                strpos($path, 'answer_details/') === 0 &&
+                file_exists($fullpath = Storage::path($path)) &&
+                is_file($fullpath)
+            ) {
                 // Project v2 申請フォームからアップロードされたファイル
                 //
                 // TODO: 将来的に、ダウンロードされるファイル名に answer_details__ は含めないようにしたい
                 // TODO: 別件だが、回答一覧画面でも answer_details/ というパスは表示しないようにしたい
                 return [$fullpath, str_replace('answer_details/', 'answer_details__', $path)];
             } elseif (
-                file_exists($fullpath = config('portal.codeigniter_upload_dir') . '/form_file/' . basename($path))
+                file_exists($fullpath = config('portal.codeigniter_upload_dir') . '/form_file/' . basename($path)) &&
+                is_file($fullpath)
             ) {
                 // CodeIgniter 申請フォームからアップロードされたファイル
                 //
