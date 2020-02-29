@@ -55,16 +55,6 @@ class DownloadZipActionTest extends TestCase
      */
     public function スタッフ以外はダウンロードできない()
     {
-        // ダウンロードされるZIPファイルの代わり
-        $example_file = new File(base_path('tests/TestFile.png'));
-        Storage::putFileAs('answer_details_zip', $example_file, 'TestFile.png');
-
-        $this->mock(DownloadZipService::class, function ($mock) {
-            $mock->shouldReceive('makeZip')
-                ->once()
-                ->andReturn(storage_path("app/answer_details_zip/TestFile.png"));
-        });
-
         $response = $this->actingAs(factory(User::class)->create())
             ->get(route('staff.forms.answers.uploads.download_zip', ['form' => $this->form]));
 
