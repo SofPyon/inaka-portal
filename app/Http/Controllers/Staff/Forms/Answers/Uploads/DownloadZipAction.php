@@ -38,16 +38,6 @@ class DownloadZipAction extends Controller
             Storage::makeDirectory('answer_details_zip');
         }
 
-        $zip = new ZipArchive();
-        $zip_filename = 'uploads_' . $form_id . '_' . date('Y-m-d_H-i-s') . '.zip';
-        $zip_path = storage_path("app/answer_details_zip/{$zip_filename}");
-
-        if ($zip->open($zip_path, ZipArchive::CREATE) !== true) {
-            return back()
-                ->with('topAlert.type', 'danger')
-                ->with('topAlert.title', 'このサーバーは、ZIPダウンロードに対応していません');
-        }
-
         $tuples = array_map(function ($path) {
             if (
                 strpos($path, 'answer_details/') === 0 &&
@@ -75,6 +65,16 @@ class DownloadZipAction extends Controller
         if (!is_array($tuples) || count($tuples) === 0) {
             return back()
                 ->with('topAlert.title', 'ダウンロードできるファイルはありません');
+        }
+
+        $zip = new ZipArchive();
+        $zip_filename = 'uploads_' . $form_id . '_' . date('Y-m-d_H-i-s') . '.zip';
+        $zip_path = storage_path("app/answer_details_zip/{$zip_filename}");
+
+        if ($zip->open($zip_path, ZipArchive::CREATE) !== true) {
+            return back()
+                ->with('topAlert.type', 'danger')
+                ->with('topAlert.title', 'このサーバーは、ZIPダウンロードに対応していません');
         }
 
         foreach ($tuples as $tuple) {
