@@ -43,8 +43,9 @@ class DownloadZipAction extends Controller
         $zip_path = storage_path("app/answer_details_zip/{$zip_filename}");
 
         if ($zip->open($zip_path, ZipArchive::CREATE) !== true) {
-            abort(500, 'このサーバーは、ZIPダウンロードに対応していません');
-            return;
+            return back()
+                ->with('topAlert.type', 'danger')
+                ->with('topAlert.title', 'このサーバーは、ZIPダウンロードに対応していません');
         }
 
         $tuples = array_map(function ($path) {
@@ -65,6 +66,11 @@ class DownloadZipAction extends Controller
             return null;
         }, $uploaded_file_paths);
         $tuples = array_filter($tuples);
+
+        if (!is_array($tuples) || count($tuples) === 0) {
+            return back()
+                ->with('topAlert.title', 'ダウンロードできるファイルはありません');
+        }
 
         foreach ($tuples as $tuple) {
             [$fullpath, $localname] = $tuple;
