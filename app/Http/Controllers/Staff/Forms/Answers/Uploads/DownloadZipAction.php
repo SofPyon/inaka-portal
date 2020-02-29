@@ -47,7 +47,7 @@ class DownloadZipAction extends Controller
             return;
         }
 
-        $fullpaths = array_map(function ($path) {
+        $tuples = array_map(function ($path) {
             if (strpos($path, 'answer_details/') === 0 && file_exists($fullpath = Storage::path($path))) {
                 // Project v2 申請フォームからアップロードされたファイル
                 //
@@ -64,10 +64,10 @@ class DownloadZipAction extends Controller
             }
             return null;
         }, $uploaded_file_paths);
-        $fullpaths = array_filter($fullpaths);
+        $tuples = array_filter($tuples);
 
-        foreach ($fullpaths as $path) {
-            [$fullpath, $localname] = $path;
+        foreach ($tuples as $tuple) {
+            [$fullpath, $localname] = $tuple;
             $zip->addFile($fullpath, $localname);
         }
 
