@@ -324,7 +324,7 @@ class Applications_form extends Home_base_controller
                 }
             }
 
-            
+
             // Checkbox チェック数バリデーション
             if ($question->type === "checkbox") {
                 if (!empty($question->number_min)) {
@@ -495,14 +495,16 @@ class Applications_form extends Home_base_controller
     public function _checkbox_min($value, $data) {
         $data = preg_split('/,/', $data);
         $question_id = $data[0];
+        $checks = $this->input->post("answers[" . $question_id . "]");
         $min = $data[1];
-        return count($this->input->post("answers[" . $question_id . "]")) >= $min;
+        return count(is_array($checks) ? $checks : []) >= $min;
     }
 
     public function _checkbox_max($value, $data) {
         $data = preg_split('/,/', $data);
         $question_id = $data[0];
+        $checks = $this->input->post("answers[" . $question_id . "]");
         $max = $data[1];
-        return count($this->input->post("answers[" . $question_id . "]")) <= $max;
+        return count(is_array($checks) ? $checks : []) <= $max;
     }
 }
