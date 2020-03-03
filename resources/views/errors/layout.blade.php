@@ -1,16 +1,16 @@
 @extends('v2.layouts.app')
 
-@section('head')
 @hasSection ('twitter')
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+@push('js')
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+@endpush
 @endif
-@endsection
 
 @section('content')
 <app-container>
     <div class="error">
-        <div class="error-code">
-            @yield('code')
+        <div class="error-title">
+            @yield('title')
         </div>
         <div class="error-message">
             @yield('message')

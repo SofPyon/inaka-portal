@@ -1,19 +1,20 @@
 .error {
     color: $color-muted;
+    margin: $spacing 0;
     text-align: center;
-    &-code {
-        font-size: 300%;
+    &-title {
+        font-size: 1.5rem;
+        margin-bottom: $spacing-md;
     }
     &-message {
-        margin-bottom: $spacing-md;
+        margin: $spacing-sm 0;
     }
     &-contact {
-        margin-bottom: $spacing-md;
+        margin: $spacing-sm 0;
     }
     &-twitter {
         height: 800px;
-        margin: $spacing-md;
-        margin: 0 auto;
+        margin: $spacing-md auto;
         max-width: 400px;
     }
 }
