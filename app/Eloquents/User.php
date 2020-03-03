@@ -244,12 +244,9 @@ class User extends Authenticatable
         ])->save();
     }
 
-    /**
-     * is_signed_up を true にセット
-     */
-    public function setSignedUp()
+    public function setSignedUpAt()
     {
-        $this->is_signed_up = true;
-        $this->save();
+        $this->signed_up_at = now();
+        return $this->save();
     }
 }
