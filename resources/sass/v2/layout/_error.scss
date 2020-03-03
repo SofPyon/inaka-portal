@@ -1,0 +1,19 @@
+.error {
+    color: $color-muted;
+    text-align: center;
+    &-code {
+        font-size: 300%;
+    }
+    &-message {
+        margin-bottom: $spacing-md;
+    }
+    &-contact {
+        margin-bottom: $spacing-md;
+    }
+    &-twitter {
+        height: 800px;
+        margin: $spacing-md;
+        margin: 0 auto;
+        max-width: 400px;
+    }
+}

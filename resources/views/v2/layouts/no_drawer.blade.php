@@ -41,6 +41,7 @@
     @stack('js')
 
     <meta name="format-detection" content="telephone=no">
+    @yield('head')
 </head>
 <body>
 
