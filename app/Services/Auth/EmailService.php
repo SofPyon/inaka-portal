@@ -36,7 +36,7 @@ class EmailService
         }
 
         $verifyUrl = $this->generateSignedUrl($user, 'email');
-        $is_edit = !empty($user->signed_up_at);
+        $is_edit = $user->is_signed_up;
         $this->send($user->email, $user->name, $verifyUrl, $is_edit);
     }
 
@@ -52,7 +52,7 @@ class EmailService
         }
 
         $verifyUrl = $this->generateSignedUrl($user, 'univemail');
-        $is_edit = !empty($user->signed_up_at);
+        $is_edit = $user->is_signed_up;
         $this->send($user->univemail, $user->name, $verifyUrl, $is_edit);
     }
 

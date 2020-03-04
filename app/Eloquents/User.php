@@ -249,4 +249,9 @@ class User extends Authenticatable
         $this->signed_up_at = now();
         return $this->save();
     }
+
+    public function getIsSignedUpAttribute()
+    {
+        return !empty($this->signed_up_at);
+    }
 }

@@ -6,7 +6,7 @@
 <app-container medium>
     <list-view>
         <template v-slot:title>
-            {{ isset(Auth::user()->signed_up_at) ? 'まだユーザー情報の変更は完了していません！' : 'まだユーザー登録は完了していません！' }}
+            {{ Auth::user()->is_signed_up ? 'まだユーザー情報の変更は完了していません！' : 'まだユーザー登録は完了していません！' }}
         </template>
         <list-view-card>
             以下のメールアドレスに確認メールを送信しました。<strong>メール送信から {{ config('auth.verification.expire', 60) }} 分以内</strong>に、確認メールに記載されている URL にアクセスしてください。

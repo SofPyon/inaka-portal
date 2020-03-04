@@ -41,7 +41,7 @@ class VerifyAction extends Controller
         $response = redirect()
             ->route($user->areBothEmailsVerified() ? 'verification.completed' : 'verification.notice');
 
-        if ($user->areBothEmailsVerified() && empty($user->signed_up_at)) {
+        if ($user->areBothEmailsVerified() && !$user->is_signed_up) {
             $user->setSignedUpAt();
         }
 
