@@ -18,18 +18,20 @@
         @hasSection ('contact')
             <div class="error-contact">
                 @yield('contact')
-                <br/>
-                <a href="mailto:{{ config('portal.contact_email') }}">{{ config('portal.contact_email') }}</a>
+                <p><a href="mailto:{{ config('portal.contact_email') }}">{{ config('portal.contact_email') }}</a></p>
             </div>
         @endif
+        @hasSection ('back')
+            <button class="btn is-primary" onclick="window.history.back();">前のページに戻る</button>
+        @endif
+        @if (!empty(config('portal.admin_twitter')))
         @hasSection ('twitter')
-            @if (config('portal.admin_twitter'))
-                <div class="error-twitter">
-                    <a class="twitter-timeline" data-height="100%" data-chrome="noscrollbar noborders" href="https://twitter.com/{{ config('portal.admin_twitter') }}?ref_src=twsrc%5Etfw">
-                        Tweets by {{ config('portal.admin_twitter') }}
-                    </a>
-                </div>
-            @endif
+        <div class="error-twitter">
+            <a class="twitter-timeline" data-height="100%" data-chrome="noscrollbar noborders" href="https://twitter.com/{{ config('portal.admin_twitter') }}?ref_src=twsrc%5Etfw">
+                Tweets by {{ config('portal.admin_twitter') }}
+            </a>
+        </div>
+        @endif
         @endif
     </div>
 </app-container>
