@@ -1,6 +1,6 @@
 @extends('errors.layout')
 
-@section('title', __('Unauthorized'))
-@section('code', '401')
-@section('message', __('アクセス権限がありません'))
+@section('title', '認証に失敗しました')
+@section('message', 'ログイン情報をお確かめください')
+@section('back', true)
 @section('twitter', false)

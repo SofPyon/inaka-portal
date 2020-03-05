@@ -1,5 +1,5 @@
 @extends('errors.layout')
 
-@section('title', __('Too Many Requests'))
-@section('code', '429')
-@section('message', __('Too Many Requests'))
+@section('title', リクエストが多すぎます)
+@section('message', 時間を開けて、もう一度お試しください)
+@section('back', true)

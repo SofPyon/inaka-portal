@@ -1,6 +1,6 @@
 @extends('errors.layout')
 
-@section('title', __('Not Found'))
-@section('code', '404')
-@section('message', 'お探しのページは見つかりませんでした。')
+@section('title', __('お探しのページは見つかりませんでした'))
+@section('message', 'URLをご確認ください')
+@section('back', true)
 @section('twitter', false)
