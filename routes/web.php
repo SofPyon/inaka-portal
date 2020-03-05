@@ -145,6 +145,8 @@ Route::middleware(['auth', 'verified', 'can:staff', 'staffAuthed'])
                         Route::post('/api/update_question', 'Staff\Forms\Editor\UpdateQuestionAction');
                         Route::post('/api/delete_question', 'Staff\Forms\Editor\DeleteQuestionAction');
                     });
+                
+                Route::get('/unsubmit', 'Staff\Forms\Submission\ShowAction');
             });
 
         // メール一斉送信
