@@ -22,7 +22,9 @@
             </div>
         @endif
         @hasSection ('back')
-            <button class="btn is-primary" onclick="window.history.back();">前のページに戻る</button>
+            <div class="error-button">
+                <button class="btn is-primary" onclick="window.history.back();">前のページに戻る</button>
+            </div>
         @endif
         @if (!empty(config('portal.admin_twitter')))
         @hasSection ('twitter')
