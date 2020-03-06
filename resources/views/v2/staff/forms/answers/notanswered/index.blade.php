@@ -6,6 +6,11 @@
 <app-container>
     <list-view>
         <template v-slot:title>{{ $form->name }} - 未提出団体</template>
+        @if($circles->isEmpty())
+            <list-view-empty
+                text="未提出団体はありません"
+            >
+        @else
         @foreach ($circles as $circle)
             <list-view-item
                 href="{{ url('/home_staff/circles/read/' . $circle->id) }}"
@@ -14,6 +19,7 @@
                 <template v-slot:title>団体ID：{{ $circle->id }}　{{ $circle->name }}</template>
             </list-view-item>
         @endforeach
+        @endif
     </list-view>
 </app-container>
 <app-container class="text-center pt-spacing-md">
