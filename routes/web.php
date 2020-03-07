@@ -129,7 +129,6 @@ Route::middleware(['auth', 'verified', 'can:staff', 'staffAuthed'])
                     ->group(function () {
                         Route::get('/uploads', 'Staff\Forms\Answers\Uploads\IndexAction')->name('uploads.index');
                         Route::get('/uploads/download_zip', 'Staff\Forms\Answers\Uploads\DownloadZipAction')->name('uploads.download_zip');
-                        Route::get('/not_answered', 'Staff\Forms\Answers\NotAnswered\ShowAction');
                     });
 
                 // 申請フォームエディタ
@@ -146,6 +145,8 @@ Route::middleware(['auth', 'verified', 'can:staff', 'staffAuthed'])
                         Route::post('/api/update_question', 'Staff\Forms\Editor\UpdateQuestionAction');
                         Route::post('/api/delete_question', 'Staff\Forms\Editor\DeleteQuestionAction');
                     });
+
+                Route::get('/not_answered', 'Staff\Forms\Answers\NotAnswered\ShowAction');
             });
 
         // メール一斉送信
