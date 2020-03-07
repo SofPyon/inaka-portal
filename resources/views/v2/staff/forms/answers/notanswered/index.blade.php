@@ -6,7 +6,7 @@
 <app-container>
     <list-view>
         <template v-slot:title>{{ $form->name }} - 未提出団体</template>
-        @if($circles->isEmpty())
+        @if(empty($circles))
             <list-view-empty
                 text="未提出団体はありません"
             >
