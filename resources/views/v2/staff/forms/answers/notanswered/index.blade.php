@@ -5,7 +5,7 @@
 @section('content')
 <app-container>
     <list-view>
-        <template v-slot:title>{{ $form->name }} - 未提出団体</template>
+        <template v-slot:title>{{ $form->name }} - 未提出団体（{{ count($circles) }}団体）</template>
         @if(empty($circles))
             <list-view-empty
                 text="未提出団体はありません"
