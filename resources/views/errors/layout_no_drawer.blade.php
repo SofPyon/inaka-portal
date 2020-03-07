@@ -10,7 +10,7 @@
 <app-container>
     <div class="error">
         <div class="error-title">
-            @yield('title')
+            @yield('top')
         </div>
         <div class="error-message">
             @yield('message')
