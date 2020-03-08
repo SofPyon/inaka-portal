@@ -41,4 +41,16 @@ class Document extends Model
     {
         return $this->belongsTo(Schedule::class);
     }
+
+    public function getIsNewAttribute()
+    {
+        $moded_time = $this->created_at->add('3days');
+        return $moded_time->gte(now());
+    }
+
+    public function getIsUpdatedAttribute()
+    {
+        $moded_time = $this->updated_at->add('3days');
+        return $moded_time->gte(now()) && !$this->is_new;
+    }
 }
