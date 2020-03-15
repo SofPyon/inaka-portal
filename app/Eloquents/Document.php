@@ -4,9 +4,12 @@ namespace App\Eloquents;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use App\Eloquents\Concerns\IsNewTrait;
 
 class Document extends Model
 {
+    use IsNewTrait;
+
     protected $casts = [
         'is_public' => 'bool',
         'is_important' => 'bool',
@@ -40,17 +43,5 @@ class Document extends Model
     public function schedule()
     {
         return $this->belongsTo(Schedule::class);
-    }
-
-    public function getIsNewAttribute()
-    {
-        $moded_time = $this->created_at->add('3days');
-        return $moded_time->gte(now());
-    }
-
-    public function getIsUpdatedAttribute()
-    {
-        $moded_time = $this->updated_at->add('3days');
-        return $moded_time->gte(now()) && !$this->is_new;
     }
 }
