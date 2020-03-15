@@ -23,7 +23,7 @@
                 <i class="far fa-file-alt fa-fw"></i>
                 @endif
                 {{ $document->name }}
-                @if ($document->is_new)
+                @if ($document->isNew())
                 <span class="badge is-danger">NEW</span>
                 @endif
             </template>
