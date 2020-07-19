@@ -1,3 +1,8 @@
+# DEPRECATED
+inaka-portal は [PortalDots](https://github.com/portal-dots/PortalDots) へ移行しました。
+
+-----
+
 <h1 align="center">inaka-portal</h1>
 <p align="center">イベント参加サークルへのお知らせ配信、ウェブフォームによる申請受付ができるオープンソースウェブシステム。</p>
 
